@@ -9310,7 +9310,9 @@ section.tp{text-align:left}
 </script>
 
 
-<section class="ind hd-stack" id="industries" aria-labelledby="fitTitle">
+<!-- REMOVED 2026-11-05 (her ask: "תסיר את הסקשן הזה כרגע"). Parked in a <template> so it
+     renders nothing and every #industries script finds no element; unwrap to restore. -->
+<template id="fit-parked"><section class="ind hd-stack" id="industries" aria-labelledby="fitTitle">
   <div class="ind-head">
     <h2 class="ind-title" id="fitTitle"><span class="ind-ln"><span>A solution that fits</span></span><span class="ind-ln"><span>the shipment</span></span></h2>
     <p class="ind-lede">Agreements with leading airlines, alongside regular consolidations from major destinations around the world, let us tailor the air solution to the shipment's needs, schedule and budget.</p>
@@ -9345,7 +9347,7 @@ section.tp{text-align:left}
     </div>
   </div>
   <span class="ind-pts" aria-hidden="true"></span>
-</section>
+</section></template>
 <script>
 /* THE POINTS - see the note at .ind-pts. Four standing on the mosaic's outer
    corners, and four per card shown while that card is under the pointer; all

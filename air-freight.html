@@ -9152,7 +9152,9 @@ section.tp#aeo{padding:var(--ab-air) var(--cx);text-align:start}
 
 <!-- ===================== SOLUTION · 2 · פתרון שמתאים למשלוח (2026-10-04) =====================
      Since 2026-10-05: option 1 of _air3c-options, three photo panels, the active one opens (was option 3 of _air3-options). Copy is hers. Photos are placeholders. -->
-<section class="ind hd-stack" id="industries" aria-labelledby="fitTitle">
+<!-- REMOVED 2026-11-05 (her ask: "תסיר את הסקשן הזה כרגע"). Parked in a <template> so it
+     renders nothing and every #industries script finds no element; unwrap to restore. -->
+<template id="fit-parked"><section class="ind hd-stack" id="industries" aria-labelledby="fitTitle">
   <div class="ind-head">
     <h2 class="ind-title" id="fitTitle"><span class="ind-ln"><span>פתרון שמתאים</span></span><span class="ind-ln"><span>למשלוח</span></span></h2>
     <p class="ind-lede">הסכמים מול חברות תעופה מובילות, לצד קונסולידציות קבועות מיעדים מרכזיים בעולם, מאפשרים לנו להתאים את פתרון ההטסה לצורכי המשלוח, ללוחות הזמנים ולתקציב.</p>
@@ -9187,7 +9189,7 @@ section.tp#aeo{padding:var(--ab-air) var(--cx);text-align:start}
     </div>
   </div>
   <span class="ind-pts" aria-hidden="true"></span>
-</section>
+</section></template>
 <script>
 /* THE POINTS - see the note at .ind-pts. Four standing on the mosaic's outer
    corners, and four per card shown while that card is under the pointer; all
