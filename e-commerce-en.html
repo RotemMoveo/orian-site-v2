@@ -9741,6 +9741,12 @@ html.kb-js .kp-bento .kp-g.kb-in > .kp-i{opacity:1;transform:none}
   </div>
 </section>
 
+<section class="st" id="statement2">
+  <img class="st-logo" src="files/lg-shlager.png" alt="Shlager" width="900" height="115">
+  <p class="st-t">Orian owns <b>Shlager, Israel’s largest and most advanced locker network</b>, with nationwide coverage. Our lockers are green, located in residential neighbourhoods and high-density areas, and available 24/7.</p>
+  <svg class="st-px" viewBox="0 0 310 240" aria-hidden="true" focusable="false"><rect x="0" y="0" width="30" height="30"/><rect x="35" y="0" width="30" height="30"/><rect x="70" y="0" width="30" height="30"/><rect x="105" y="0" width="30" height="30"/><rect x="140" y="0" width="30" height="30"/><rect x="0" y="35" width="30" height="30"/><rect x="35" y="35" width="30" height="30"/><rect x="70" y="35" width="30" height="30"/><rect x="0" y="70" width="30" height="30"/><rect x="35" y="70" width="30" height="30"/><rect x="70" y="70" width="30" height="30"/><rect x="105" y="70" width="30" height="30"/><rect x="140" y="70" width="30" height="30"/><rect class="r" x="175" y="70" width="30" height="30"/><rect x="0" y="105" width="30" height="30"/><rect x="35" y="105" width="30" height="30"/><rect x="70" y="105" width="30" height="30"/><rect x="105" y="105" width="30" height="30"/><rect x="140" y="105" width="30" height="30"/><rect x="210" y="105" width="30" height="30"/><rect x="0" y="140" width="30" height="30"/><rect x="35" y="140" width="30" height="30"/><rect x="70" y="140" width="30" height="30"/><rect x="105" y="140" width="30" height="30"/><rect x="140" y="140" width="30" height="30"/><rect class="r" x="175" y="140" width="30" height="30"/><rect x="0" y="175" width="30" height="30"/><rect x="35" y="175" width="30" height="30"/><rect x="70" y="175" width="30" height="30"/><rect x="105" y="175" width="30" height="30"/><rect x="0" y="210" width="30" height="30"/><rect x="35" y="210" width="30" height="30"/><rect x="70" y="210" width="30" height="30"/><rect x="105" y="210" width="30" height="30"/><rect x="140" y="210" width="30" height="30"/><rect x="175" y="210" width="30" height="30"/><rect x="210" y="210" width="30" height="30"/></svg>
+</section>
+
 <section class="kp hd-stack kp-bento" id="why" aria-labelledby="whyT">
   <div class="kp-head">
     <h2 class="kp-h" id="whyT"><span class="lt">Why</span> <span class="bd">Orian.</span></h2>
@@ -9809,12 +9815,7 @@ html.kb-js .kp-bento .kp-g.kb-in > .kp-i{opacity:1;transform:none}
 </script>
 
 
-<section class="tp" id="aeo" aria-label="The Shlager locker network">
-  <div class="tp-row">
-    <div class="tp-nm"><img class="tp-logo" src="files/lg-shlager.png" alt="Shlager" width="900" height="115"><h2 class="tp-t">Shlager, Orian's locker network</h2></div>
-    <p class="tp-d">Orian owns Shlager, Israel’s largest and most advanced locker network, with nationwide coverage. Our lockers are green, located in residential neighbourhoods and high-density areas, and available 24/7.</p>
-  </div>
-</section>
+
 
 
 <section class="fq" id="faq" aria-labelledby="fqTitle">
@@ -11965,6 +11966,19 @@ html body .kp.kp-bento .kp-g .kp-i:first-child .kp-d{color:rgba(255,255,255,.85)
 .m-top.is-cur:not(.m-util)::after{--top-mk:var(--top-mk-on)}
 .dd .dd-t.is-cur,.mg .dd-t.is-cur{color:var(--red);border-bottom-color:var(--red)}
 .dd .dd-t.is-cur .btn-ring .ar,.mg .dd-t.is-cur .btn-ring .ar{color:var(--red)}
+
+/* the statement band (as on the industry pages), on GREY, with the Shlager logo over the sentence - it replaced a trust strip: Shlager is a company Orian owns, not a certificate (2026-11-11) */
+.st{background:#fff;display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);column-gap:calc(var(--sp-7) * 1.5);align-items:center}
+.st .st-pt{grid-column:1}
+.st .st-t{grid-column:1;font-size:calc(var(--fs-sec) * .5);line-height:1.22;font-weight:300;letter-spacing:-.01em;max-width:none}
+.st .st-t b{font-weight:700}
+.st-px{grid-column:2;grid-row:1 / span 2;width:100%;max-width:380px;justify-self:end;fill:#ECEAE5}
+[dir="ltr"] .st-px{transform:scaleX(-1)}
+.st-px .r{fill:var(--red)}
+@media(max-width:900px){.st{grid-template-columns:1fr}.st-px{display:none}}
+section.st#statement2{background:#F2F1EE}
+section.st#statement2 .st-px{fill:#fff}
+.st-logo{grid-column:1;display:block;width:auto;height:clamp(28px,2.6vw,40px);margin-block-end:var(--sp-5)}
 </style>
 <script>
 /* the nav marks the current page: its tile in the menu and its group in the bar */
