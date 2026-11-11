@@ -8864,6 +8864,16 @@ section.tp#aeo{padding:var(--ab-air) var(--cx);text-align:start}
 .dd .dd-t .btn-ring .ar{width:12px;height:12px;color:var(--ink);--ar-w:1.8}
 .dd .dd-t:hover,.dd .dd-t:focus-visible{background:none;color:var(--red);border-bottom-color:var(--red)}
 .dd .dd-t:hover .btn-ring .ar,.dd .dd-t:focus-visible .btn-ring .ar{color:var(--red)}
+/* ---- THE MENU IN THREE COLUMNS (2026-11-11, option 4 of _menu3-options). The client asked to
+   join today's line-and-arrow menu with the earlier one: the grey sheet and the white tiles
+   come back, three to a row, no icons; the tile wears the new manner - the small diagonal
+   arrow always standing at its far end, and hover = label, arrow and a red line under the
+   tile in one frame, no red fill. Desktop only, like the sheet; the phone menu is .mg. ---- */
+.dd{background:linear-gradient(transparent var(--win-gap),var(--sheet) 0)}
+.dd .dd-g{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--win-gap);padding:var(--sp-4) var(--gin)}
+.dd .dd-t{background:var(--white);min-height:calc(var(--sq) + var(--sp-4));padding-inline:var(--sp-4);border-bottom:2px solid transparent}
+.dd .dd-t .btn-ring{inset-inline-end:var(--sp-4)}
+.dd .dd-t:hover,.dd .dd-t:focus-visible{background:var(--white);color:var(--red);border-bottom-color:var(--red)}
 .dd-ic{display:none}
 </style>
 <style>
@@ -8890,6 +8900,42 @@ section.tp#aeo{padding:var(--ab-air) var(--cx);text-align:start}
   .mg + .m-util{border-top:0}
 }
 </style>
+<style>
+/* AEO AIR (2026-11-11, hers: the AEO band has too much space round it). The strip's own --ab-air
+   was being ADDED to its neighbours' air, so a white neighbour stood two --ab-air away (156px at
+   1440), up to 306 on sea. Now ONE --ab-air between the strip and what stands beside it: a white
+   neighbour gives up its own air on the strip's side; a grey band (.on-grey above, the FAQ's grey
+   below) keeps its inner air and the white gap is counted from its edge. */
+html body section.tp#aeo{padding-block:var(--ab-air)}
+html body :is(section,div):not(.on-grey):has(+ #aeo),
+html body :is(section,div):not(.on-grey):has(+ script + #aeo){padding-bottom:0!important}
+html body #aeo + section:not(.fq):not(.on-grey),html body #aeo + script + section:not(.fq):not(.on-grey){padding-top:0!important}
+html body #aeo + section.kp:not(.fq){padding-top:0!important}
+</style>
+<style>
+/* THE BENTO'S CARDS COME IN ONE BY ONE (2026-11-11, hers: "תכניס את הקוביות בהדרגה"). When the
+   grid reaches the screen each card rises 28px and fades in, the red one first, .16s apart. The
+   class kb-js goes on only when IntersectionObserver exists, so without it the cards just stand. */
+html.kb-js .kp-bento .kp-g > .kp-i{opacity:0;transform:translateY(28px);
+  transition:opacity .7s ease var(--kb-d,0s),transform .9s cubic-bezier(.16,.84,.24,1) var(--kb-d,0s)}
+html.kb-js .kp-bento .kp-g.kb-in > .kp-i{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){html.kb-js .kp-bento .kp-g > .kp-i{opacity:1;transform:none;transition:none}}
+</style>
+<script>
+(function(){
+  if(!('IntersectionObserver' in window)) return;
+  if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.documentElement.classList.add('kb-js');
+  document.addEventListener('DOMContentLoaded', function(){
+    [].forEach.call(document.querySelectorAll('.kp-bento .kp-g'), function(g){
+      [].forEach.call(g.children, function(li, i){ li.style.setProperty('--kb-d', (i * .16) + 's'); });
+      var io = new IntersectionObserver(function(es){ es.forEach(function(e){
+        if(e.isIntersecting){ g.classList.add('kb-in'); io.disconnect(); } }); }, {threshold:.2});
+      io.observe(g);
+    });
+  });
+})();
+</script>
 </head>
 <body>
 
@@ -9068,6 +9114,32 @@ section.tp#aeo{padding:var(--ab-air) var(--cx);text-align:start}
   </div>
   <div class="ix-fig" aria-hidden="true"><img src="files/g-dc-hero.jpg" alt="" fetchpriority="high"></div>
 </section>
+<style>
+/* ==== INNER HERO · ONE CURTAIN, TOP DOWN (2026-11-11, second pass) ====
+   Her correction the same day: the pixels must not pop off one by one ("לא בחשיפה מיידית").
+   ONE white cover over the whole picture, the crumbling pixel band included, draws up off
+   it from the top down, like a curtain opening downward: the band's squares come out first
+   and then the photograph, gradually, as its edge passes. Replaces the square-by-square band
+   and the second wipe that followed it. */
+#hero.ix .ix-fig{animation:none!important;clip-path:none!important;overflow:hidden}
+#hero.ix .ix-cv{position:absolute;inset:0;z-index:2;background:var(--white,#fff);pointer-events:none;
+  animation:ix-cv var(--cvd,1.2s) cubic-bezier(.45,0,.2,1) var(--cvs,.15s) forwards}
+@keyframes ix-cv{from{clip-path:inset(0)}to{clip-path:inset(100% 0 0 0)}}
+@media (prefers-reduced-motion:reduce){#hero.ix .ix-cv{display:none}}
+</style>
+<script>
+/* inner hero: one curtain, drawn down off the picture */
+(function(){
+  var f=document.querySelector('#hero.ix .ix-fig'); if(!f) return;
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var START=150, WIPE=1200;
+  var c=document.createElement('div'); c.className='ix-cv'; c.setAttribute('aria-hidden','true');
+  c.style.setProperty('--cvs',START+'ms'); c.style.setProperty('--cvd',WIPE+'ms');
+  f.appendChild(c);
+  setTimeout(function(){ if(c.parentNode) c.parentNode.removeChild(c); }, START+WIPE+300);
+})();
+</script>
+
 
 <script>
 /* INNER HERO · THE HOMEPAGE'S ENTRANCE (2026-10-06) - concept-3-hero.html's
@@ -9189,12 +9261,18 @@ section.tp#aeo{padding:var(--ab-air) var(--cx);text-align:start}
 
 <section class="fs" id="story">
   <article class="fs-row"><figure class="fs-img"><img src="files/g-dc-hall.jpg" alt="" loading="lazy"></figure><div class="fs-tx"><h2 class="fs-h">משלוחים קריטיים</h2><p>אנו יודעים לתת מענה מהיר למשלוחים קריטיים ולהביאם לישראל בבטחה ובמהירות, לצד פתרונות אחסנה לארונות תקשורת, ציוד וחלקי חילוף.</p></div></article>
-  <article class="fs-row"><figure class="fs-img"><img src="files/v-dc-cage.jpg" alt="" loading="lazy"></figure><div class="fs-tx"><h2 class="fs-h"><bdi dir="ltr">White Glove</bdi></h2><p>הפעילות כוללת גם אספקה מקצועית לאתרי דאטה סנטר באמצעות שירותי <bdi dir="ltr">White Glove</bdi>, עם צוות מיומן, ציוד ייעודי ומשאיות מותאמות לשינוע ציוד רגיש ובעל ערך גבוה.</p><p>כל מסירה מתואמת מראש מול האתר וצוותי ההתקנה, כדי להבטיח תהליך מדויק ובטוח עד לנקודת היעד.</p></div></article>
 </section>
 
-<section class="kp on-grey" id="caps" aria-labelledby="capsT">
+<section class="tp" id="aeo" aria-label="White Glove">
+  <div class="tp-row">
+    <div class="tp-nm"><span class="tp-bk" aria-hidden="true"><span class="tp-a"></span></span><h2 class="tp-t"><bdi dir="ltr">White Glove</bdi></h2></div>
+    <p class="tp-d">אספקה מקצועית לאתרי דאטה סנטר, עם צוות מיומן, ציוד ייעודי ומשאיות מותאמות לציוד רגיש ובעל ערך גבוה. כל מסירה מתואמת מראש מול האתר וצוותי ההתקנה.</p>
+  </div>
+</section>
+
+<section class="kp kp-bento" id="caps" aria-labelledby="capsT">
   <div class="kp-head">
-    <h2 class="kp-h" id="capsT"><span class="lt">מערכות בתחום</span><span class="bd">ה-<bdi dir="ltr">Semiconductors</bdi>.</span></h2>
+    <h2 class="kp-h" id="capsT"><span class="lt">מערכות בתחום</span><span class="bd"><span class="nw">ה-<bdi dir="ltr">Semiconductors</bdi>.</span></span></h2>
     
   </div>
   <ol class="kp-g">
@@ -9276,6 +9354,23 @@ section.tp#aeo{padding:var(--ab-air) var(--cx);text-align:start}
      One grey sheet: the words + the CTA, a 12px field whose red points draw the
      page's arrow on arrival, and פתרונות נוספים as four white cells in its floor.
      The four links point at "#" until those pages exist. -->
+<section class="fq" id="faq" aria-labelledby="fqTitle">
+  <div class="fq-side">
+    <h2 class="fq-h" id="fqTitle"><span class="lt">שאלות</span><span class="bd">נפוצות</span></h2>
+    <p class="fq-p">התשובות לשאלות שאנחנו שומעים הכי הרבה.</p>
+  </div>
+  <div class="fq-l">
+      <div class="fq-i" style="--i:0"><h3 class="fq-hq"><button class="fq-q" type="button" id="fqQ0" aria-expanded="false" aria-controls="fqA0"><span class="fq-m" aria-hidden="true"></span><span class="fq-t">אתם מטפלים בציוד במידות חריגות?</span></button></h3>
+        <div class="fq-a" id="fqA0" role="region" aria-labelledby="fqQ0"><div><p>כן. אנחנו מתפעלים משלוחים עם מידות חריגות ובקרת טמפרטורה, עם משאיות שתומכות בציוד חריג במידות ובמשקל.</p></div></div></div>
+      <div class="fq-i" style="--i:1"><h3 class="fq-hq"><button class="fq-q" type="button" id="fqQ1" aria-expanded="false" aria-controls="fqA1"><span class="fq-m" aria-hidden="true"></span><span class="fq-t">מה כולל שירות <bdi dir="ltr">White Glove</bdi>?</span></button></h3>
+        <div class="fq-a" id="fqA1" role="region" aria-labelledby="fqQ1"><div><p>אספקה לאתר עם צוות מיומן, ציוד ייעודי ומשאיות מותאמות, הובלת הארונות עד המיקום הסופי בתוך האתר, ופירוק ומחזור פסולת למקורות מורשים.</p></div></div></div>
+      <div class="fq-i" style="--i:2"><h3 class="fq-hq"><button class="fq-q" type="button" id="fqQ2" aria-expanded="false" aria-controls="fqA2"><span class="fq-m" aria-hidden="true"></span><span class="fq-t">אפשר לעמוד בלוח הזמנים של ההתקנה?</span></button></h3>
+        <div class="fq-a" id="fqA2" role="region" aria-labelledby="fqQ2"><div><p>כן. כל מסירה מתואמת מראש מול האתר וצוותי ההתקנה, בהתאם ללוחות הזמנים בישראל או במדינת היעד.</p></div></div></div>
+      <div class="fq-i" style="--i:3"><h3 class="fq-hq"><button class="fq-q" type="button" id="fqQ3" aria-expanded="false" aria-controls="fqA3"><span class="fq-m" aria-hidden="true"></span><span class="fq-t">אתם מאחסנים ציוד?</span></button></h3>
+        <div class="fq-a" id="fqA3" role="region" aria-labelledby="fqQ3"><div><p>כן, יש לנו פתרונות אחסנה לארונות תקשורת, ציוד וחלקי חילוף.</p></div></div></div>
+  </div>
+</section>
+
 <section class="mo" id="more" aria-labelledby="moTitle">
   <div class="mo-sheet">
     <div class="mo-top">
@@ -9287,7 +9382,7 @@ section.tp#aeo{padding:var(--ab-air) var(--cx);text-align:start}
     </div>
     <div class="mo-more">
       <p class="mo-k">עוד בתחום שלכם</p>
-      <ul class="mo-g"><li style="--i:0"><a href="air-freight.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 4L13.5 6.5V10L21 14V16L13.5 14V18.5L16 20.5V22L12 21L8 22V20.5L10.5 18.5V14L3 16V14L10.5 10V6.5Z"/><rect class="pt" x="10.5" y="0.5" width="3" height="3" /></svg><span class="mo-n">הובלה אווירית</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li><li style="--i:1"><a href="customs-clearance.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 3H15L19 7V21H5ZM15 3V7H19M8 11H16M8 14H13"/><rect class="pt" x="13.5" y="16.5" width="3" height="3" /></svg><span class="mo-n">עמילות מכס</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li><li style="--i:2"><a href="projects.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M7 21V3M3 6H21M7 3L11 6M18 6V11M3 21H11"/><rect class="pt" x="16.5" y="11" width="3" height="3" /></svg><span class="mo-n">פרויקטים</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li><li style="--i:3"><a href="land-transportation.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M2 7H14V17H2ZM14 10H18L21 13V17H14"/><circle cx="6" cy="18" r="1.75" class="wh"/><circle cx="17.5" cy="18" r="1.75" class="wh"/><rect class="pt" x="6.5" y="10.5" width="3" height="3" /></svg><span class="mo-n">הובלה יבשתית</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li></ul>
+      <ul class="mo-g"><li style="--i:0"><a href="air-freight.html" class="mo-c"><span class="mo-n">הובלה אווירית</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li><li style="--i:1"><a href="customs-clearance.html" class="mo-c"><span class="mo-n">עמילות מכס</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li><li style="--i:2"><a href="projects.html" class="mo-c"><span class="mo-n">פרויקטים</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li><li style="--i:3"><a href="land-transportation.html" class="mo-c"><span class="mo-n">הובלה יבשתית</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li></ul>
     </div>
   </div>
 </section>
@@ -11208,14 +11303,14 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
       if(h.classList.contains('ol1')){ h.classList.remove('ol1'); h.style.textAlign=''; gap(h,0) }
       var r=h.getBoundingClientRect(); if(!r.width||!r.height) return;
       var L=lh(h); if(r.height<L*1.6) return;                 /* already one line */
-      var cs=getComputedStyle(h), col=colW(h), ta='';
+      var cs=getComputedStyle(h), col=Math.min(colW(h), r.width), ta='';   /* 2026-11-05: its OWN column (the box it fills on two lines), not the head row's whole width - a heading beside its paragraph was set on one line and ran under it */
       /* a heading laid out as a flex/grid column keeps the side its lines stood on */
       if(/flex|grid/.test(cs.display)){ var ai=(cs.alignItems+' '+cs.justifyItems);
         ta=/center/.test(ai)?'center':(/flex-end|(^| )end|right/.test(ai)?'end':'') }
       h.classList.add('ol1'); if(ta) h.style.textAlign=ta; gap(h,1);
       h.style.width='max-content'; var w=h.getBoundingClientRect().width; h.style.width='';
       var one=h.getBoundingClientRect().height<L*1.6;          /* it really is one line now */
-      if(!(one&&w<=lim&&w<=col+1)){ h.classList.remove('ol1'); h.style.textAlign=''; gap(h,0) }
+      if(!(one&&w<=lim&&w<=col+1&&h.scrollWidth<=h.clientWidth+1)){   /* and its words may not spill past its box */ h.classList.remove('ol1'); h.style.textAlign=''; gap(h,0) }
     });
   }
   var t; function later(){ clearTimeout(t); t=setTimeout(fit,120) }
@@ -11228,7 +11323,61 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
      content blocks (heading, text, button, picture) and, one level down, the items of
      a grid or list. Built on `translate` + WAAPI so it never overrides a section's own
      transform, transition, hover or tabs. Off under prefers-reduced-motion. -->
-<style>.rv-wait{opacity:0!important}</style>
+<style>.rv-wait{opacity:0!important}
+/* ==== KP BENTO (2026-11-10, client: option 2 of _kp-options) ==================
+   The numbered cards: the first point is a red panel two columns by two rows,
+   the rest stand around it; the cards' text is light. The layout is chosen by
+   the count (2-6). Not on .kp-band / link / certificate windows. */
+.kp-bento .kp-g{grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(clamp(170px,14vw,220px),auto)}
+.kp-bento .kp-g::after,.kp-bento .kp-i::before{display:none!important}
+.kp-bento .kp-i{min-height:0;align-content:space-between}
+.kp-bento .kp-t{font-weight:300}
+.kp-bento .kp-i:first-child{grid-column:span 2;grid-row:span 2;background:var(--red);color:#fff;padding:var(--sp-6) var(--gin)}
+.kp-bento .kp-i:first-child .kp-n,.kp-bento .kp-i:first-child .kp-d,.kp-bento .kp-i:first-child .kp-ic{color:#fff}
+.kp-bento .kp-i:first-child .kp-ic .pt{fill:#fff}
+.kp-bento .kp-i:first-child .kp-t{font-size:calc(var(--fs-sec) * .62);font-weight:700;line-height:1.05;max-width:10em}
+.kp-bento .kp-g:has(> .kp-i:nth-child(3):last-child) .kp-i:not(:first-child){grid-column:span 2}
+.kp-bento .kp-g:has(> .kp-i:nth-child(4):last-child) .kp-i:nth-child(4){grid-column:span 2}
+.kp-bento .kp-g:has(> .kp-i:nth-child(6):last-child){grid-template-columns:repeat(3,minmax(0,1fr))}
+.kp-bento .kp-g:has(> .kp-i:nth-child(2):last-child){grid-template-columns:repeat(3,minmax(0,1fr))}
+.kp-bento .kp-g:has(> .kp-i:nth-child(2):last-child) .kp-i:first-child{grid-row:auto}
+@media(max-width:1024px){
+  .kp-bento .kp-g,.kp-bento .kp-g:has(> .kp-i:nth-child(6):last-child),.kp-bento .kp-g:has(> .kp-i:nth-child(2):last-child){grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:auto}
+  .kp-bento .kp-g .kp-i,.kp-bento .kp-g:has(> .kp-i:nth-child(3):last-child) .kp-i:not(:first-child),.kp-bento .kp-g:has(> .kp-i:nth-child(4):last-child) .kp-i:nth-child(4){grid-column:auto}
+  .kp-bento .kp-g .kp-i:first-child{grid-column:1 / -1;grid-row:auto;min-height:clamp(200px,30vw,280px)}
+  .kp-bento .kp-g .kp-i:last-child:nth-child(even){grid-column:1 / -1}
+}
+@media(max-width:700px){
+  .kp-bento .kp-g,.kp-bento .kp-g:has(> .kp-i){grid-template-columns:1fr}
+  .kp-bento .kp-g .kp-i,.kp-bento .kp-g .kp-i:last-child:nth-child(even){grid-column:auto}
+}
+
+/* ==== KP BENTO · TYPE (2026-11-10, client: option 5 of _kp2-options) ==========
+   Inside each card: the number in its own narrow column, a hairline, the text
+   beside it at --fs-lede x .92 / 400 (the red panel --fs-name / 500). A
+   description sits under the text, an icon at the far end of the row. */
+html body .kp.kp-bento .kp-g .kp-i{grid-template-columns:auto minmax(0,1fr);align-content:start;align-items:start;column-gap:var(--sp-3);row-gap:var(--sp-2)}
+html body .kp.kp-bento .kp-g .kp-i .kp-n{grid-column:1;grid-row:1 / span 2;align-self:start;padding-inline-end:var(--sp-3);border-inline-end:1px solid rgba(20,22,25,.18);line-height:1.6}
+html body .kp.kp-bento .kp-g .kp-i .kp-t{grid-column:2;grid-row:1;font-size:calc(var(--fs-lede) * .92);font-weight:400;line-height:1.5;letter-spacing:0;max-width:26em}
+html body .kp.kp-bento .kp-g .kp-i .kp-d{grid-column:2;grid-row:2;margin:0}
+html body .kp.kp-bento .kp-g .kp-i:has(.kp-ic){grid-template-columns:auto minmax(0,1fr) auto}
+html body .kp.kp-bento .kp-g .kp-ic{grid-column:3;grid-row:1;align-self:start}
+html body .kp.kp-bento .kp-g .kp-i:first-child{padding:var(--sp-5) var(--gin)}   /* same top inset as every card */
+html body .kp.kp-bento .kp-g .kp-i:first-child .kp-n{border-color:rgba(255,255,255,.45)}
+html body .kp.kp-bento .kp-g .kp-i:first-child .kp-t{font-size:var(--fs-name);font-weight:500;line-height:1.22;max-width:14em}
+html body .kp.kp-bento .kp-g .kp-i:first-child .kp-d{color:rgba(255,255,255,.85)}
+
+/* the industry mix (2026-11-11): one story row is left, so no kicker over it - no number, no line */
+.fs .fs-tx::before{content:none!important;display:none!important}
+
+/* "Semiconductors" never breaks: the word and its full stop stay one unit, and the heading takes the whole width (no paragraph beside it) (2026-11-11) */
+.kp-h .nw{white-space:nowrap;overflow-wrap:normal;hyphens:none}
+html body #caps .kp-head{grid-template-columns:1fr}
+html body #caps .kp-h{font-size:min(var(--fs-sec), 10.5vw)}   /* a phone: the one long word fits the width instead of breaking or overflowing */
+
+/* a phone: every bento is ONE column - the six-card rule outranked the phone rule (2026-11-11) */
+@media(max-width:700px){html body .kp.kp-bento .kp-g{grid-template-columns:1fr!important}html body .kp.kp-bento .kp-g .kp-i{grid-column:auto!important}}
+</style>
 <script>(function(){
   var T=[1, 2], STRONG='strong'==='strong';  /* the industry pages take the stronger profile (2026-11-05) */
   if(!T.length||!('IntersectionObserver' in window)||!Element.prototype.animate) return;
@@ -11306,5 +11455,39 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
   window.addEventListener('resize',sweep);
 })();</script>
 <!-- /ORIAN ENTRY REVEAL -->
+<style>
+/* ==== THE NAV KNOWS WHERE YOU ARE (2026-11-11) ==========================================
+   The page you are on is marked in the bar AND in the menu, in the hover's own look:
+   its group's word in the bar is red with its square (as when open), and its tile in the
+   menu is red with the red line under it (desktop sheet and phone list alike). */
+.m-top.is-cur:not(.m-util){color:var(--red)}
+.m-top.is-cur:not(.m-util)::after{--top-mk:var(--top-mk-on)}
+.dd .dd-t.is-cur,.mg .dd-t.is-cur{color:var(--red);border-bottom-color:var(--red)}
+.dd .dd-t.is-cur .btn-ring .ar,.mg .dd-t.is-cur .btn-ring .ar{color:var(--red)}
+</style>
+<script>
+/* the nav marks the current page: its tile in the menu and its group in the bar */
+(function(){
+  function file(h){ try{ return decodeURIComponent(new URL(h, location.href).pathname.split('/').pop()) || 'index.html'; }catch(e){ return ''; } }
+  var me = file(location.href), GROUPS = ['dd-svc','dd-ind','dd-sus','dd-abt'];
+  function mark(){
+    var hit = -1;
+    [].forEach.call(document.querySelectorAll('a.dd-t'), function(a){
+      var on = file(a.getAttribute('href') || '') === me;
+      a.classList.toggle('is-cur', on);
+      if(on){ a.setAttribute('aria-current','page'); var g = a.closest('.dd-g'); if(g && hit < 0) hit = GROUPS.indexOf(g.id); }
+      else if(a.getAttribute('aria-current') === 'page') a.removeAttribute('aria-current');
+    });
+    [].forEach.call(document.querySelectorAll('#bar .m-top:not(.m-util)'), function(t, i){
+      t.classList.toggle('is-cur', i === hit);
+      if(i === hit) t.setAttribute('aria-current','page'); else t.removeAttribute('aria-current');
+    });
+  }
+  mark();
+  window.addEventListener('load', mark);
+  setTimeout(mark, 600);
+  document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('.m-top, .m-btn, [aria-controls]')) setTimeout(mark, 30); }, true);
+})();
+</script>
 </body>
 </html>

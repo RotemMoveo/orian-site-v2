@@ -5515,8 +5515,8 @@ h1 .rl::after{content:"";position:absolute;right:0;left:0;bottom:.02em;height:.0
    `cover` keeps ~58% of the width, and the truck spans 43-72% of the frame
    and the far turbine stands at 20% - 40% keeps the truck whole and both
    turbines in. */
-.sus-img{position:absolute;inset:0;background:var(--sus-panel) 40% center/cover no-repeat
-  url(files/sus-turbines-no-truck.jpg)}
+.sus-img{position:absolute;inset:0;background:var(--sus-panel) right center/cover no-repeat
+  url(files/sus-wind-field.jpg)}
 
 
 
@@ -7285,6 +7285,16 @@ h1 .rl::after{content:"";position:absolute;right:0;left:0;bottom:.02em;height:.0
 .dd .dd-t .btn-ring .ar{width:12px;height:12px;color:var(--ink);--ar-w:1.8}
 .dd .dd-t:hover,.dd .dd-t:focus-visible{background:none;color:var(--red);border-bottom-color:var(--red)}
 .dd .dd-t:hover .btn-ring .ar,.dd .dd-t:focus-visible .btn-ring .ar{color:var(--red)}
+/* ---- THE MENU IN THREE COLUMNS (2026-11-11, option 4 of _menu3-options). The client asked to
+   join today's line-and-arrow menu with the earlier one: the grey sheet and the white tiles
+   come back, three to a row, no icons; the tile wears the new manner - the small diagonal
+   arrow always standing at its far end, and hover = label, arrow and a red line under the
+   tile in one frame, no red fill. Desktop only, like the sheet; the phone menu is .mg. ---- */
+.dd{background:linear-gradient(transparent var(--win-gap),var(--sheet) 0)}
+.dd .dd-g{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--win-gap);padding:var(--sp-4) var(--gin)}
+.dd .dd-t{background:var(--white);min-height:calc(var(--sq) + var(--sp-4));padding-inline:var(--sp-4);border-bottom:2px solid transparent}
+.dd .dd-t .btn-ring{inset-inline-end:var(--sp-4)}
+.dd .dd-t:hover,.dd .dd-t:focus-visible{background:var(--white);color:var(--red);border-bottom-color:var(--red)}
 .dd-ic{display:none}
 @media(max-width:840px){ .dd{display:none!important} }
 /* ==================== THE MENU ON A PHONE (2026-10-07) ====================
@@ -7452,6 +7462,34 @@ h1 .rl::after{content:"";position:absolute;right:0;left:0;bottom:.02em;height:.0
   .mg .dd-t:hover .btn-ring .ar,.mg .dd-t:focus-visible .btn-ring .ar,.mg .dd-t:active .btn-ring .ar{color:var(--red)}
   .mg + .m-util{border-top:0}
 }
+
+
+/* ---- SHIPMENT TYPE IN THE SITE'S OWN LANGUAGE (2026-11-10): no native popup.
+   A field like the number's, and a white list with hairline rows that opens
+   DOWNWARD over the number field (her ask); while it is open the card drops its clip-path so the list can hang past the card. The
+   hovered or chosen row takes the nav's mark: red ink + one red square on its
+   reading edge. The card now stands up to the grid's middle crossing. ---- */
+@media (min-width:821px){.hero.pz .pz-card{align-self:stretch}.pz-card .tc-foot{margin-top:auto}}
+.tc-type{position:relative;z-index:6;margin-top:var(--sp-3);margin-bottom:var(--sp-3)}
+.tt-btn{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2);width:100%;
+  font-family:inherit;font-weight:var(--w-light);font-size:var(--fs-text);color:rgba(20,22,25,.42);text-align:start;
+  background:transparent;border:0;border-bottom:1px solid rgba(20,22,25,.16);border-radius:0;padding:6px 0 10px;cursor:pointer}
+.tc-type.has .tt-btn{color:var(--ink)}
+.tt-chev{flex:none;width:12px;height:8px;fill:none;stroke:var(--ink);stroke-width:1.4;transition:transform .25s ease}
+.tc-type.open .tt-chev{transform:rotate(180deg)}
+.tc-type.open .tt-btn,.tt-btn:focus-visible{outline:none;border-bottom-color:var(--ink)}
+.tt-list{position:absolute;inset-inline:0;top:100%;z-index:5;margin:-1px 0 0;padding:0;list-style:none;
+  background:var(--white);border:1px solid rgba(20,22,25,.16);border-top:0;
+  clip-path:inset(0 0 100% 0);visibility:hidden;transition:clip-path .35s cubic-bezier(.66,0,.16,1),visibility 0s .35s}
+.tt-list.open{clip-path:inset(0);visibility:visible;transition:clip-path .35s cubic-bezier(.66,0,.16,1)}
+/* on open the list is moved to <body> and placed under the field, so neither the card nor the hero can cut it */
+body > .tt-list{position:absolute;inset-inline:auto;top:0;left:0;z-index:60;margin:0;border-top:0;direction:inherit}
+.tt-list li{display:flex;align-items:center;gap:10px;padding:12px var(--sp-2);
+  font-weight:var(--w-light);font-size:var(--fs-text);color:var(--ink);cursor:pointer;outline:none}
+.tt-list li + li{border-top:1px solid rgba(20,22,25,.1)}
+.tt-list li::before{content:"";flex:none;width:8px;height:8px;background:var(--red);opacity:0}
+.tt-list li:hover,.tt-list li:focus-visible,.tt-list li[aria-selected="true"]{color:var(--red)}
+.tt-list li:hover::before,.tt-list li:focus-visible::before,.tt-list li[aria-selected="true"]::before{opacity:1}
 </style>
 </head>
 <body>
@@ -7664,6 +7702,7 @@ h1 .rl::after{content:"";position:absolute;right:0;left:0;bottom:.02em;height:.0
            the old block is in _ארכיון/גרסאות קודמות/concept-3-hero.before-notices-out-2026-10-25.html -->
       <div class="tc-foot">
         <span class="pz-hd"><span class="nt-sq" aria-hidden="true"></span><span class="tc-eyebrow" id="trackTitle">מעקב משלוחים</span></span>
+        <div class="tc-type"><button type="button" class="tt-btn" aria-haspopup="listbox" aria-expanded="false"><span class="tt-val">סוג משלוח</span><svg class="tt-chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5l5 5 5-5"/></svg></button><ul class="tt-list" role="listbox" aria-label="סוג משלוח"><li role="option" tabindex="-1" aria-selected="false">משלוחי אקספרס ו-E-Commerce</li><li role="option" tabindex="-1" aria-selected="false">פנים ארצי</li><li role="option" tabindex="-1" aria-selected="false">הובלה בינלאומית</li></ul><input type="hidden" name="shipmentType"></div>
         <form class="tc-form" onsubmit="return false">
           <label class="sr-only" for="trackNo">מספר הזמנה או שטר מטען</label>
           <!-- .m-box is the field's frame on a phone and display:contents above
@@ -10101,6 +10140,53 @@ h1 .rl::after{content:"";position:absolute;right:0;left:0;bottom:.02em;height:.0
     nx.style.transition = 'none'; nx.classList.remove('out'); void nx.offsetWidth; nx.style.transition = '';
     nx.classList.add('on');
   }, 5000);
+})();
+</script>
+
+<script>
+/* shipment type: the site's own dropdown (2026-11-10) */
+(function(){var w=document.querySelector('.tc-type');if(!w)return;
+var b=w.querySelector('.tt-btn'),v=w.querySelector('.tt-val'),l=w.querySelector('.tt-list'),h=w.querySelector('input'),it=[].slice.call(l.children);
+function place(){var r=b.getBoundingClientRect();l.style.left=(r.left+scrollX)+'px';l.style.top=(r.bottom+scrollY)+'px';l.style.width=r.width+'px'}
+function set(o){w.classList.toggle('open',o);b.setAttribute('aria-expanded',o);if(o){if(l.parentNode!==document.body){l.dir=document.documentElement.dir;document.body.appendChild(l)}place()}l.classList.toggle('open',o)}
+addEventListener('resize',function(){if(w.classList.contains('open'))place()});
+b.addEventListener('click',function(){set(!w.classList.contains('open'));if(w.classList.contains('open'))(l.querySelector('[aria-selected="true"]')||it[0]).focus()});
+it.forEach(function(li,i){li.addEventListener('click',function(){it.forEach(function(x){x.setAttribute('aria-selected','false')});li.setAttribute('aria-selected','true');v.textContent=li.textContent;h.value=li.textContent;w.classList.add('has');set(false);b.focus()});
+li.addEventListener('keydown',function(e){if(e.key==='ArrowDown'){e.preventDefault();(it[i+1]||it[0]).focus()}else if(e.key==='ArrowUp'){e.preventDefault();(it[i-1]||it[it.length-1]).focus()}else if(e.key==='Enter'||e.key===' '){e.preventDefault();li.click()}else if(e.key==='Escape'){set(false);b.focus()}})});
+document.addEventListener('click',function(e){if(!w.contains(e.target)&&!l.contains(e.target))set(false)});})();
+</script>
+<style>
+/* ==== THE NAV KNOWS WHERE YOU ARE (2026-11-11) ==========================================
+   The page you are on is marked in the bar AND in the menu, in the hover's own look:
+   its group's word in the bar is red with its square (as when open), and its tile in the
+   menu is red with the red line under it (desktop sheet and phone list alike). */
+.m-top.is-cur:not(.m-util){color:var(--red)}
+.m-top.is-cur:not(.m-util)::after{--top-mk:var(--top-mk-on)}
+.dd .dd-t.is-cur,.mg .dd-t.is-cur{color:var(--red);border-bottom-color:var(--red)}
+.dd .dd-t.is-cur .btn-ring .ar,.mg .dd-t.is-cur .btn-ring .ar{color:var(--red)}
+</style>
+<script>
+/* the nav marks the current page: its tile in the menu and its group in the bar */
+(function(){
+  function file(h){ try{ return decodeURIComponent(new URL(h, location.href).pathname.split('/').pop()) || 'index.html'; }catch(e){ return ''; } }
+  var me = file(location.href), GROUPS = ['dd-svc','dd-ind','dd-sus','dd-abt'];
+  function mark(){
+    var hit = -1;
+    [].forEach.call(document.querySelectorAll('a.dd-t'), function(a){
+      var on = file(a.getAttribute('href') || '') === me;
+      a.classList.toggle('is-cur', on);
+      if(on){ a.setAttribute('aria-current','page'); var g = a.closest('.dd-g'); if(g && hit < 0) hit = GROUPS.indexOf(g.id); }
+      else if(a.getAttribute('aria-current') === 'page') a.removeAttribute('aria-current');
+    });
+    [].forEach.call(document.querySelectorAll('#bar .m-top:not(.m-util)'), function(t, i){
+      t.classList.toggle('is-cur', i === hit);
+      if(i === hit) t.setAttribute('aria-current','page'); else t.removeAttribute('aria-current');
+    });
+  }
+  mark();
+  window.addEventListener('load', mark);
+  setTimeout(mark, 600);
+  document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('.m-top, .m-btn, [aria-controls]')) setTimeout(mark, 30); }, true);
 })();
 </script>
 </body>

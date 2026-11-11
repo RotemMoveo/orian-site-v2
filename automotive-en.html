@@ -8864,6 +8864,16 @@ section.tp#aeo{padding:var(--ab-air) var(--cx);text-align:start}
 .dd .dd-t .btn-ring .ar{width:12px;height:12px;color:var(--ink);--ar-w:1.8}
 .dd .dd-t:hover,.dd .dd-t:focus-visible{background:none;color:var(--red);border-bottom-color:var(--red)}
 .dd .dd-t:hover .btn-ring .ar,.dd .dd-t:focus-visible .btn-ring .ar{color:var(--red)}
+/* ---- THE MENU IN THREE COLUMNS (2026-11-11, option 4 of _menu3-options). The client asked to
+   join today's line-and-arrow menu with the earlier one: the grey sheet and the white tiles
+   come back, three to a row, no icons; the tile wears the new manner - the small diagonal
+   arrow always standing at its far end, and hover = label, arrow and a red line under the
+   tile in one frame, no red fill. Desktop only, like the sheet; the phone menu is .mg. ---- */
+.dd{background:linear-gradient(transparent var(--win-gap),var(--sheet) 0)}
+.dd .dd-g{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--win-gap);padding:var(--sp-4) var(--gin)}
+.dd .dd-t{background:var(--white);min-height:calc(var(--sq) + var(--sp-4));padding-inline:var(--sp-4);border-bottom:2px solid transparent}
+.dd .dd-t .btn-ring{inset-inline-end:var(--sp-4)}
+.dd .dd-t:hover,.dd .dd-t:focus-visible{background:var(--white);color:var(--red);border-bottom-color:var(--red)}
 .dd-ic{display:none}
 </style>
 <style>
@@ -8953,8 +8963,8 @@ section.tp#aeo{padding:var(--ab-air) var(--cx);text-align:start}
 .ct-fd input[type=tel]{text-align:left}
 
 /* ---- the footer: the crumbling end of the red floor goes to the LEFT */
-.ft-band{background:linear-gradient(var(--red),var(--red)) right / calc(100% - var(--ft-crumb-w) + 1px) 100% no-repeat}
-.ft-band svg{right:auto;left:0;transform:scaleX(-1)}
+
+
 @media(prefers-reduced-motion:reduce){
   .pz-nt .ns-item,.pz-nt .ns-item.out,.pz-nt .ns-item.on{transform:none}
 }
@@ -9235,6 +9245,32 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
   </div>
   <div class="ix-fig" aria-hidden="true"><img src="files/g-auto-port.jpg" alt="" fetchpriority="high"></div>
 </section>
+<style>
+/* ==== INNER HERO · ONE CURTAIN, TOP DOWN (2026-11-11, second pass) ====
+   Her correction the same day: the pixels must not pop off one by one ("לא בחשיפה מיידית").
+   ONE white cover over the whole picture, the crumbling pixel band included, draws up off
+   it from the top down, like a curtain opening downward: the band's squares come out first
+   and then the photograph, gradually, as its edge passes. Replaces the square-by-square band
+   and the second wipe that followed it. */
+#hero.ix .ix-fig{animation:none!important;clip-path:none!important;overflow:hidden}
+#hero.ix .ix-cv{position:absolute;inset:0;z-index:2;background:var(--white,#fff);pointer-events:none;
+  animation:ix-cv var(--cvd,1.2s) cubic-bezier(.45,0,.2,1) var(--cvs,.15s) forwards}
+@keyframes ix-cv{from{clip-path:inset(0)}to{clip-path:inset(100% 0 0 0)}}
+@media (prefers-reduced-motion:reduce){#hero.ix .ix-cv{display:none}}
+</style>
+<script>
+/* inner hero: one curtain, drawn down off the picture */
+(function(){
+  var f=document.querySelector('#hero.ix .ix-fig'); if(!f) return;
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var START=150, WIPE=1200;
+  var c=document.createElement('div'); c.className='ix-cv'; c.setAttribute('aria-hidden','true');
+  c.style.setProperty('--cvs',START+'ms'); c.style.setProperty('--cvd',WIPE+'ms');
+  f.appendChild(c);
+  setTimeout(function(){ if(c.parentNode) c.parentNode.removeChild(c); }, START+WIPE+300);
+})();
+</script>
+
 
 <script>
 /* INNER HERO · THE HOMEPAGE'S ENTRANCE (2026-10-06) - concept-3-hero.html's
@@ -9354,11 +9390,6 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
 })();
 </script>
 
-<section class="fs" id="story">
-  <article class="fs-row"><figure class="fs-img"><img src="files/g-auto-parts.jpg" alt="" loading="lazy"></figure><div class="fs-tx"><h2 class="fs-h">Spare parts</h2><p>In spare parts, we combine a full service of international forwarding and customs brokerage, with support before the customs authorities, the relevant government ministries and other bodies such as the Ministry of Communications and the Standards Institution.</p></div></article>
-  <article class="fs-row"><figure class="fs-img"><img src="files/g-auto-port.jpg" alt="" loading="lazy"></figure><div class="fs-tx"><h2 class="fs-h">Vehicle release</h2><p>With years of experience releasing vehicles, our teams specialise in exemption releases, and are strong at finding logistics solutions and creative solutions with customs that help vehicle importers deal quickly and efficiently with release pressures during exchange-rate changes, at month-end and at year-end.</p><p>Ongoing updates on regulatory requirements in the field and on operations, with full availability and an understanding of our customers' targets.</p></div></article>
-</section>
-
 <section class="st" id="statement">
   <i class="st-pt" aria-hidden="true"></i>
   <p class="st-t">Our long experience and deep knowledge of the automotive world let us ensure <b>continuous, accurate and efficient release processes and supply chains</b>.</p>
@@ -9367,6 +9398,26 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
 
 
 
+
+<section class="tb" id="systems" aria-labelledby="tbTitle">
+  <div class="tb-g">
+    <div class="tb-txt">
+      <h2 class="tb-h" id="tbTitle"><span class="lt">Spare parts</span><span class="bd">and vehicle</span><span class="bd">release.</span></h2>
+      <p class="tb-p">Ongoing updates on regulatory requirements in the field, with full availability.</p>
+      <div class="tb-two">
+        <div class="tb-tabs" role="tablist" aria-label="Areas of activity">
+          <button type="button" role="tab" class="tb-tab on" id="tbT0" aria-selected="true" aria-controls="tbP0" data-k="0"><i>01</i>Spare parts</button>
+          <button type="button" role="tab" class="tb-tab" id="tbT1" aria-selected="false" aria-controls="tbP1" data-k="1" tabindex="-1"><i>02</i>Vehicle release</button>
+        </div>
+        <div class="tb-panes">
+          <div class="tb-pn on" role="tabpanel" id="tbP0" aria-labelledby="tbT0" data-k="0"><h3 class="tb-t">Spare parts</h3><p class="tb-d">In spare parts, we combine a full service of international forwarding and customs brokerage, with support before the customs authorities, the relevant government ministries and other bodies such as the Ministry of Communications and the Standards Institution.</p></div>
+          <div class="tb-pn" role="tabpanel" id="tbP1" aria-labelledby="tbT1" data-k="1" hidden><h3 class="tb-t">Vehicle release</h3><p class="tb-d">With years of experience releasing vehicles, our teams specialise in exemption releases, and are strong at finding logistics solutions and creative solutions with customs that help vehicle importers deal quickly and efficiently with release pressures during exchange-rate changes, at month-end and at year-end.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="tb-im" aria-hidden="true"><img class="on" data-k="0" src="files/g-auto-parts.jpg" alt=""><img class="" data-k="1" src="files/g-auto-port.jpg" alt="" loading="lazy"><i class="tb-k tr"></i><i class="tb-k tl"></i><i class="tb-k br"></i><i class="tb-k bl"></i></div>
+  </div>
+</section>
 
 <script>
 /* HERO FILM: plays at once; until the tiles are built, every frame of it is painted
@@ -9416,6 +9467,23 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
 
 
 
+<section class="fq" id="faq" aria-labelledby="fqTitle">
+  <div class="fq-side">
+    <h2 class="fq-h" id="fqTitle"><span class="lt">Common</span><span class="bd">questions</span></h2>
+    <p class="fq-p">The questions we hear most often.</p>
+  </div>
+  <div class="fq-l">
+      <div class="fq-i" style="--i:0"><h3 class="fq-hq"><button class="fq-q" type="button" id="fqQ0" aria-expanded="false" aria-controls="fqA0"><span class="fq-m" aria-hidden="true"></span><span class="fq-t">What services do you give vehicle importers?</span></button></h3>
+        <div class="fq-a" id="fqA0" role="region" aria-labelledby="fqQ0"><div><p>International forwarding and customs brokerage for spare parts and vehicle release, with support before the customs authorities and the relevant government ministries.</p></div></div></div>
+      <div class="fq-i" style="--i:1"><h3 class="fq-hq"><button class="fq-q" type="button" id="fqQ1" aria-expanded="false" aria-controls="fqA1"><span class="fq-m" aria-hidden="true"></span><span class="fq-t">Do you handle exemption releases?</span></button></h3>
+        <div class="fq-a" id="fqA1" role="region" aria-labelledby="fqQ1"><div><p>Yes. Our teams specialise in exemption releases, alongside creative solutions with customs.</p></div></div></div>
+      <div class="fq-i" style="--i:2"><h3 class="fq-hq"><button class="fq-q" type="button" id="fqQ2" aria-expanded="false" aria-controls="fqA2"><span class="fq-m" aria-hidden="true"></span><span class="fq-t">What about busy periods, like month-end or a change in exchange rates?</span></button></h3>
+        <div class="fq-a" id="fqA2" role="region" aria-labelledby="fqQ2"><div><p>We help vehicle importers deal quickly and efficiently with release pressures during exchange-rate changes, at month-end and at year-end.</p></div></div></div>
+      <div class="fq-i" style="--i:3"><h3 class="fq-hq"><button class="fq-q" type="button" id="fqQ3" aria-expanded="false" aria-controls="fqA3"><span class="fq-m" aria-hidden="true"></span><span class="fq-t">Who do you work with for spare parts?</span></button></h3>
+        <div class="fq-a" id="fqA3" role="region" aria-labelledby="fqQ3"><div><p>The customs authorities, the relevant government ministries and other bodies, such as the Ministry of Communications and the Standards Institution.</p></div></div></div>
+  </div>
+</section>
+
 <section class="mo" id="more" aria-labelledby="moTitle">
   <div class="mo-sheet">
     <div class="mo-top">
@@ -9427,7 +9495,7 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
     </div>
     <div class="mo-more">
       <p class="mo-k">More for your industry</p>
-      <ul class="mo-g"><li style="--i:0"><a href="customs-clearance-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 3H15L19 7V21H5ZM15 3V7H19M8 11H16M8 14H13"/><rect class="pt" x="13.5" y="16.5" width="3" height="3" /></svg><span class="mo-n">Customs Brokerage</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:1"><a href="sea-freight-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 15H21L18 20H6Z"/><rect x="6.5" y="10" width="4" height="5"/><rect x="10.5" y="10" width="4" height="5"/><rect class="pt" x="15" y="12" width="3" height="3" /></svg><span class="mo-n">Ocean Freight</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:2"><a href="land-transportation-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M2 7H14V17H2ZM14 10H18L21 13V17H14"/><circle cx="6" cy="18" r="1.75" class="wh"/><circle cx="17.5" cy="18" r="1.75" class="wh"/><rect class="pt" x="6.5" y="10.5" width="3" height="3" /></svg><span class="mo-n">Land Transportation</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:3"><a href="cargo-insurance-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 3L20 6V12L12 21L4 12V6Z"/><rect class="pt" x="10.5" y="9.5" width="3" height="3" /></svg><span class="mo-n">Cargo Insurance</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li></ul>
+      <ul class="mo-g"><li style="--i:0"><a href="customs-clearance-en.html" class="mo-c"><span class="mo-n">Customs Brokerage</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:1"><a href="sea-freight-en.html" class="mo-c"><span class="mo-n">Ocean Freight</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:2"><a href="land-transportation-en.html" class="mo-c"><span class="mo-n">Land Transportation</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:3"><a href="cargo-insurance-en.html" class="mo-c"><span class="mo-n">Cargo Insurance</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li></ul>
     </div>
   </div>
 </section>
@@ -11279,7 +11347,16 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
      content blocks (heading, text, button, picture) and, one level down, the items of
      a grid or list. Built on `translate` + WAAPI so it never overrides a section's own
      transform, transition, hover or tabs. Off under prefers-reduced-motion. -->
-<style>.rv-wait{opacity:0!important}</style>
+<style>.rv-wait{opacity:0!important}
+/* ---- THE ENGLISH STRIP RUNS AS THE HEBREW ONE (2026-11-10, client meeting):
+   crumbled end on the RIGHT, links on the left; the words inside read LTR ---- */
+.ft-foot{direction:rtl}
+.ft-foot > *{direction:ltr}
+.ft-foot .ft-rights{margin-right:0;margin-left:auto}
+@media(max-width:640px){.ft-foot .ft-rights{margin:0}}
+/* the language switch at the strip's far end, as in Hebrew */
+.ft-foot .ft-legal{direction:rtl}
+</style>
 <script>(function(){
   var T=[1, 2], STRONG='strong'==='strong';  /* the industry pages take the stronger profile (2026-11-05) */
   if(!T.length||!('IntersectionObserver' in window)||!Element.prototype.animate) return;
@@ -11357,5 +11434,39 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
   window.addEventListener('resize',sweep);
 })();</script>
 <!-- /ORIAN ENTRY REVEAL -->
+<style>
+/* ==== THE NAV KNOWS WHERE YOU ARE (2026-11-11) ==========================================
+   The page you are on is marked in the bar AND in the menu, in the hover's own look:
+   its group's word in the bar is red with its square (as when open), and its tile in the
+   menu is red with the red line under it (desktop sheet and phone list alike). */
+.m-top.is-cur:not(.m-util){color:var(--red)}
+.m-top.is-cur:not(.m-util)::after{--top-mk:var(--top-mk-on)}
+.dd .dd-t.is-cur,.mg .dd-t.is-cur{color:var(--red);border-bottom-color:var(--red)}
+.dd .dd-t.is-cur .btn-ring .ar,.mg .dd-t.is-cur .btn-ring .ar{color:var(--red)}
+</style>
+<script>
+/* the nav marks the current page: its tile in the menu and its group in the bar */
+(function(){
+  function file(h){ try{ return decodeURIComponent(new URL(h, location.href).pathname.split('/').pop()) || 'index.html'; }catch(e){ return ''; } }
+  var me = file(location.href), GROUPS = ['dd-svc','dd-ind','dd-sus','dd-abt'];
+  function mark(){
+    var hit = -1;
+    [].forEach.call(document.querySelectorAll('a.dd-t'), function(a){
+      var on = file(a.getAttribute('href') || '') === me;
+      a.classList.toggle('is-cur', on);
+      if(on){ a.setAttribute('aria-current','page'); var g = a.closest('.dd-g'); if(g && hit < 0) hit = GROUPS.indexOf(g.id); }
+      else if(a.getAttribute('aria-current') === 'page') a.removeAttribute('aria-current');
+    });
+    [].forEach.call(document.querySelectorAll('#bar .m-top:not(.m-util)'), function(t, i){
+      t.classList.toggle('is-cur', i === hit);
+      if(i === hit) t.setAttribute('aria-current','page'); else t.removeAttribute('aria-current');
+    });
+  }
+  mark();
+  window.addEventListener('load', mark);
+  setTimeout(mark, 600);
+  document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('.m-top, .m-btn, [aria-controls]')) setTimeout(mark, 30); }, true);
+})();
+</script>
 </body>
 </html>

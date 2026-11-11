@@ -8770,6 +8770,16 @@ section.tp#aeo{padding:var(--ab-air) var(--cx);text-align:start}
 .dd .dd-t .btn-ring .ar{width:12px;height:12px;color:var(--ink);--ar-w:1.8}
 .dd .dd-t:hover,.dd .dd-t:focus-visible{background:none;color:var(--red);border-bottom-color:var(--red)}
 .dd .dd-t:hover .btn-ring .ar,.dd .dd-t:focus-visible .btn-ring .ar{color:var(--red)}
+/* ---- THE MENU IN THREE COLUMNS (2026-11-11, option 4 of _menu3-options). The client asked to
+   join today's line-and-arrow menu with the earlier one: the grey sheet and the white tiles
+   come back, three to a row, no icons; the tile wears the new manner - the small diagonal
+   arrow always standing at its far end, and hover = label, arrow and a red line under the
+   tile in one frame, no red fill. Desktop only, like the sheet; the phone menu is .mg. ---- */
+.dd{background:linear-gradient(transparent var(--win-gap),var(--sheet) 0)}
+.dd .dd-g{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--win-gap);padding:var(--sp-4) var(--gin)}
+.dd .dd-t{background:var(--white);min-height:calc(var(--sq) + var(--sp-4));padding-inline:var(--sp-4);border-bottom:2px solid transparent}
+.dd .dd-t .btn-ring{inset-inline-end:var(--sp-4)}
+.dd .dd-t:hover,.dd .dd-t:focus-visible{background:var(--white);color:var(--red);border-bottom-color:var(--red)}
 .dd-ic{display:none}
 </style>
 <style>
@@ -8859,8 +8869,8 @@ section.tp#aeo{padding:var(--ab-air) var(--cx);text-align:start}
 .ct-fd input[type=tel]{text-align:left}
 
 /* ---- the footer: the crumbling end of the red floor goes to the LEFT */
-.ft-band{background:linear-gradient(var(--red),var(--red)) right / calc(100% - var(--ft-crumb-w) + 1px) 100% no-repeat}
-.ft-band svg{right:auto;left:0;transform:scaleX(-1)}
+
+
 @media(prefers-reduced-motion:reduce){
   .pz-nt .ns-item,.pz-nt .ns-item.out,.pz-nt .ns-item.on{transform:none}
 }
@@ -8987,6 +8997,42 @@ section.tp{text-align:left}
   .mg + .m-util{border-top:0}
 }
 </style>
+<style>
+/* AEO AIR (2026-11-11, hers: the AEO band has too much space round it). The strip's own --ab-air
+   was being ADDED to its neighbours' air, so a white neighbour stood two --ab-air away (156px at
+   1440), up to 306 on sea. Now ONE --ab-air between the strip and what stands beside it: a white
+   neighbour gives up its own air on the strip's side; a grey band (.on-grey above, the FAQ's grey
+   below) keeps its inner air and the white gap is counted from its edge. */
+html body section.tp#aeo{padding-block:var(--ab-air)}
+html body :is(section,div):not(.on-grey):has(+ #aeo),
+html body :is(section,div):not(.on-grey):has(+ script + #aeo){padding-bottom:0!important}
+html body #aeo + section:not(.fq):not(.on-grey),html body #aeo + script + section:not(.fq):not(.on-grey){padding-top:0!important}
+html body #aeo + section.kp:not(.fq){padding-top:0!important}
+</style>
+<style>
+/* THE BENTO'S CARDS COME IN ONE BY ONE (2026-11-11, hers: "תכניס את הקוביות בהדרגה"). When the
+   grid reaches the screen each card rises 28px and fades in, the red one first, .16s apart. The
+   class kb-js goes on only when IntersectionObserver exists, so without it the cards just stand. */
+html.kb-js .kp-bento .kp-g > .kp-i{opacity:0;transform:translateY(28px);
+  transition:opacity .7s ease var(--kb-d,0s),transform .9s cubic-bezier(.16,.84,.24,1) var(--kb-d,0s)}
+html.kb-js .kp-bento .kp-g.kb-in > .kp-i{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){html.kb-js .kp-bento .kp-g > .kp-i{opacity:1;transform:none;transition:none}}
+</style>
+<script>
+(function(){
+  if(!('IntersectionObserver' in window)) return;
+  if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.documentElement.classList.add('kb-js');
+  document.addEventListener('DOMContentLoaded', function(){
+    [].forEach.call(document.querySelectorAll('.kp-bento .kp-g'), function(g){
+      [].forEach.call(g.children, function(li, i){ li.style.setProperty('--kb-d', (i * .16) + 's'); });
+      var io = new IntersectionObserver(function(es){ es.forEach(function(e){
+        if(e.isIntersecting){ g.classList.add('kb-in'); io.disconnect(); } }); }, {threshold:.2});
+      io.observe(g);
+    });
+  });
+})();
+</script>
 </head>
 <body>
 
@@ -9136,18 +9182,46 @@ section.tp{text-align:left}
 
 
 
-<section class="xh" id="hero" aria-labelledby="solTitle">
-  <div class="xh-txt">
+<section class="ix" id="hero" aria-labelledby="solTitle">
+  <div class="ix-top">
+    <div class="ix-txt">
     <nav class="crumb" aria-label="Breadcrumb"><a href="concept-3-hero-en.html">Home</a><i>/</i><span>Solutions</span><i>/</i><b aria-current="page">Air Freight</b></nav>
     <p class="sol-k">Air Freight</p>
     <h1 class="ab-h1" id="solTitle">
         <span class="lt">When time is critical,</span>
         <span class="bd">you need to move fast</span>
       </h1>
+    </div>
     <p class="sol-p">Orian is one of the leading air freight forwarders in Israel, handling import and export shipments every day for companies across industries, with a strong agent network worldwide.</p>
   </div>
-  <div class="xh-fig" aria-hidden="true"><video src="files/air-hero-film.mp4" poster="files/air-hero-film-poster.jpg" muted loop playsinline autoplay preload="auto"></video></div>
+  <div class="ix-fig" aria-hidden="true"><video src="files/air-hero-film.mp4" poster="files/air-hero-film-poster.jpg" muted loop playsinline autoplay preload="auto"></video></div>
 </section>
+<style>
+/* ==== INNER HERO · ONE CURTAIN, TOP DOWN (2026-11-11, second pass) ====
+   Her correction the same day: the pixels must not pop off one by one ("לא בחשיפה מיידית").
+   ONE white cover over the whole picture, the crumbling pixel band included, draws up off
+   it from the top down, like a curtain opening downward: the band's squares come out first
+   and then the photograph, gradually, as its edge passes. Replaces the square-by-square band
+   and the second wipe that followed it. */
+#hero.ix .ix-fig{animation:none!important;clip-path:none!important;overflow:hidden}
+#hero.ix .ix-cv{position:absolute;inset:0;z-index:2;background:var(--white,#fff);pointer-events:none;
+  animation:ix-cv var(--cvd,1.2s) cubic-bezier(.45,0,.2,1) var(--cvs,.15s) forwards}
+@keyframes ix-cv{from{clip-path:inset(0)}to{clip-path:inset(100% 0 0 0)}}
+@media (prefers-reduced-motion:reduce){#hero.ix .ix-cv{display:none}}
+</style>
+<script>
+/* inner hero: one curtain, drawn down off the picture */
+(function(){
+  var f=document.querySelector('#hero.ix .ix-fig'); if(!f) return;
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var START=150, WIPE=1200;
+  var c=document.createElement('div'); c.className='ix-cv'; c.setAttribute('aria-hidden','true');
+  c.style.setProperty('--cvs',START+'ms'); c.style.setProperty('--cvd',WIPE+'ms');
+  f.appendChild(c);
+  setTimeout(function(){ if(c.parentNode) c.parentNode.removeChild(c); }, START+WIPE+300);
+})();
+</script>
+
 
 <script>
 /* INNER HERO · THE HOMEPAGE'S ENTRANCE (2026-10-06) - concept-3-hero.html's
@@ -9267,13 +9341,10 @@ section.tp{text-align:left}
 })();
 </script>
 
-<section class="kp kp-band" id="critical" aria-labelledby="criticalT"><p class="kp-lab" id="criticalT">Handling critical shipments</p>
-  <ol class="kp-g" style="--n:4">
-    <li class="kp-i"><span class="kp-n">01</span><b class="kp-t"> <bdi dir="ltr">NFO</bdi></b></li>
-    <li class="kp-i"><span class="kp-n">02</span><b class="kp-t"><bdi dir="ltr">Hand Carry</bdi></b></li>
-    <li class="kp-i"><span class="kp-n">03</span><b class="kp-t">Releases through the passenger hall</b></li>
-    <li class="kp-i"><span class="kp-n">04</span><b class="kp-t">Offices at Maman, with a team on service 24/7</b></li>
-  </ol>
+<section class="st" id="critical">
+  <i class="st-pt" aria-hidden="true"></i>
+  <p class="st-t">Handling critical shipments: <b>NFO shipments, Hand Carry and releases through the passenger hall</b>, with offices at Maman and a team that gives 24/7 service.</p>
+  <svg class="st-px" viewBox="0 0 310 240" aria-hidden="true" focusable="false"><rect x="0" y="0" width="30" height="30"/><rect x="35" y="0" width="30" height="30"/><rect x="70" y="0" width="30" height="30"/><rect x="105" y="0" width="30" height="30"/><rect x="140" y="0" width="30" height="30"/><rect x="0" y="35" width="30" height="30"/><rect x="35" y="35" width="30" height="30"/><rect x="70" y="35" width="30" height="30"/><rect x="0" y="70" width="30" height="30"/><rect x="35" y="70" width="30" height="30"/><rect x="70" y="70" width="30" height="30"/><rect x="105" y="70" width="30" height="30"/><rect x="140" y="70" width="30" height="30"/><rect class="r" x="175" y="70" width="30" height="30"/><rect x="0" y="105" width="30" height="30"/><rect x="35" y="105" width="30" height="30"/><rect x="70" y="105" width="30" height="30"/><rect x="105" y="105" width="30" height="30"/><rect x="140" y="105" width="30" height="30"/><rect x="210" y="105" width="30" height="30"/><rect x="0" y="140" width="30" height="30"/><rect x="35" y="140" width="30" height="30"/><rect x="70" y="140" width="30" height="30"/><rect x="105" y="140" width="30" height="30"/><rect x="140" y="140" width="30" height="30"/><rect class="r" x="175" y="140" width="30" height="30"/><rect x="0" y="175" width="30" height="30"/><rect x="35" y="175" width="30" height="30"/><rect x="70" y="175" width="30" height="30"/><rect x="105" y="175" width="30" height="30"/><rect x="0" y="210" width="30" height="30"/><rect x="35" y="210" width="30" height="30"/><rect x="70" y="210" width="30" height="30"/><rect x="105" y="210" width="30" height="30"/><rect x="140" y="210" width="30" height="30"/><rect x="175" y="210" width="30" height="30"/><rect x="210" y="210" width="30" height="30"/></svg>
 </section>
 
 
@@ -9394,34 +9465,49 @@ section.tp{text-align:left}
 </script>
 
 
-<div class="cv-run">
-<section class="cv" id="route" aria-labelledby="rteTitle">
-  <div class="cv-txt">
-    <h2 class="cv-h" id="rteTitle"><span class="lt">One shipment.</span><span class="bd">Managed end to end.</span></h2>
-    <p class="cv-p">Our forwarding teams stay with the shipment from pickup to delivery at destination, with door-to-door solutions, ongoing tracking and coordination between every party along the way. Our deep knowledge of the Israeli market, together with a broad international network and Orian's customs brokerage, lets us manage the whole process under one roof.</p>
+<!-- ===================== SOLUTION · 3 · המסלול =====================
+     HORIZONTAL since 2026-11-10 (the client found the pinned conveyor tiring and the 3D icons childish):
+     the e-commerce page's own steps row (.sp), same copy, no pin, no pictures. The old conveyor is in
+     _ארכיון/before-horizontal-route-2026-11-10. -->
+<div class="sp-run"><section class="sp on-grey" id="route" aria-labelledby="rteTitle">
+  <div class="kp-head">
+    <h2 class="kp-h" id="rteTitle"><span class="lt">One shipment.</span><span class="bd">Managed end to end.</span></h2>
+    <p class="kp-p">Our forwarding teams stay with the shipment from pickup to delivery at destination, with door-to-door solutions, ongoing tracking and coordination between every party along the way. Our deep knowledge of the Israeli market, together with a broad international network and Orian's customs brokerage, lets us manage the whole process under one roof.</p>
   </div>
-  <div class="cv-w">
-  <div class="cv-line" aria-hidden="true"></div><i class="cv-pt" aria-hidden="true"></i>
-  <ol class="cv-l">
-    <li><span class="cv-k" aria-hidden="true"></span><span class="cv-i" aria-hidden="true"><img class="ln" src="files/sol-ic-dst-line.png" alt=""><img class="rd" src="files/sol-ic-dst-3d.png" alt=""></span><div><span class="cv-n">01</span><b class="cv-t">Pickup</b><span class="cv-d">Collecting the cargo</span></div></li>
-    <li><span class="cv-k" aria-hidden="true"></span><span class="cv-i" aria-hidden="true"><img class="ln" src="files/sol-ic-pln-line.png" alt=""><img class="rd" src="files/sol-ic-pln-3d.png" alt=""></span><div><span class="cv-n">02</span><b class="cv-t">Air Freight</b><span class="cv-d">Booking and flying the cargo</span></div></li>
-    <li><span class="cv-k" aria-hidden="true"></span><span class="cv-i" aria-hidden="true"><img class="ln" src="files/sol-ic-doc-line.png" alt=""><img class="rd" src="files/sol-ic-doc-3d.png" alt=""></span><div><span class="cv-n">03</span><b class="cv-t">Customs</b><span class="cv-d">Customs brokerage</span></div></li>
-    <li><span class="cv-k" aria-hidden="true"></span><span class="cv-i" aria-hidden="true"><img class="ln" src="files/sol-ic-box-line.png" alt=""><img class="rd" src="files/sol-ic-box-3d.png" alt=""></span><div><span class="cv-n">04</span><b class="cv-t">Delivery</b><span class="cv-d">Delivery to destination</span></div></li>
+  <ol class="sp-l" style="--n:4">
+    <li class="sp-i"><span class="sp-pt" aria-hidden="true"></span><span class="sp-n">01</span><b class="sp-t">Pickup</b><span class="sp-d">Collecting the cargo</span></li>
+    <li class="sp-i"><span class="sp-pt" aria-hidden="true"></span><span class="sp-n">02</span><b class="sp-t">Air Freight</b><span class="sp-d">Booking and flying the cargo</span></li>
+    <li class="sp-i"><span class="sp-pt" aria-hidden="true"></span><span class="sp-n">03</span><b class="sp-t">Customs</b><span class="sp-d">Customs brokerage</span></li>
+    <li class="sp-i"><span class="sp-pt" aria-hidden="true"></span><span class="sp-n">04</span><b class="sp-t">Delivery</b><span class="sp-d">Delivery to destination</span></li>
   </ol>
+</section></div>
+
+
+<section class="tb" id="systems" aria-labelledby="tbTitle">
+  <div class="tb-g">
+    <div class="tb-txt">
+      <h2 class="tb-h" id="tbTitle"><span class="lt">Systems</span><span class="bd">that work</span><span class="bd">for you</span></h2>
+      <p class="tb-p">Four digital systems that connect you to every shipment.</p>
+      <div class="tb-two">
+        <div class="tb-tabs" role="tablist" aria-label="The systems">
+          <button type="button" role="tab" class="tb-tab on" id="tbT0" aria-selected="true" aria-controls="tbP0" data-k="0"><i>01</i>Real-time tracking</button>
+          <button type="button" role="tab" class="tb-tab" id="tbT1" aria-selected="false" aria-controls="tbP1" data-k="1" tabindex="-1"><i>02</i>Customer portal</button>
+          <button type="button" role="tab" class="tb-tab" id="tbT2" aria-selected="false" aria-controls="tbP2" data-k="2" tabindex="-1"><i>03</i>Digital customs</button>
+          <button type="button" role="tab" class="tb-tab" id="tbT3" aria-selected="false" aria-controls="tbP3" data-k="3" tabindex="-1"><i>04</i>Data and reports</button>
+        </div>
+        <div class="tb-panes">
+          <div class="tb-pn on" role="tabpanel" id="tbP0" aria-labelledby="tbT0" data-k="0"><h3 class="tb-t">Real-time tracking</h3><p class="tb-d">Your shipment is on screen from the moment it is picked up. Every landing, every transfer and every release is updated automatically, straight to your phone and email.</p><dl class="tb-fs"><div><dt>Updates</dt><dd>At every status change</dd></div><div><dt>Channels</dt><dd>Email, SMS, portal</dd></div></dl></div>
+          <div class="tb-pn" role="tabpanel" id="tbP1" aria-labelledby="tbT1" data-k="1" hidden><h3 class="tb-t">Customer portal</h3><p class="tb-d">Orders, documents and invoices sit in one place, arranged by shipment. Download, share and approve at any hour, without waiting for anyone.</p><dl class="tb-fs"><div><dt>Access</dt><dd>Browser and mobile</dd></div><div><dt>Users</dt><dd>Several per organisation, with permissions</dd></div></dl></div>
+          <div class="tb-pn" role="tabpanel" id="tbP2" aria-labelledby="tbT2" data-k="2" hidden><h3 class="tb-t">Digital customs</h3><p class="tb-d">Import declarations are filed through a direct interface with the Israel Tax Authority, even before the cargo lands. No paperwork, no queues and no wasted days.</p><dl class="tb-fs"><div><dt>Filing</dt><dd>Before landing</dd></div><div><dt>Status</dt><dd>Authorised Economic Operator (AEO)</dd></div></dl></div>
+          <div class="tb-pn" role="tabpanel" id="tbP3" aria-labelledby="tbT3" data-k="3" hidden><h3 class="tb-t">Data and reports</h3><p class="tb-d">Every shipment leaves data behind: times, costs and volumes. Our reports turn it into better planning for the next shipment, and connect to your ERP.</p><dl class="tb-fs"><div><dt>Export</dt><dd>Excel and PDF</dd></div><div><dt>Connection</dt><dd>API to your ERP</dd></div></dl></div>
+        </div>
+      </div>
+    </div>
+    <div class="tb-im" aria-hidden="true"><img class="on" data-k="0" src="files/air-hero-wing.jpg" alt=""><img class="" data-k="1" src="files/about-team-talk.jpg" alt="" loading="lazy"><img class="" data-k="2" src="files/cc-hero-hq.jpg" alt="" loading="lazy"><img class="" data-k="3" src="files/sol-air-cap.jpg" alt="" loading="lazy"><i class="tb-k tr"></i><i class="tb-k tl"></i><i class="tb-k br"></i><i class="tb-k bl"></i></div>
   </div>
 </section>
-</div>
 
-
-<section class="kp kp-band" id="sys" aria-labelledby="sysT"><p class="kp-lab" id="sysT">Systems that work for you</p>
-  <ol class="kp-g" style="--n:3">
-    <li class="kp-i"><span class="kp-n">01</span><b class="kp-t">Ongoing updates from the system</b></li>
-    <li class="kp-i"><span class="kp-n">02</span><b class="kp-t">A direct interface with the customer</b></li>
-    <li class="kp-i"><span class="kp-n">03</span><b class="kp-t">Tracking reports</b></li>
-  </ol>
-</section>
-
-<section class="kp on-grey" id="points" aria-labelledby="pointsT">
+<section class="kp on-grey kp-bento" id="points" aria-labelledby="pointsT">
   <div class="kp-head">
     <h2 class="kp-h" id="pointsT"><span class="lt">What sets us</span><span class="bd">apart in the air.</span></h2>
     <p class="kp-p">We adapt to every industry and shape the solution around the customer and the shipment.</p>
@@ -9484,7 +9570,7 @@ section.tp{text-align:left}
     </div>
     <div class="mo-more">
       <p class="mo-k">More Solutions</p>
-      <ul class="mo-g"><li style="--i:0"><a href="sea-freight-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 15H21L18 20H6Z"/><rect x="6.5" y="10" width="4" height="5"/><rect x="10.5" y="10" width="4" height="5"/><rect class="pt" x="15" y="12" width="3" height="3" /></svg><span class="mo-n">Ocean Freight</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:1"><a href="customs-clearance-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 3H15L19 7V21H5ZM15 3V7H19M8 11H16M8 14H13"/><rect class="pt" x="13.5" y="16.5" width="3" height="3" /></svg><span class="mo-n">Customs Brokerage</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:2"><a href="land-transportation-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M2 7H14V17H2ZM14 10H18L21 13V17H14"/><circle cx="6" cy="18" r="1.75" class="wh"/><circle cx="17.5" cy="18" r="1.75" class="wh"/><rect class="pt" x="6.5" y="10.5" width="3" height="3" /></svg><span class="mo-n">Land Transportation</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:3"><a href="cargo-insurance-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 3L20 6V12L12 21L4 12V6Z"/><rect class="pt" x="10.5" y="9.5" width="3" height="3" /></svg><span class="mo-n">Cargo Insurance</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li></ul>
+      <ul class="mo-g"><li style="--i:0"><a href="sea-freight-en.html" class="mo-c"><span class="mo-n">Ocean Freight</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:1"><a href="customs-clearance-en.html" class="mo-c"><span class="mo-n">Customs Brokerage</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:2"><a href="land-transportation-en.html" class="mo-c"><span class="mo-n">Land Transportation</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:3"><a href="cargo-insurance-en.html" class="mo-c"><span class="mo-n">Cargo Insurance</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li></ul>
     </div>
   </div>
 </section>
@@ -11364,14 +11450,14 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
       if(h.classList.contains('ol1')){ h.classList.remove('ol1'); h.style.textAlign=''; gap(h,0) }
       var r=h.getBoundingClientRect(); if(!r.width||!r.height) return;
       var L=lh(h); if(r.height<L*1.6) return;                 /* already one line */
-      var cs=getComputedStyle(h), col=colW(h), ta='';
+      var cs=getComputedStyle(h), col=Math.min(colW(h), r.width), ta='';   /* 2026-11-05: its OWN column (the box it fills on two lines), not the head row's whole width - a heading beside its paragraph was set on one line and ran under it */
       /* a heading laid out as a flex/grid column keeps the side its lines stood on */
       if(/flex|grid/.test(cs.display)){ var ai=(cs.alignItems+' '+cs.justifyItems);
         ta=/center/.test(ai)?'center':(/flex-end|(^| )end|right/.test(ai)?'end':'') }
       h.classList.add('ol1'); if(ta) h.style.textAlign=ta; gap(h,1);
       h.style.width='max-content'; var w=h.getBoundingClientRect().width; h.style.width='';
       var one=h.getBoundingClientRect().height<L*1.6;          /* it really is one line now */
-      if(!(one&&w<=lim&&w<=col+1)){ h.classList.remove('ol1'); h.style.textAlign=''; gap(h,0) }
+      if(!(one&&w<=lim&&w<=col+1&&h.scrollWidth<=h.clientWidth+1)){   /* and its words may not spill past its box */ h.classList.remove('ol1'); h.style.textAlign=''; gap(h,0) }
     });
   }
   var t; function later(){ clearTimeout(t); t=setTimeout(fit,120) }
@@ -11384,7 +11470,118 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
      content blocks (heading, text, button, picture) and, one level down, the items of
      a grid or list. Built on `translate` + WAAPI so it never overrides a section's own
      transform, transition, hover or tabs. Off under prefers-reduced-motion. -->
-<style>.rv-wait{opacity:0!important}</style>
+<style>.rv-wait{opacity:0!important}
+/* ---- THE ENGLISH STRIP RUNS AS THE HEBREW ONE (2026-11-10, client meeting):
+   crumbled end on the RIGHT, links on the left; the words inside read LTR ---- */
+.ft-foot{direction:rtl}
+.ft-foot > *{direction:ltr}
+.ft-foot .ft-rights{margin-right:0;margin-left:auto}
+@media(max-width:640px){.ft-foot .ft-rights{margin:0}}
+/* the language switch at the strip's far end, as in Hebrew */
+.ft-foot .ft-legal{direction:rtl}
+
+/* ==== KP BENTO (2026-11-10, client: option 2 of _kp-options) ==================
+   The numbered cards: the first point is a red panel two columns by two rows,
+   the rest stand around it; the cards' text is light. The layout is chosen by
+   the count (2-6). Not on .kp-band / link / certificate windows. */
+.kp-bento .kp-g{grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(clamp(170px,14vw,220px),auto)}
+.kp-bento .kp-g::after,.kp-bento .kp-i::before{display:none!important}
+.kp-bento .kp-i{min-height:0;align-content:space-between}
+.kp-bento .kp-t{font-weight:300}
+.kp-bento .kp-i:first-child{grid-column:span 2;grid-row:span 2;background:var(--red);color:#fff;padding:var(--sp-6) var(--gin)}
+.kp-bento .kp-i:first-child .kp-n,.kp-bento .kp-i:first-child .kp-d,.kp-bento .kp-i:first-child .kp-ic{color:#fff}
+.kp-bento .kp-i:first-child .kp-ic .pt{fill:#fff}
+.kp-bento .kp-i:first-child .kp-t{font-size:calc(var(--fs-sec) * .62);font-weight:700;line-height:1.05;max-width:10em}
+.kp-bento .kp-g:has(> .kp-i:nth-child(3):last-child) .kp-i:not(:first-child){grid-column:span 2}
+.kp-bento .kp-g:has(> .kp-i:nth-child(4):last-child) .kp-i:nth-child(4){grid-column:span 2}
+.kp-bento .kp-g:has(> .kp-i:nth-child(6):last-child){grid-template-columns:repeat(3,minmax(0,1fr))}
+.kp-bento .kp-g:has(> .kp-i:nth-child(2):last-child){grid-template-columns:repeat(3,minmax(0,1fr))}
+.kp-bento .kp-g:has(> .kp-i:nth-child(2):last-child) .kp-i:first-child{grid-row:auto}
+@media(max-width:1024px){
+  .kp-bento .kp-g,.kp-bento .kp-g:has(> .kp-i:nth-child(6):last-child),.kp-bento .kp-g:has(> .kp-i:nth-child(2):last-child){grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:auto}
+  .kp-bento .kp-g .kp-i,.kp-bento .kp-g:has(> .kp-i:nth-child(3):last-child) .kp-i:not(:first-child),.kp-bento .kp-g:has(> .kp-i:nth-child(4):last-child) .kp-i:nth-child(4){grid-column:auto}
+  .kp-bento .kp-g .kp-i:first-child{grid-column:1 / -1;grid-row:auto;min-height:clamp(200px,30vw,280px)}
+  .kp-bento .kp-g .kp-i:last-child:nth-child(even){grid-column:1 / -1}
+}
+@media(max-width:700px){
+  .kp-bento .kp-g,.kp-bento .kp-g:has(> .kp-i){grid-template-columns:1fr}
+  .kp-bento .kp-g .kp-i,.kp-bento .kp-g .kp-i:last-child:nth-child(even){grid-column:auto}
+}
+
+/* ==== KP BENTO · TYPE (2026-11-10, client: option 5 of _kp2-options) ==========
+   Inside each card: the number in its own narrow column, a hairline, the text
+   beside it at --fs-lede x .92 / 400 (the red panel --fs-name / 500). A
+   description sits under the text, an icon at the far end of the row. */
+html body .kp.kp-bento .kp-g .kp-i{grid-template-columns:auto minmax(0,1fr);align-content:start;align-items:start;column-gap:var(--sp-3);row-gap:var(--sp-2)}
+html body .kp.kp-bento .kp-g .kp-i .kp-n{grid-column:1;grid-row:1 / span 2;align-self:start;padding-inline-end:var(--sp-3);border-inline-end:1px solid rgba(20,22,25,.18);line-height:1.6}
+html body .kp.kp-bento .kp-g .kp-i .kp-t{grid-column:2;grid-row:1;font-size:calc(var(--fs-lede) * .92);font-weight:400;line-height:1.5;letter-spacing:0;max-width:26em}
+html body .kp.kp-bento .kp-g .kp-i .kp-d{grid-column:2;grid-row:2;margin:0}
+html body .kp.kp-bento .kp-g .kp-i:has(.kp-ic){grid-template-columns:auto minmax(0,1fr) auto}
+html body .kp.kp-bento .kp-g .kp-ic{grid-column:3;grid-row:1;align-self:start}
+html body .kp.kp-bento .kp-g .kp-i:first-child{padding:var(--sp-5) var(--gin)}   /* same top inset as every card */
+html body .kp.kp-bento .kp-g .kp-i:first-child .kp-n{border-color:rgba(255,255,255,.45)}
+html body .kp.kp-bento .kp-g .kp-i:first-child .kp-t{font-size:var(--fs-name);font-weight:500;line-height:1.22;max-width:14em}
+html body .kp.kp-bento .kp-g .kp-i:first-child .kp-d{color:rgba(255,255,255,.85)}
+
+/* ==== INNER HERO = THE INDUSTRY HERO (copied from aerospace) ==== */
+#hero.ix{position:relative;z-index:1;background:var(--white);box-sizing:border-box;
+  padding:calc(var(--gin) + var(--strip-h) + var(--sp-6)) var(--cx) var(--sp-6)}
+#hero.ix .ix-top{display:grid;grid-template-columns:7fr 5fr;gap:var(--sp-6);align-items:end;margin-bottom:var(--sp-5)}
+#hero.ix .ix-txt{min-width:0}
+#hero.ix .crumb,#hero.ix .sol-k,#hero.ix .ab-h1,#hero.ix .ab-h1 > span,#hero.ix .sol-p{opacity:1;transform:none;clip-path:none;transition:none}
+#hero.ix .crumb{color:rgba(20,22,25,.55);margin-bottom:var(--sp-4)}
+#hero.ix .crumb a{color:inherit}#hero.ix .crumb b{color:var(--ink)}
+#hero.ix .sol-k{color:var(--red);display:flex;align-items:center;gap:10px}
+#hero.ix .sol-k::before{content:"";flex:none;width:12px;height:12px;background:var(--red)}
+#hero.ix .ab-h1{color:var(--ink);font-size:calc(var(--fs-h1) * .62);line-height:1.02;margin:0}
+#hero.ix .ab-h1 > span{display:block;color:var(--ink)}
+#hero.ix .ab-h1 .lt{font-weight:var(--w-light)}#hero.ix .ab-h1 .bd{font-weight:var(--w-bold);white-space:normal}
+#hero.ix .sol-p{margin:0;max-width:30em;color:rgba(20,22,25,.78);font-size:var(--fs-lede);line-height:1.55;font-weight:var(--w-light)}
+#hero.ix .ix-fig{position:relative;width:100%;aspect-ratio:1280/480;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%201280%20480%22%20preserveAspectRatio=%22none%22%20shape-rendering=%22crispEdges%22%3E%3Crect%20x=%220%22%20y=%22120%22%20width=%221280%22%20height=%22360%22%20fill=%22white%22/%3E%3Crect%20x=%220%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2240%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22120%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22200%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22240%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22320%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22400%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22440%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22560%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22600%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22840%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22920%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22960%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221000%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221040%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221120%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%220%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2240%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2280%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22120%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22200%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22240%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22280%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22320%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22360%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22480%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22520%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22560%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22680%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22760%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22800%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22880%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22920%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22960%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221080%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221160%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221240%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%220%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2240%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2280%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22160%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22200%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22240%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22280%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22320%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22400%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22440%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22480%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22520%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22560%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22600%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22640%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22680%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22720%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22760%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22800%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22840%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22880%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22960%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221000%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221040%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221120%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221160%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221200%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221240%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3C/svg%3E") center/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%201280%20480%22%20preserveAspectRatio=%22none%22%20shape-rendering=%22crispEdges%22%3E%3Crect%20x=%220%22%20y=%22120%22%20width=%221280%22%20height=%22360%22%20fill=%22white%22/%3E%3Crect%20x=%220%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2240%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22120%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22200%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22240%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22320%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22400%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22440%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22560%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22600%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22840%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22920%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22960%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221000%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221040%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221120%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%220%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2240%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2280%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22120%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22200%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22240%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22280%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22320%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22360%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22480%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22520%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22560%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22680%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22760%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22800%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22880%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22920%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22960%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221080%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221160%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221240%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%220%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2240%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2280%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22160%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22200%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22240%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22280%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22320%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22400%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22440%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22480%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22520%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22560%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22600%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22640%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22680%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22720%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22760%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22800%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22840%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22880%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22960%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221000%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221040%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221120%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221160%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221200%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221240%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3C/svg%3E") center/100% 100% no-repeat}
+#hero.ix .ix-fig img,#hero.ix .ix-fig video{display:block;width:100%;height:100%;object-fit:cover}
+#hero.ix .ix-top{animation:xh-up .9s cubic-bezier(.22,1,.36,1) .1s both}
+#hero.ix .ix-fig{animation:ix-open 1.2s cubic-bezier(.62,0,.2,1) .25s both}
+@keyframes ix-open{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0)}}
+@keyframes xh-up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){ #hero.ix .ix-top,#hero.ix .ix-fig{animation:none} }
+@media (max-width:900px){
+  #hero.ix .ix-top{grid-template-columns:1fr;gap:var(--sp-4)}
+  #hero.ix .ab-h1{font-size:calc(var(--fs-h1) * .8)}
+  #hero.ix .ix-fig{aspect-ratio:400/320;-webkit-mask-image:url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20400%20320%22%20preserveAspectRatio=%22none%22%20shape-rendering=%22crispEdges%22%3E%3Crect%20x=%220%22%20y=%2280%22%20width=%22400%22%20height=%22240%22%20fill=%22white%22/%3E%3Crect%20x=%220%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22240%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%220%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2240%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2280%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22160%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22200%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22320%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22360%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20400%20320%22%20preserveAspectRatio=%22none%22%20shape-rendering=%22crispEdges%22%3E%3Crect%20x=%220%22%20y=%2280%22%20width=%22400%22%20height=%22240%22%20fill=%22white%22/%3E%3Crect%20x=%220%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22240%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%220%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2240%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2280%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22160%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22200%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22320%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22360%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3C/svg%3E")}
+}
+/* the solution pages took the industry hero (2026-11-11, client: option 2 of _hero-unify-options):
+   same words, same wide picture with the crumbling top edge; a hero button stands under the paragraph */
+#hero.ix .ix-side{min-width:0}
+#hero.ix .ix-side .xh-cta{margin-top:var(--sp-4)}
+
+/* ==== KP BAND = THE COMPACT BENTO (2026-11-11, client: option 2) ==============
+   The short proof strip under a solution hero speaks the bento's language now:
+   separate cards (grey on white, white on grey) with the bento's gap, and inside each
+   the number | hairline | text recipe at the same sizes, everything top-aligned.
+   No red panel - the strip stays one quiet row. */
+html body .kp.kp-band .kp-g{gap:var(--win-gap);background:none;border:0}
+html body .kp.kp-band .kp-g .kp-i{background:var(--sheet);padding:var(--sp-5) var(--gin);grid-template-columns:auto minmax(0,1fr);
+  align-content:start;align-items:start;column-gap:var(--sp-3);row-gap:var(--sp-2)}
+html body .kp.kp-band.on-grey .kp-g .kp-i{background:#fff}
+html body .kp.kp-band .kp-g .kp-i .kp-n{grid-column:1;grid-row:1 / span 2;align-self:start;padding-inline-end:var(--sp-3);
+  border-inline-end:1px solid rgba(20,22,25,.18);line-height:1.6}
+html body .kp.kp-band .kp-g .kp-i .kp-t{grid-column:2;grid-row:1;font-size:calc(var(--fs-lede) * .92);font-weight:400;line-height:1.5;letter-spacing:0;max-width:26em}
+html body .kp.kp-band .kp-g .kp-i .kp-d{grid-column:2;grid-row:2;margin:0}
+
+/* the statement band, as on the industry pages (2026-11-11: critical shipments) */
+.st{background:#fff;display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);column-gap:calc(var(--sp-7) * 1.5);align-items:center}
+.st .st-pt{grid-column:1}
+.st .st-t{grid-column:1;font-size:calc(var(--fs-sec) * .5);line-height:1.22;font-weight:300;letter-spacing:-.01em;max-width:none}
+.st .st-t b{font-weight:700}
+.st-px{grid-column:2;grid-row:1 / span 2;width:100%;max-width:380px;justify-self:end;fill:#ECEAE5}
+[dir="ltr"] .st-px{transform:scaleX(-1)}
+.st-px .r{fill:var(--red)}
+@media(max-width:900px){.st{grid-template-columns:1fr}.st-px{display:none}}
+
+/* a phone: every bento is ONE column - the six-card rule outranked the phone rule (2026-11-11) */
+@media(max-width:700px){html body .kp.kp-bento .kp-g{grid-template-columns:1fr!important}html body .kp.kp-bento .kp-g .kp-i{grid-column:auto!important}}
+</style>
 <script>(function(){
   var T=[1, 2, 4, 5], STRONG='soft'==='strong';  /* the industry pages take the stronger profile (2026-11-05) */
   if(!T.length||!('IntersectionObserver' in window)||!Element.prototype.animate) return;
@@ -11462,5 +11659,39 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
   window.addEventListener('resize',sweep);
 })();</script>
 <!-- /ORIAN ENTRY REVEAL -->
+<style>
+/* ==== THE NAV KNOWS WHERE YOU ARE (2026-11-11) ==========================================
+   The page you are on is marked in the bar AND in the menu, in the hover's own look:
+   its group's word in the bar is red with its square (as when open), and its tile in the
+   menu is red with the red line under it (desktop sheet and phone list alike). */
+.m-top.is-cur:not(.m-util){color:var(--red)}
+.m-top.is-cur:not(.m-util)::after{--top-mk:var(--top-mk-on)}
+.dd .dd-t.is-cur,.mg .dd-t.is-cur{color:var(--red);border-bottom-color:var(--red)}
+.dd .dd-t.is-cur .btn-ring .ar,.mg .dd-t.is-cur .btn-ring .ar{color:var(--red)}
+</style>
+<script>
+/* the nav marks the current page: its tile in the menu and its group in the bar */
+(function(){
+  function file(h){ try{ return decodeURIComponent(new URL(h, location.href).pathname.split('/').pop()) || 'index.html'; }catch(e){ return ''; } }
+  var me = file(location.href), GROUPS = ['dd-svc','dd-ind','dd-sus','dd-abt'];
+  function mark(){
+    var hit = -1;
+    [].forEach.call(document.querySelectorAll('a.dd-t'), function(a){
+      var on = file(a.getAttribute('href') || '') === me;
+      a.classList.toggle('is-cur', on);
+      if(on){ a.setAttribute('aria-current','page'); var g = a.closest('.dd-g'); if(g && hit < 0) hit = GROUPS.indexOf(g.id); }
+      else if(a.getAttribute('aria-current') === 'page') a.removeAttribute('aria-current');
+    });
+    [].forEach.call(document.querySelectorAll('#bar .m-top:not(.m-util)'), function(t, i){
+      t.classList.toggle('is-cur', i === hit);
+      if(i === hit) t.setAttribute('aria-current','page'); else t.removeAttribute('aria-current');
+    });
+  }
+  mark();
+  window.addEventListener('load', mark);
+  setTimeout(mark, 600);
+  document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('.m-top, .m-btn, [aria-controls]')) setTimeout(mark, 30); }, true);
+})();
+</script>
 </body>
 </html>

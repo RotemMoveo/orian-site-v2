@@ -8911,6 +8911,16 @@ a.cd-v:hover{color:var(--red)}
 .dd .dd-t .btn-ring .ar{width:12px;height:12px;color:var(--ink);--ar-w:1.8}
 .dd .dd-t:hover,.dd .dd-t:focus-visible{background:none;color:var(--red);border-bottom-color:var(--red)}
 .dd .dd-t:hover .btn-ring .ar,.dd .dd-t:focus-visible .btn-ring .ar{color:var(--red)}
+/* ---- THE MENU IN THREE COLUMNS (2026-11-11, option 4 of _menu3-options). The client asked to
+   join today's line-and-arrow menu with the earlier one: the grey sheet and the white tiles
+   come back, three to a row, no icons; the tile wears the new manner - the small diagonal
+   arrow always standing at its far end, and hover = label, arrow and a red line under the
+   tile in one frame, no red fill. Desktop only, like the sheet; the phone menu is .mg. ---- */
+.dd{background:linear-gradient(transparent var(--win-gap),var(--sheet) 0)}
+.dd .dd-g{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--win-gap);padding:var(--sp-4) var(--gin)}
+.dd .dd-t{background:var(--white);min-height:calc(var(--sq) + var(--sp-4));padding-inline:var(--sp-4);border-bottom:2px solid transparent}
+.dd .dd-t .btn-ring{inset-inline-end:var(--sp-4)}
+.dd .dd-t:hover,.dd .dd-t:focus-visible{background:var(--white);color:var(--red);border-bottom-color:var(--red)}
 .dd-ic{display:none}
 </style>
 <style>
@@ -9370,7 +9380,7 @@ w.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)re
     </div>
     <div class="mo-more">
       <p class="mo-k">עוד על אוריין</p>
-      <ul class="mo-g"><li style="--i:0"><a href="about.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M4 21V7L12 3L20 7V21ZM2 21H22M9 21V16H15V21M8 10H10M14 10H16"/><rect class="pt" x="10.5" y="6.5" width="3" height="3" /></svg><span class="mo-n">אודות אוריין</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li><li style="--i:1"><a href="management.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 7V11M5 11H19M5 11V15M12 11V15M19 11V15"/><rect x="3" y="15" width="4" height="4"/><rect x="10" y="15" width="4" height="4"/><rect x="17" y="15" width="4" height="4"/><rect class="pt" x="10" y="3" width="4" height="4" /></svg><span class="mo-n">ההנהלה</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li><li style="--i:2"><a href="quality.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 19V11L12 4H20V12L13 19ZM3 21L14 10M10 14V10M10 14H14"/><rect class="pt" x="18.5" y="2.5" width="3" height="3" /></svg><span class="mo-n">איכות</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li><li style="--i:3"><a href="logistics-warehousing.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M4 3V21M20 3V21M4 9H20M4 15H20"/><rect x="7" y="5" width="4" height="4"/><rect x="12" y="11" width="4" height="4"/><rect class="pt" x="7.5" y="16.5" width="3" height="3" /></svg><span class="mo-n">לוגיסטיקה ואחסנה</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li></ul>
+      <ul class="mo-g"><li style="--i:0"><a href="about.html" class="mo-c"><span class="mo-n">אודות אוריין</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li><li style="--i:1"><a href="management.html" class="mo-c"><span class="mo-n">ההנהלה</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li><li style="--i:2"><a href="quality.html" class="mo-c"><span class="mo-n">איכות</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li><li style="--i:3"><a href="logistics-warehousing.html" class="mo-c"><span class="mo-n">לוגיסטיקה ואחסנה</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li></ul>
     </div>
   </div>
 </section>
@@ -11341,5 +11351,39 @@ w.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)re
   window.addEventListener('resize',sweep);
 })();</script>
 <!-- /ORIAN ENTRY REVEAL -->
+<style>
+/* ==== THE NAV KNOWS WHERE YOU ARE (2026-11-11) ==========================================
+   The page you are on is marked in the bar AND in the menu, in the hover's own look:
+   its group's word in the bar is red with its square (as when open), and its tile in the
+   menu is red with the red line under it (desktop sheet and phone list alike). */
+.m-top.is-cur:not(.m-util){color:var(--red)}
+.m-top.is-cur:not(.m-util)::after{--top-mk:var(--top-mk-on)}
+.dd .dd-t.is-cur,.mg .dd-t.is-cur{color:var(--red);border-bottom-color:var(--red)}
+.dd .dd-t.is-cur .btn-ring .ar,.mg .dd-t.is-cur .btn-ring .ar{color:var(--red)}
+</style>
+<script>
+/* the nav marks the current page: its tile in the menu and its group in the bar */
+(function(){
+  function file(h){ try{ return decodeURIComponent(new URL(h, location.href).pathname.split('/').pop()) || 'index.html'; }catch(e){ return ''; } }
+  var me = file(location.href), GROUPS = ['dd-svc','dd-ind','dd-sus','dd-abt'];
+  function mark(){
+    var hit = -1;
+    [].forEach.call(document.querySelectorAll('a.dd-t'), function(a){
+      var on = file(a.getAttribute('href') || '') === me;
+      a.classList.toggle('is-cur', on);
+      if(on){ a.setAttribute('aria-current','page'); var g = a.closest('.dd-g'); if(g && hit < 0) hit = GROUPS.indexOf(g.id); }
+      else if(a.getAttribute('aria-current') === 'page') a.removeAttribute('aria-current');
+    });
+    [].forEach.call(document.querySelectorAll('#bar .m-top:not(.m-util)'), function(t, i){
+      t.classList.toggle('is-cur', i === hit);
+      if(i === hit) t.setAttribute('aria-current','page'); else t.removeAttribute('aria-current');
+    });
+  }
+  mark();
+  window.addEventListener('load', mark);
+  setTimeout(mark, 600);
+  document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('.m-top, .m-btn, [aria-controls]')) setTimeout(mark, 30); }, true);
+})();
+</script>
 </body>
 </html>

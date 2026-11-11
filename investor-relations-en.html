@@ -9015,6 +9015,16 @@ section.tp#aeo{padding:var(--ab-air) var(--cx);text-align:start}
 .dd .dd-t .btn-ring .ar{width:12px;height:12px;color:var(--ink);--ar-w:1.8}
 .dd .dd-t:hover,.dd .dd-t:focus-visible{background:none;color:var(--red);border-bottom-color:var(--red)}
 .dd .dd-t:hover .btn-ring .ar,.dd .dd-t:focus-visible .btn-ring .ar{color:var(--red)}
+/* ---- THE MENU IN THREE COLUMNS (2026-11-11, option 4 of _menu3-options). The client asked to
+   join today's line-and-arrow menu with the earlier one: the grey sheet and the white tiles
+   come back, three to a row, no icons; the tile wears the new manner - the small diagonal
+   arrow always standing at its far end, and hover = label, arrow and a red line under the
+   tile in one frame, no red fill. Desktop only, like the sheet; the phone menu is .mg. ---- */
+.dd{background:linear-gradient(transparent var(--win-gap),var(--sheet) 0)}
+.dd .dd-g{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--win-gap);padding:var(--sp-4) var(--gin)}
+.dd .dd-t{background:var(--white);min-height:calc(var(--sq) + var(--sp-4));padding-inline:var(--sp-4);border-bottom:2px solid transparent}
+.dd .dd-t .btn-ring{inset-inline-end:var(--sp-4)}
+.dd .dd-t:hover,.dd .dd-t:focus-visible{background:var(--white);color:var(--red);border-bottom-color:var(--red)}
 .dd-ic{display:none}
 </style>
 <style>
@@ -9104,8 +9114,8 @@ section.tp#aeo{padding:var(--ab-air) var(--cx);text-align:start}
 .ct-fd input[type=tel]{text-align:left}
 
 /* ---- the footer: the crumbling end of the red floor goes to the LEFT */
-.ft-band{background:linear-gradient(var(--red),var(--red)) right / calc(100% - var(--ft-crumb-w) + 1px) 100% no-repeat}
-.ft-band svg{right:auto;left:0;transform:scaleX(-1)}
+
+
 @media(prefers-reduced-motion:reduce){
   .pz-nt .ns-item,.pz-nt .ns-item.out,.pz-nt .ns-item.on{transform:none}
 }
@@ -9226,6 +9236,45 @@ section.tp{text-align:left}
   .mg .dd-t:hover,.mg .dd-t:focus-visible,.mg .dd-t:active{background:none;color:var(--red);border-bottom-color:var(--red)}
   .mg .dd-t:hover .btn-ring .ar,.mg .dd-t:focus-visible .btn-ring .ar,.mg .dd-t:active .btn-ring .ar{color:var(--red)}
   .mg + .m-util{border-top:0}
+}
+</style>
+<style>
+/* copied from quality.html 2026-11-11: the reports wear the certificates' cards */
+/* CERTIFICATES · option 3 of _cert-options (2026-11-10): the client asked for less on each card by default.
+   The standard's code IS the title (ISO 9001, no year; AEO; the platinum mark by name), a short topic under it.
+   Hover swaps the topic for her own description, on the red the card already had. No icon. A phone has no
+   hover and a tap opens the PDF, so there the description stays under the topic. */
+.kp-cert .kp-a{min-height:clamp(250px,20.8vw,330px);align-content:start}
+.kp-cert .cr-code{display:block;margin-block-start:var(--sp-2);font-size:calc(var(--fs-sec) * .62);font-weight:700;line-height:1;letter-spacing:var(--tr-head);color:var(--ink)}
+.kp-cert .cr-sub{font-size:var(--fs-text);font-weight:500;color:var(--ink);max-width:22em}
+.kp-cert .kp-a .kp-d{display:none}
+@media (hover:hover){
+  .kp-cert .kp-a:is(:hover,:focus-visible) .cr-code{color:var(--paper)}
+  .kp-cert .kp-a:is(:hover,:focus-visible) .cr-sub{display:none}
+  .kp-cert .kp-a:is(:hover,:focus-visible) .kp-d{display:block}
+}
+@media (hover:none){
+  .kp-cert .kp-a{min-height:0}
+  .kp-cert .kp-a .kp-d{display:block}
+}
+</style>
+<style>
+/* THE CERTIFICATE OPENS SOFTLY (2026-11-11, hers: "נפתחות בצורה לינארית ונעימה ולא מיידית").
+   The page throws every .kp-a hover on in one frame (transition:none!important); here, and only
+   here, the red ground eases in over .45s and the topic cross-fades into the description in the
+   SAME grid cell, so the card never jumps. Pointer devices only; a phone shows both, as before. */
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  html body .kp-cert .kp-a{grid-template-columns:minmax(0,1fr);
+    transition:background-color .45s cubic-bezier(.4,0,.2,1),color .45s cubic-bezier(.4,0,.2,1)!important}
+  html body .kp-cert .kp-a > .ar-sq{transition:background-color .45s cubic-bezier(.4,0,.2,1)!important}
+  html body .kp-cert .kp-a > *:not(.ar-sq){transition:color .45s cubic-bezier(.4,0,.2,1),background-color .45s cubic-bezier(.4,0,.2,1),
+    opacity .4s cubic-bezier(.4,0,.2,1),transform .5s cubic-bezier(.4,0,.2,1)!important}
+  html body .kp-cert .kp-a .kp-n{grid-row:1;grid-column:1}
+  html body .kp-cert .kp-a .cr-code{grid-row:2;grid-column:1}
+  html body .kp-cert .kp-a .cr-sub,html body .kp-cert .kp-a .kp-d{grid-row:3;grid-column:1;display:block!important}
+  html body .kp-cert .kp-a .kp-d{opacity:0;transform:translateY(10px)}
+  html body .kp-cert .kp-a:is(:hover,:focus-visible) .cr-sub{opacity:0;transform:translateY(-6px)}
+  html body .kp-cert .kp-a:is(:hover,:focus-visible) .kp-d{opacity:1;transform:none;transition-delay:0s,0s,.12s,.12s!important}
 }
 </style>
 </head>
@@ -9391,6 +9440,32 @@ section.tp{text-align:left}
   </div>
   <div class="ix-fig" aria-hidden="true"><img src="files/cc-hero-hq.jpg" alt="" fetchpriority="high"></div>
 </section>
+<style>
+/* ==== INNER HERO · ONE CURTAIN, TOP DOWN (2026-11-11, second pass) ====
+   Her correction the same day: the pixels must not pop off one by one ("לא בחשיפה מיידית").
+   ONE white cover over the whole picture, the crumbling pixel band included, draws up off
+   it from the top down, like a curtain opening downward: the band's squares come out first
+   and then the photograph, gradually, as its edge passes. Replaces the square-by-square band
+   and the second wipe that followed it. */
+#hero.ix .ix-fig{animation:none!important;clip-path:none!important;overflow:hidden}
+#hero.ix .ix-cv{position:absolute;inset:0;z-index:2;background:var(--white,#fff);pointer-events:none;
+  animation:ix-cv var(--cvd,1.2s) cubic-bezier(.45,0,.2,1) var(--cvs,.15s) forwards}
+@keyframes ix-cv{from{clip-path:inset(0)}to{clip-path:inset(100% 0 0 0)}}
+@media (prefers-reduced-motion:reduce){#hero.ix .ix-cv{display:none}}
+</style>
+<script>
+/* inner hero: one curtain, drawn down off the picture */
+(function(){
+  var f=document.querySelector('#hero.ix .ix-fig'); if(!f) return;
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var START=150, WIPE=1200;
+  var c=document.createElement('div'); c.className='ix-cv'; c.setAttribute('aria-hidden','true');
+  c.style.setProperty('--cvs',START+'ms'); c.style.setProperty('--cvd',WIPE+'ms');
+  f.appendChild(c);
+  setTimeout(function(){ if(c.parentNode) c.parentNode.removeChild(c); }, START+WIPE+300);
+})();
+</script>
+
 
 <script>
 /* INNER HERO · THE HOMEPAGE'S ENTRANCE (2026-10-06) - concept-3-hero.html's
@@ -9510,17 +9585,17 @@ section.tp{text-align:left}
 })();
 </script>
 
-<section class="kp on-grey" id="reports" aria-labelledby="reportsT">
+<section class="kp kp-cert on-grey" id="reports" aria-labelledby="reportsT">
   <div class="kp-head">
     <h2 class="kp-h" id="reportsT"><span class="lt">Reports</span><span class="bd">and presentations.</span></h2>
     <p class="kp-p">Orian's financial reports and capital markets presentations.</p>
   </div>
   <ol class="kp-g">
-    <li class="kp-i kp-l"><a class="kp-a" href="https://mayafiles.tase.co.il/rpdf/1764001-1765000/P1764978-00.pdf" target="_blank" rel="noopener"><svg class="v2-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M6 2.5H15L19 6.5V21.5H6Z"/><path d="M15 2.5V6.5H19M9 11H16M9 14.5H16M9 18H13"/><rect class="pt" x="14.5" y="16.5" width="3" height="3"/></svg><span class="kp-n">01</span><b class="kp-t">Q2 2026</b><span class="kp-d">Quarterly report (PDF).</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
-    <li class="kp-i kp-l"><a class="kp-a" href="https://mayafiles.tase.co.il/rpdf/1764001-1765000/P1764983-00.pdf" target="_blank" rel="noopener"><svg class="v2-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 4H21V16H3ZM12 16V20M8 21H16"/><path d="M7 12L10.5 8.5L13 11L17 7"/><rect class="pt" x="15.5" y="5.5" width="3" height="3"/></svg><span class="kp-n">02</span><b class="kp-t">Capital markets presentation, August 2026</b><span class="kp-d">Investor presentation (PDF).</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
-    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/P1742262-00.pdf" target="_blank" rel="noopener"><svg class="v2-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M6 2.5H15L19 6.5V21.5H6Z"/><path d="M15 2.5V6.5H19M9 11H16M9 14.5H16M9 18H13"/><rect class="pt" x="14.5" y="16.5" width="3" height="3"/></svg><span class="kp-n">03</span><b class="kp-t">Q1 2026</b><span class="kp-d">Quarterly report (PDF).</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
-    <li class="kp-i kp-l"><a class="kp-a" href="https://maya.tase.co.il/he/reports/1729242" target="_blank" rel="noopener"><svg class="v2-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M6 2.5H15L19 6.5V21.5H6Z"/><path d="M15 2.5V6.5H19M9 11H16M9 14.5H16M9 18H13"/><rect class="pt" x="14.5" y="16.5" width="3" height="3"/></svg><span class="kp-n">04</span><b class="kp-t">2025 reports</b><span class="kp-d">On the TASE Maya site.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
-    <li class="kp-i kp-l"><a class="kp-a" href="https://www.tase.co.il/he/market_data/company/1425/about" target="_blank" rel="noopener"><svg class="v2-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 21.5H21M6 21.5V13M11 21.5V8M16 21.5V11"/><path d="M3 9.5L11 4L16 7L21 3.5"/><rect class="pt" x="14.5" y="13.5" width="3" height="3"/></svg><span class="kp-n">05</span><b class="kp-t">Financial data</b><span class="kp-d">Trading data on the Tel Aviv Stock Exchange site.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
+    <li class="kp-i kp-l"><a class="kp-a" href="https://mayafiles.tase.co.il/rpdf/1764001-1765000/P1764978-00.pdf" target="_blank" rel="noopener"><span class="kp-n">01</span><b class="cr-code">Q2 2026</b><span class="cr-sub">Quarterly report</span><span class="kp-d">Quarterly report (PDF).</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
+    <li class="kp-i kp-l"><a class="kp-a" href="https://mayafiles.tase.co.il/rpdf/1764001-1765000/P1764983-00.pdf" target="_blank" rel="noopener"><span class="kp-n">02</span><b class="cr-code">August 2026</b><span class="cr-sub">Capital markets presentation</span><span class="kp-d">Investor presentation (PDF).</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
+    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/P1742262-00.pdf" target="_blank" rel="noopener"><span class="kp-n">03</span><b class="cr-code">Q1 2026</b><span class="cr-sub">Quarterly report</span><span class="kp-d">Quarterly report (PDF).</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
+    <li class="kp-i kp-l"><a class="kp-a" href="https://maya.tase.co.il/he/reports/1729242" target="_blank" rel="noopener"><span class="kp-n">04</span><b class="cr-code">2025</b><span class="cr-sub">Annual reports</span><span class="kp-d">On the TASE Maya site.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
+    <li class="kp-i kp-l"><a class="kp-a" href="https://www.tase.co.il/he/market_data/company/1425/about" target="_blank" rel="noopener"><span class="kp-n">05</span><b class="cr-code">Financial data</b><span class="cr-sub">Trading data</span><span class="kp-d">Trading data on the Tel Aviv Stock Exchange site.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
   </ol>
 </section>
 
@@ -9586,7 +9661,7 @@ section.tp{text-align:left}
     </div>
     <div class="mo-more">
       <p class="mo-k">More about Orian</p>
-      <ul class="mo-g"><li style="--i:0"><a href="about-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M4 21V7L12 3L20 7V21ZM2 21H22M9 21V16H15V21M8 10H10M14 10H16"/><rect class="pt" x="10.5" y="6.5" width="3" height="3" /></svg><span class="mo-n">About Orian</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:1"><a href="board-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="3.5" y="7" width="3" height="3"/><rect x="17.5" y="7" width="3" height="3"/><path d="M2 17V13H8V17M9 17V10H15V17M16 17V13H22V17M2 20H22"/><rect class="pt" x="10.5" y="4" width="3" height="3" /></svg><span class="mo-n">Board of Directors</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:2"><a href="management-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 7V11M5 11H19M5 11V15M12 11V15M19 11V15"/><rect x="3" y="15" width="4" height="4"/><rect x="10" y="15" width="4" height="4"/><rect x="17" y="15" width="4" height="4"/><rect class="pt" x="10" y="3" width="4" height="4" /></svg><span class="mo-n">Management</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:3"><a href="quality-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 19V11L12 4H20V12L13 19ZM3 21L14 10M10 14V10M10 14H14"/><rect class="pt" x="18.5" y="2.5" width="3" height="3" /></svg><span class="mo-n">Quality</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li></ul>
+      <ul class="mo-g"><li style="--i:0"><a href="about-en.html" class="mo-c"><span class="mo-n">About Orian</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:1"><a href="board-en.html" class="mo-c"><span class="mo-n">Board of Directors</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:2"><a href="management-en.html" class="mo-c"><span class="mo-n">Management</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:3"><a href="quality-en.html" class="mo-c"><span class="mo-n">Quality</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li></ul>
     </div>
   </div>
 </section>
@@ -11466,14 +11541,14 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
       if(h.classList.contains('ol1')){ h.classList.remove('ol1'); h.style.textAlign=''; gap(h,0) }
       var r=h.getBoundingClientRect(); if(!r.width||!r.height) return;
       var L=lh(h); if(r.height<L*1.6) return;                 /* already one line */
-      var cs=getComputedStyle(h), col=colW(h), ta='';
+      var cs=getComputedStyle(h), col=Math.min(colW(h), r.width), ta='';   /* 2026-11-05: its OWN column (the box it fills on two lines), not the head row's whole width - a heading beside its paragraph was set on one line and ran under it */
       /* a heading laid out as a flex/grid column keeps the side its lines stood on */
       if(/flex|grid/.test(cs.display)){ var ai=(cs.alignItems+' '+cs.justifyItems);
         ta=/center/.test(ai)?'center':(/flex-end|(^| )end|right/.test(ai)?'end':'') }
       h.classList.add('ol1'); if(ta) h.style.textAlign=ta; gap(h,1);
       h.style.width='max-content'; var w=h.getBoundingClientRect().width; h.style.width='';
       var one=h.getBoundingClientRect().height<L*1.6;          /* it really is one line now */
-      if(!(one&&w<=lim&&w<=col+1)){ h.classList.remove('ol1'); h.style.textAlign=''; gap(h,0) }
+      if(!(one&&w<=lim&&w<=col+1&&h.scrollWidth<=h.clientWidth+1)){   /* and its words may not spill past its box */ h.classList.remove('ol1'); h.style.textAlign=''; gap(h,0) }
     });
   }
   var t; function later(){ clearTimeout(t); t=setTimeout(fit,120) }
@@ -11486,7 +11561,16 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
      content blocks (heading, text, button, picture) and, one level down, the items of
      a grid or list. Built on `translate` + WAAPI so it never overrides a section's own
      transform, transition, hover or tabs. Off under prefers-reduced-motion. -->
-<style>.rv-wait{opacity:0!important}</style>
+<style>.rv-wait{opacity:0!important}
+/* ---- THE ENGLISH STRIP RUNS AS THE HEBREW ONE (2026-11-10, client meeting):
+   crumbled end on the RIGHT, links on the left; the words inside read LTR ---- */
+.ft-foot{direction:rtl}
+.ft-foot > *{direction:ltr}
+.ft-foot .ft-rights{margin-right:0;margin-left:auto}
+@media(max-width:640px){.ft-foot .ft-rights{margin:0}}
+/* the language switch at the strip's far end, as in Hebrew */
+.ft-foot .ft-legal{direction:rtl}
+</style>
 <script>(function(){
   var T=[1], STRONG='soft'==='strong';  /* the industry pages take the stronger profile (2026-11-05) */
   if(!T.length||!('IntersectionObserver' in window)||!Element.prototype.animate) return;
@@ -11564,5 +11648,39 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
   window.addEventListener('resize',sweep);
 })();</script>
 <!-- /ORIAN ENTRY REVEAL -->
+<style>
+/* ==== THE NAV KNOWS WHERE YOU ARE (2026-11-11) ==========================================
+   The page you are on is marked in the bar AND in the menu, in the hover's own look:
+   its group's word in the bar is red with its square (as when open), and its tile in the
+   menu is red with the red line under it (desktop sheet and phone list alike). */
+.m-top.is-cur:not(.m-util){color:var(--red)}
+.m-top.is-cur:not(.m-util)::after{--top-mk:var(--top-mk-on)}
+.dd .dd-t.is-cur,.mg .dd-t.is-cur{color:var(--red);border-bottom-color:var(--red)}
+.dd .dd-t.is-cur .btn-ring .ar,.mg .dd-t.is-cur .btn-ring .ar{color:var(--red)}
+</style>
+<script>
+/* the nav marks the current page: its tile in the menu and its group in the bar */
+(function(){
+  function file(h){ try{ return decodeURIComponent(new URL(h, location.href).pathname.split('/').pop()) || 'index.html'; }catch(e){ return ''; } }
+  var me = file(location.href), GROUPS = ['dd-svc','dd-ind','dd-sus','dd-abt'];
+  function mark(){
+    var hit = -1;
+    [].forEach.call(document.querySelectorAll('a.dd-t'), function(a){
+      var on = file(a.getAttribute('href') || '') === me;
+      a.classList.toggle('is-cur', on);
+      if(on){ a.setAttribute('aria-current','page'); var g = a.closest('.dd-g'); if(g && hit < 0) hit = GROUPS.indexOf(g.id); }
+      else if(a.getAttribute('aria-current') === 'page') a.removeAttribute('aria-current');
+    });
+    [].forEach.call(document.querySelectorAll('#bar .m-top:not(.m-util)'), function(t, i){
+      t.classList.toggle('is-cur', i === hit);
+      if(i === hit) t.setAttribute('aria-current','page'); else t.removeAttribute('aria-current');
+    });
+  }
+  mark();
+  window.addEventListener('load', mark);
+  setTimeout(mark, 600);
+  document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('.m-top, .m-btn, [aria-controls]')) setTimeout(mark, 30); }, true);
+})();
+</script>
 </body>
 </html>

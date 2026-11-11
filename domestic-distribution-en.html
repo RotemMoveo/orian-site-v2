@@ -8828,6 +8828,16 @@ section.tp#aeo{padding:var(--ab-air) var(--cx);text-align:start}
 .dd .dd-t .btn-ring .ar{width:12px;height:12px;color:var(--ink);--ar-w:1.8}
 .dd .dd-t:hover,.dd .dd-t:focus-visible{background:none;color:var(--red);border-bottom-color:var(--red)}
 .dd .dd-t:hover .btn-ring .ar,.dd .dd-t:focus-visible .btn-ring .ar{color:var(--red)}
+/* ---- THE MENU IN THREE COLUMNS (2026-11-11, option 4 of _menu3-options). The client asked to
+   join today's line-and-arrow menu with the earlier one: the grey sheet and the white tiles
+   come back, three to a row, no icons; the tile wears the new manner - the small diagonal
+   arrow always standing at its far end, and hover = label, arrow and a red line under the
+   tile in one frame, no red fill. Desktop only, like the sheet; the phone menu is .mg. ---- */
+.dd{background:linear-gradient(transparent var(--win-gap),var(--sheet) 0)}
+.dd .dd-g{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--win-gap);padding:var(--sp-4) var(--gin)}
+.dd .dd-t{background:var(--white);min-height:calc(var(--sq) + var(--sp-4));padding-inline:var(--sp-4);border-bottom:2px solid transparent}
+.dd .dd-t .btn-ring{inset-inline-end:var(--sp-4)}
+.dd .dd-t:hover,.dd .dd-t:focus-visible{background:var(--white);color:var(--red);border-bottom-color:var(--red)}
 .dd-ic{display:none}
 </style>
 <style>
@@ -8917,8 +8927,8 @@ section.tp#aeo{padding:var(--ab-air) var(--cx);text-align:start}
 .ct-fd input[type=tel]{text-align:left}
 
 /* ---- the footer: the crumbling end of the red floor goes to the LEFT */
-.ft-band{background:linear-gradient(var(--red),var(--red)) right / calc(100% - var(--ft-crumb-w) + 1px) 100% no-repeat}
-.ft-band svg{right:auto;left:0;transform:scaleX(-1)}
+
+
 @media(prefers-reduced-motion:reduce){
   .pz-nt .ns-item,.pz-nt .ns-item.out,.pz-nt .ns-item.on{transform:none}
 }
@@ -9194,24 +9204,45 @@ section.tp{text-align:left}
 
 
 
-<section class="xh" id="hero" aria-labelledby="solTitle">
-  <div class="xh-txt">
+<section class="ix" id="hero" aria-labelledby="solTitle">
+  <div class="ix-top">
+    <div class="ix-txt">
     <nav class="crumb" aria-label="Breadcrumb"><a href="concept-3-hero-en.html">Home</a><i>/</i><span>Solutions</span><i>/</i><b aria-current="page">Domestic Distribution</b></nav>
     <p class="sol-k">Domestic Distribution</p>
     <h1 class="ab-h1" id="solTitle">
         <span class="lt">A nationwide network,</span>
         <span class="bd">with branches across Israel.</span>
       </h1>
-    <p class="sol-p">Our nationwide coverage, technology systems and operations let us deliver an accurate, transparent and flexible service all the way to the point of delivery.</p>
+    </div>
+    <div class="ix-side"><p class="sol-p">Our nationwide coverage, technology systems and operations let us deliver an accurate, transparent and flexible service all the way to the point of delivery.</p> <a class="btn xh-cta" href="#frequency" data-fr-go><span class="btn-ring" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span><span class="btn-label">Which days do we deliver?</span></a></div>
   </div>
-  <div class="xh-fig" aria-hidden="true"><img src="files/real-fleet-centre.jpg" alt="" fetchpriority="high"></div>
+  <div class="ix-fig" aria-hidden="true"><img src="files/v-dist-hub.jpg" style="object-position:50% 62%" alt="" fetchpriority="high"></div>
 </section>
-
-
-
-
-
-
+<style>
+/* ==== INNER HERO · ONE CURTAIN, TOP DOWN (2026-11-11, second pass) ====
+   Her correction the same day: the pixels must not pop off one by one ("לא בחשיפה מיידית").
+   ONE white cover over the whole picture, the crumbling pixel band included, draws up off
+   it from the top down, like a curtain opening downward: the band's squares come out first
+   and then the photograph, gradually, as its edge passes. Replaces the square-by-square band
+   and the second wipe that followed it. */
+#hero.ix .ix-fig{animation:none!important;clip-path:none!important;overflow:hidden}
+#hero.ix .ix-cv{position:absolute;inset:0;z-index:2;background:var(--white,#fff);pointer-events:none;
+  animation:ix-cv var(--cvd,1.2s) cubic-bezier(.45,0,.2,1) var(--cvs,.15s) forwards}
+@keyframes ix-cv{from{clip-path:inset(0)}to{clip-path:inset(100% 0 0 0)}}
+@media (prefers-reduced-motion:reduce){#hero.ix .ix-cv{display:none}}
+</style>
+<script>
+/* inner hero: one curtain, drawn down off the picture */
+(function(){
+  var f=document.querySelector('#hero.ix .ix-fig'); if(!f) return;
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var START=150, WIPE=1200;
+  var c=document.createElement('div'); c.className='ix-cv'; c.setAttribute('aria-hidden','true');
+  c.style.setProperty('--cvs',START+'ms'); c.style.setProperty('--cvd',WIPE+'ms');
+  f.appendChild(c);
+  setTimeout(function(){ if(c.parentNode) c.parentNode.removeChild(c); }, START+WIPE+300);
+})();
+</script>
 
 
 <script>
@@ -9252,6 +9283,29 @@ section.tp{text-align:left}
     <li class="kp-i"><span class="kp-n">02</span><b class="kp-t">6,000 parcels an hour</b><span class="kp-d">An advanced sorter, sorting 6,000 parcels an hour.</span></li>
     <li class="kp-i"><span class="kp-n">03</span><b class="kp-t">The recipient chooses</b><span class="kp-d">A range of options for private recipients: to the home, to a locker, or a change of address.</span></li>
   </ol>
+</section>
+
+<section class="fr on-grey" id="frequency" aria-labelledby="frequencyT">
+  <div class="kp-head">
+    <h2 class="kp-h" id="frequencyT"><span class="lt">Which days</span><span class="bd">do we reach you?</span></h2>
+    <p class="kp-p">Enter your town or city to see which days we deliver there.</p>
+  </div>
+  <div class="fr-box">
+    <div class="fr-q">
+      <label class="trk-l" for="frIn">Town</label>
+      <input id="frIn" class="fr-in" type="text" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="frList" placeholder="For example: Tel Aviv">
+      <ul class="fr-list" id="frList" role="listbox" hidden></ul>
+    </div>
+    <div class="fr-out" aria-live="polite">
+      <p class="fr-name" id="frName">Delivery days</p>
+      <ol class="fr-days" id="frDays"><li class="fr-d"><span class="fr-sq" aria-hidden="true"></span><span class="fr-dn">Sun</span></li><li class="fr-d"><span class="fr-sq" aria-hidden="true"></span><span class="fr-dn">Mon</span></li><li class="fr-d"><span class="fr-sq" aria-hidden="true"></span><span class="fr-dn">Tue</span></li><li class="fr-d"><span class="fr-sq" aria-hidden="true"></span><span class="fr-dn">Wed</span></li><li class="fr-d"><span class="fr-sq" aria-hidden="true"></span><span class="fr-dn">Thu</span></li></ol>
+      <p class="fr-m" id="frMsg"></p>
+      <span class="fr-t" data-k="none" hidden>We could not find that town. Try another spelling.</span>
+      <span class="fr-t" data-k="x" hidden>We have no regular delivery to this town right now. Talk to us and we will find a way.</span>
+      <span class="fr-t" data-k="all" hidden>We deliver to your locality every Sunday through Thursday.</span>
+      <span class="fr-t" data-k="some" hidden>The days in red are delivery days for this town.</span>
+    </div>
+  </div>
 </section>
 
 <script>
@@ -9386,28 +9440,6 @@ section.tp{text-align:left}
 var io=new IntersectionObserver(function(e){if(e[0].isIntersecting){s.classList.add('in');io.disconnect();}},{rootMargin:'0px 0px -25% 0px'});io.observe(s);})();
 </script>
 
-<section class="fr on-grey" id="frequency" aria-labelledby="frequencyT">
-  <div class="kp-head">
-    <h2 class="kp-h" id="frequencyT"><span class="lt">Which days</span><span class="bd">do we reach you?</span></h2>
-    <p class="kp-p">Enter your town or city to see which days we deliver there.</p>
-  </div>
-  <div class="fr-box">
-    <div class="fr-q">
-      <label class="trk-l" for="frIn">Town</label>
-      <input id="frIn" class="fr-in" type="text" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="frList" placeholder="For example: Tel Aviv">
-      <ul class="fr-list" id="frList" role="listbox" hidden></ul>
-    </div>
-    <div class="fr-out" aria-live="polite">
-      <p class="fr-name" id="frName">Delivery days</p>
-      <ol class="fr-days" id="frDays"><li class="fr-d"><span class="fr-sq" aria-hidden="true"></span><span class="fr-dn">Sun</span></li><li class="fr-d"><span class="fr-sq" aria-hidden="true"></span><span class="fr-dn">Mon</span></li><li class="fr-d"><span class="fr-sq" aria-hidden="true"></span><span class="fr-dn">Tue</span></li><li class="fr-d"><span class="fr-sq" aria-hidden="true"></span><span class="fr-dn">Wed</span></li><li class="fr-d"><span class="fr-sq" aria-hidden="true"></span><span class="fr-dn">Thu</span></li></ol>
-      <p class="fr-m" id="frMsg"></p>
-      <span class="fr-t" data-k="none" hidden>We could not find that town. Try another spelling.</span>
-      <span class="fr-t" data-k="x" hidden>We have no regular delivery to this town right now. Talk to us and we will find a way.</span>
-      <span class="fr-t" data-k="all" hidden>We deliver to your locality every Sunday through Thursday.</span>
-      <span class="fr-t" data-k="some" hidden>The days in red are delivery days for this town.</span>
-    </div>
-  </div>
-</section>
 <script>
 (function(){
   var sec=document.getElementById('frequency');if(!sec)return;
@@ -9545,7 +9577,7 @@ var io=new IntersectionObserver(function(e){if(e[0].isIntersecting){s.classList.
 <section class="cv" id="route" aria-labelledby="rteTitle">
   <div class="cv-txt">
     <h2 class="cv-h" id="rteTitle"><span class="lt">Pickup, sorting,</span><span class="bd">delivery.</span></h2>
-    <p class="cv-p">Our network uses a <bdi dir="ltr">Hub &amp; Spoke</bdi>model: distribution centres across Israel support fast collection, sorting and delivery.</p>
+    <p class="cv-p">Our network uses a <bdi dir="ltr">Hub &amp; Spoke</bdi> model: distribution centres across Israel support fast collection, sorting and delivery.</p>
   </div>
   <div class="cv-w">
   <div class="cv-line" aria-hidden="true"></div><i class="cv-pt" aria-hidden="true"></i>
@@ -9559,31 +9591,17 @@ var io=new IntersectionObserver(function(e){if(e[0].isIntersecting){s.classList.
 </section>
 </div>
 
-<section class="pk" id="packing" aria-labelledby="pkT">
+<section class="pk pq" id="packing" aria-labelledby="pkT">
   <div class="pk-in">
     <div class="pk-head">
       <h2 class="kp-h" id="pkT"><span class="lt">Packed right,</span><span class="bd">shipped safe.</span></h2>
       <p class="kp-p">Orian’s distribution runs one of the world’s most advanced automatic sorting systems, which relies on accurate identification and sorting. Correct packing protects the product, prevents sorting errors, makes the parcel easy to identify along the supply chain and allows accurate weighing for pricing.</p>
     </div>
-    <table class="pk-t"><thead><tr><th>Shipment type</th><th>Packaging</th><th>Max weight (kg)</th><th>Max dimensions (cm)</th></tr></thead><tbody><tr><td>Parcel to a business</td><td>Envelope or parcel</td><td>20</td><td><bdi dir="ltr">60×40×40</bdi></td></tr><tr><td>Parcel to a home</td><td>Envelope or parcel</td><td>15</td><td><bdi dir="ltr">50×30×40</bdi></td></tr><tr><td>Parcel to a pickup point (locker / shop)</td><td>Envelope or parcel</td><td>5</td><td><bdi dir="ltr">40×20×20</bdi></td></tr></tbody></table>
-    <div class="pk-g" role="tablist" aria-orientation="vertical" aria-label="Packing guidelines" style="--n:6"><button class="pk-tab on" type="button" role="tab" id="pkTab0" aria-controls="pkPan0" aria-selected="true" tabindex="0" style="--r:1"><span class="pk-num">01</span><span class="pk-l">Contents and packing</span><span class="pk-ar" aria-hidden="true"></span></button><div class="pk-pan on" role="tabpanel" id="pkPan0" aria-labelledby="pkTab0"><ul><li>A new or intact carton in good condition, with no tears, defects or old labels.</li><li>Seal the carton well with tape (3-inch, non-glossy and non-reflective recommended).</li><li>Do not attach any other material, such as plastic film or cloth.</li><li>Round items (hats, balls) are packed with rigid, flat materials; the product is fixed in place, with no empty space.</li><li>Several delicate items in one carton must be separated.</li><li>Nothing may stick out of the parcel (nails, screws, tags, sharp parts).</li><li>Every parcel is packed on its own; no banding parcels together and no sacks.</li><li>Liquids and dangerous goods may not be sent for sorting.</li></ul></div><button class="pk-tab" type="button" role="tab" id="pkTab1" aria-controls="pkPan1" aria-selected="false" tabindex="-1" style="--r:2"><span class="pk-num">02</span><span class="pk-l">Packaging type</span><span class="pk-ar" aria-hidden="true"></span></button><div class="pk-pan" role="tabpanel" id="pkPan1" aria-labelledby="pkTab1" hidden><ul><li>Double-wall corrugated carton is recommended.</li><li>Match the carton to the product’s size and weight.</li><li>Fill cartons as much as possible; fill empty space with suitable filler.</li><li>Delicate products: the packaging is fitted to the contents.</li></ul></div><button class="pk-tab" type="button" role="tab" id="pkTab2" aria-controls="pkPan2" aria-selected="false" tabindex="-1" style="--r:3"><span class="pk-num">03</span><span class="pk-l">Label position</span><span class="pk-ar" aria-hidden="true"></span></button><div class="pk-pan" role="tabpanel" id="pkPan2" aria-labelledby="pkTab2" hidden><ul><li>On a smooth, even surface in the centre of the carton, not on the flap, sides or corners.</li><li>The barcode is not covered by packing materials (bags, tape, bands, other labels, shrink wrap).</li><li>For plastic packaging: apply the label before inserting the product, so it lies flat.</li></ul></div><button class="pk-tab" type="button" role="tab" id="pkTab3" aria-controls="pkPan3" aria-selected="false" tabindex="-1" style="--r:4"><span class="pk-num">04</span><span class="pk-l">Label size, quality and printing</span><span class="pk-ar" aria-hidden="true"></span></button><div class="pk-pan" role="tabpanel" id="pkPan3" aria-labelledby="pkTab3" hidden><ul><li>Recommended size 10×10 cm, a white label with a matte finish, so the camera is not dazzled.</li><li>A black barcode on a white, complete label, readable, unscratched and not faded.</li><li>Recommended printers: Zebra GK420 (small), Zebra ZT230 (large).</li></ul></div><button class="pk-tab" type="button" role="tab" id="pkTab4" aria-controls="pkPan4" aria-selected="false" tabindex="-1" style="--r:5"><span class="pk-num">05</span><span class="pk-l">Barcode specification</span><span class="pk-ar" aria-hidden="true"></span></button><div class="pk-pan" role="tabpanel" id="pkPan4" aria-labelledby="pkTab4" hidden><ul><li>ANSI A or B quality; module size X between 0.25 and 0.55 mm; minimum bar length 20 mm.</li><li>Quiet zone at least 10× the module size on both sides; length-to-height ratio 4:1.</li><li>Code 128 preferred, no frame around the barcode, centred at the top of the label.</li><li>Labels not made in the Orian portal: design them to spec and approve them with Orian’s IT contact.</li><li>Labels from the Orian portal: print in portrait, in Orian’s formats only, without resizing.</li></ul></div><button class="pk-tab" type="button" role="tab" id="pkTab5" aria-controls="pkPan5" aria-selected="false" tabindex="-1" style="--r:6"><span class="pk-num">06</span><span class="pk-l">Minimums and oversize</span><span class="pk-ar" aria-hidden="true"></span></button><div class="pk-pan" role="tabpanel" id="pkPan5" aria-labelledby="pkTab5" hidden><ul><li>Envelopes: A4 minimum; smaller envelopes will not be handled.</li><li>Parcels: minimum 15×10×1 cm and 250 g.</li><li>Parcels over the limits are charged the oversize rate (with your sales contact); an oversized parcel declared as regular is charged the oversize rate plus a handling fee.</li></ul></div></div>
+    <ul class="pq-cards"><li><p class="pq-k">Parcel to a business</p><p class="pq-w"><b>20</b> kg</p><p class="pq-d">Up to <bdi dir="ltr">60×40×40</bdi> cm</p></li><li><p class="pq-k">Parcel to a home</p><p class="pq-w"><b>15</b> kg</p><p class="pq-d">Up to <bdi dir="ltr">50×30×40</bdi> cm</p></li><li><p class="pq-k">To a pickup point (locker / shop)</p><p class="pq-w"><b>5</b> kg</p><p class="pq-d">Up to <bdi dir="ltr">40×20×20</bdi> cm</p></li></ul>
+    <div class="pq-go"><a class="btn" href="#pkDlg" data-pk-open aria-haspopup="dialog"><span class="btn-ring" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span><span class="btn-label">All packing guidelines</span></a><p class="pq-t">6 topics: contents and packing · packaging type · label position · label printing · barcode · minimums and oversize</p></div>
     <p class="pk-n">Please note: Orian accepts no liability for damage to fragile products.</p>
   </div>
-</section><script>
-(function(){var g=document.querySelector('#packing .pk-g');if(!g)return;
-var tabs=[].slice.call(g.querySelectorAll('.pk-tab')),pans=[].slice.call(g.querySelectorAll('.pk-pan'));
-var mq=window.matchMedia('(max-width:900px)');
-function set(k,open){tabs.forEach(function(t,j){var on=j===k&&open;t.classList.toggle('on',on);t.setAttribute('aria-selected',on?'true':'false');t.tabIndex=(j===k)?0:-1;
- pans[j].classList.toggle('on',on);pans[j].hidden=!on;});}
-tabs.forEach(function(t,j){t.addEventListener('click',function(){
-  if(mq.matches&&t.classList.contains('on')){set(j,false);return;}   /* accordion: tap again to close */
-  set(j,true);
-  if(mq.matches){var y=t.getBoundingClientRect().top;if(y<80)window.scrollBy({top:y-90,behavior:'smooth'});}});
- t.addEventListener('keydown',function(e){var d=(e.key==='ArrowDown')?1:(e.key==='ArrowUp')?-1:0;
-  if(e.key==='Home')d=-j;if(e.key==='End')d=tabs.length-1-j;
-  if(d){e.preventDefault();var n=(j+d+tabs.length)%tabs.length;set(n,true);tabs[n].focus();}});});
-})();
-</script>
+</section>
 
 
 
@@ -9600,6 +9618,23 @@ tabs.forEach(function(t,j){t.addEventListener('click',function(){
 
 
 
+
+<section class="fq" id="faq" aria-labelledby="fqTitle">
+  <div class="fq-side">
+    <h2 class="fq-h" id="fqTitle"><span class="lt">Common</span><span class="bd">questions</span></h2>
+    <p class="fq-p">The questions we hear most often.</p>
+  </div>
+  <div class="fq-l">
+      <div class="fq-i" style="--i:0"><h3 class="fq-hq"><button class="fq-q" type="button" id="fqQ0" aria-expanded="false" aria-controls="fqA0"><span class="fq-m" aria-hidden="true"></span><span class="fq-t">On which days do you reach my town?</span></button></h3>
+        <div class="fq-a" id="fqA0" role="region" aria-labelledby="fqQ0"><div><p>Use the "Which days do we deliver?" search at the top of the page: type the name of the town to see its delivery days.</p></div></div></div>
+      <div class="fq-i" style="--i:1"><h3 class="fq-hq"><button class="fq-q" type="button" id="fqQ1" aria-expanded="false" aria-controls="fqA1"><span class="fq-m" aria-hidden="true"></span><span class="fq-t">Where can I receive the parcel?</span></button></h3>
+        <div class="fq-a" id="fqA1" role="region" aria-labelledby="fqQ1"><div><p>The private recipient chooses: to the door, to a locker or to a pickup point, and can also change the address.</p></div></div></div>
+      <div class="fq-i" style="--i:2"><h3 class="fq-hq"><button class="fq-q" type="button" id="fqQ2" aria-expanded="false" aria-controls="fqA2"><span class="fq-m" aria-hidden="true"></span><span class="fq-t">What is the maximum weight for a parcel?</span></button></h3>
+        <div class="fq-a" id="fqA2" role="region" aria-labelledby="fqQ2"><div><p>Up to 20 kg to a business, up to 15 kg to a home and up to 5 kg to a pickup point. All the guidelines are under "All packing guidelines".</p></div></div></div>
+      <div class="fq-i" style="--i:3"><h3 class="fq-hq"><button class="fq-q" type="button" id="fqQ3" aria-expanded="false" aria-controls="fqA3"><span class="fq-m" aria-hidden="true"></span><span class="fq-t">Do you distribute pallets too?</span></button></h3>
+        <div class="fq-a" id="fqA3" role="region" aria-labelledby="fqQ3"><div><p>Yes. We provide B2B and B2C solutions, from parcels to pallets, including Next Day services.</p></div></div></div>
+  </div>
+</section>
 
 <section class="mo" id="more" aria-labelledby="moTitle">
   <div class="mo-sheet">
@@ -9612,7 +9647,7 @@ tabs.forEach(function(t,j){t.addEventListener('click',function(){
     </div>
     <div class="mo-more">
       <p class="mo-k">More Solutions</p>
-      <ul class="mo-g"><li style="--i:0"><a href="e-commerce-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 8H19V20H5ZM9 8V5H15V8"/><rect class="pt" x="10.5" y="12.5" width="3" height="3" /></svg><span class="mo-n">e-Commerce</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:1"><a href="land-transportation-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M2 7H14V17H2ZM14 10H18L21 13V17H14"/><circle cx="6" cy="18" r="1.75" class="wh"/><circle cx="17.5" cy="18" r="1.75" class="wh"/><rect class="pt" x="6.5" y="10.5" width="3" height="3" /></svg><span class="mo-n">Land Transportation</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:2"><a href="customs-clearance-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 3H15L19 7V21H5ZM15 3V7H19M8 11H16M8 14H13"/><rect class="pt" x="13.5" y="16.5" width="3" height="3" /></svg><span class="mo-n">Customs Brokerage</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:3"><a href="fashion-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M8 3L3 7L5 11L7 10V21H17V10L19 11L21 7L16 3L14 5H10Z"/><rect class="pt" x="10.5" y="11" width="3" height="3" /></svg><span class="mo-n">Fashion</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li></ul>
+      <ul class="mo-g"><li style="--i:0"><a href="e-commerce-en.html" class="mo-c"><span class="mo-n">e-Commerce</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:1"><a href="land-transportation-en.html" class="mo-c"><span class="mo-n">Land Transportation</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:2"><a href="customs-clearance-en.html" class="mo-c"><span class="mo-n">Customs Brokerage</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:3"><a href="fashion-en.html" class="mo-c"><span class="mo-n">Fashion</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li></ul>
     </div>
   </div>
 </section>
@@ -11492,14 +11527,14 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
       if(h.classList.contains('ol1')){ h.classList.remove('ol1'); h.style.textAlign=''; gap(h,0) }
       var r=h.getBoundingClientRect(); if(!r.width||!r.height) return;
       var L=lh(h); if(r.height<L*1.6) return;                 /* already one line */
-      var cs=getComputedStyle(h), col=colW(h), ta='';
+      var cs=getComputedStyle(h), col=Math.min(colW(h), r.width), ta='';   /* 2026-11-05: its OWN column (the box it fills on two lines), not the head row's whole width - a heading beside its paragraph was set on one line and ran under it */
       /* a heading laid out as a flex/grid column keeps the side its lines stood on */
       if(/flex|grid/.test(cs.display)){ var ai=(cs.alignItems+' '+cs.justifyItems);
         ta=/center/.test(ai)?'center':(/flex-end|(^| )end|right/.test(ai)?'end':'') }
       h.classList.add('ol1'); if(ta) h.style.textAlign=ta; gap(h,1);
       h.style.width='max-content'; var w=h.getBoundingClientRect().width; h.style.width='';
       var one=h.getBoundingClientRect().height<L*1.6;          /* it really is one line now */
-      if(!(one&&w<=lim&&w<=col+1)){ h.classList.remove('ol1'); h.style.textAlign=''; gap(h,0) }
+      if(!(one&&w<=lim&&w<=col+1&&h.scrollWidth<=h.clientWidth+1)){   /* and its words may not spill past its box */ h.classList.remove('ol1'); h.style.textAlign=''; gap(h,0) }
     });
   }
   var t; function later(){ clearTimeout(t); t=setTimeout(fit,120) }
@@ -11512,7 +11547,132 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
      content blocks (heading, text, button, picture) and, one level down, the items of
      a grid or list. Built on `translate` + WAAPI so it never overrides a section's own
      transform, transition, hover or tabs. Off under prefers-reduced-motion. -->
-<style>.rv-wait{opacity:0!important}</style>
+<style>.rv-wait{opacity:0!important}
+/* ---- THE ENGLISH STRIP RUNS AS THE HEBREW ONE (2026-11-10, client meeting):
+   crumbled end on the RIGHT, links on the left; the words inside read LTR ---- */
+.ft-foot{direction:rtl}
+.ft-foot > *{direction:ltr}
+.ft-foot .ft-rights{margin-right:0;margin-left:auto}
+@media(max-width:640px){.ft-foot .ft-rights{margin:0}}
+/* the language switch at the strip's far end, as in Hebrew */
+.ft-foot .ft-legal{direction:rtl}
+
+/* ==== DELIVERY DAYS UP FRONT (2026-11-10, client meeting) ====================
+   A hero button that jumps to the town search; on e-commerce the search shares
+   the tracking strip as a second tab. */
+.xh-cta{margin-top:var(--sp-4);align-self:start}
+.trk-in.has-tabs{display:block}
+.trk-tl{display:flex;gap:var(--sp-5);margin:0 0 var(--sp-5);border-block-end:1px solid rgba(20,22,25,.14)}
+.trk-tb{position:relative;display:flex;align-items:center;gap:10px;font-family:inherit;font-size:var(--fs-lede);font-weight:300;
+  color:var(--muted);background:none;border:0;border-radius:0;padding:0 0 var(--sp-2);margin-block-end:-1px;cursor:pointer;
+  border-block-end:2px solid transparent}
+.trk-tb::before{content:"";flex:none;width:10px;height:10px;background:var(--red);opacity:0}
+.trk-tb:hover{color:var(--ink)}
+.trk-tb[aria-selected="true"]{color:var(--ink);font-weight:500;border-block-end-color:var(--red)}
+.trk-tb[aria-selected="true"]::before{opacity:1}
+.trk-tb:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+.trk-p{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:var(--sp-4) var(--sp-6);align-items:end}
+.trk-p[hidden]{display:none}
+.trk .fr.trk-p{padding:0;align-items:start}
+.trk .fr .fr-box{margin:0;padding:0;background:none;display:grid;grid-template-columns:1fr;gap:var(--sp-4)}
+.trk .fr .fr-box::after{content:none}
+.trk .fr .trk-p-k{margin:var(--sp-2) 0 0;font-size:var(--fs-text);color:var(--muted)}
+@media (max-width:820px){.trk-p{grid-template-columns:1fr}.trk-tl{gap:var(--sp-3)}.trk-tb{font-size:var(--fs-text)}}
+/* the grey under the town search was ~260px: the box's own foot + the section's --sec-air */
+section#frequency.fr{padding-bottom:var(--sp-6)!important}
+section#frequency .fr-box{padding-block-end:0}
+
+/* ==== PACKING AS A POPUP (2026-11-10, client: option 1 of _pk-options) =========
+   The section keeps three limit cards + one button; the table and the six guide
+   tabs moved into a centred dialog at the end of <body> (fixed, so no animated
+   ancestor can carry it). */
+.pq-cards{list-style:none;margin:0 0 var(--sp-5);padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--win-gap,12px)}
+.pq-cards li{position:relative;background:#fff;padding:var(--sp-4)}
+.pq-cards li::after{content:"";position:absolute;inset-block-start:0;inset-inline-start:0;width:12px;height:12px;background:var(--red)}
+.pq-k{margin:0 0 var(--sp-3);font-size:var(--fs-text);color:var(--muted)}
+.pq-w{margin:0;font-size:var(--fs-text)}
+.pq-w b{font-size:calc(var(--fs-sec) * .62);font-weight:700;line-height:1;color:var(--ink);margin-inline-end:6px}
+.pq-d{margin:var(--sp-2) 0 0;font-size:var(--fs-text);color:var(--ink)}
+.pq-go{display:flex;align-items:center;gap:var(--sp-5);flex-wrap:wrap}
+.pq-t{margin:0;font-size:var(--fs-text);color:var(--muted)}
+.pq .pk-n{margin-block-start:var(--sp-4)}
+@media (max-width:760px){.pq-cards{grid-template-columns:1fr}.pq-go{gap:var(--sp-3)}}
+html.pq-lock{overflow:hidden}
+.pq-ov{position:fixed;inset:0;z-index:200;background:rgba(20,22,25,.55);opacity:0;transition:opacity .3s}
+.pq-ov[hidden]{display:none}
+.pq-ov.on{opacity:1}
+.pq-dlg{position:absolute;inset-block-start:50%;inset-inline-start:50%;width:min(1180px,calc(100vw - 2 * var(--cx)));max-height:86vh;overflow:auto;overscroll-behavior:contain;
+  transform:translate(-50%,-46%);background:#fff;padding:var(--sp-5) var(--sp-5) var(--sp-6);transition:transform .35s cubic-bezier(.66,0,.16,1);outline:0}
+.pq-ov.on .pq-dlg{transform:translate(-50%,-50%)}
+.pq-dlg::after{content:"";position:absolute;inset-block-start:0;inset-inline-start:0;width:12px;height:12px;background:var(--red)}
+.pq-dlg .pk-t{margin-block-end:var(--sp-5)}
+.pq-dlg .pk-pan{background:#f6f4f1}
+.pq-x{display:grid;place-items:center;width:44px;height:44px;flex:none;background:var(--red);border:0;border-radius:0;cursor:pointer}
+.pq-x svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:1.6}
+.pq-x:hover{background:var(--ink)}
+.pq-x:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.pq-dh{position:sticky;top:calc(-1 * var(--sp-5));z-index:2;background:#fff;display:flex;align-items:center;justify-content:space-between;gap:var(--sp-3);
+  margin:calc(-1 * var(--sp-5)) 0 var(--sp-4);padding:var(--sp-5) 0 var(--sp-3);border-block-end:1px solid rgba(20,22,25,.14)}
+.pq-dh h3{margin:0;font-size:var(--fs-name,28px);font-weight:500;line-height:1.1}
+.pq-dh h3 b{color:var(--red);font-weight:700}
+.pq-sub{margin:0 0 var(--sp-2);font-size:var(--fs-text);font-weight:500}
+@media (max-width:760px){.pq-dlg{inset:auto 0 0 0;width:auto;max-height:92vh;transform:translateY(8%);padding:var(--sp-4) var(--gin,20px) var(--sp-5)}
+  .pq-ov.on .pq-dlg{transform:none}.pq-dh{top:calc(-1 * var(--sp-4));margin-block-start:calc(-1 * var(--sp-4));padding-block-start:var(--sp-4)}}
+@media (prefers-reduced-motion:reduce){.pq-ov,.pq-dlg{transition:none}}
+
+/* ==== INNER HERO = THE INDUSTRY HERO (copied from aerospace) ==== */
+#hero.ix{position:relative;z-index:1;background:var(--white);box-sizing:border-box;
+  padding:calc(var(--gin) + var(--strip-h) + var(--sp-6)) var(--cx) var(--sp-6)}
+#hero.ix .ix-top{display:grid;grid-template-columns:7fr 5fr;gap:var(--sp-6);align-items:end;margin-bottom:var(--sp-5)}
+#hero.ix .ix-txt{min-width:0}
+#hero.ix .crumb,#hero.ix .sol-k,#hero.ix .ab-h1,#hero.ix .ab-h1 > span,#hero.ix .sol-p{opacity:1;transform:none;clip-path:none;transition:none}
+#hero.ix .crumb{color:rgba(20,22,25,.55);margin-bottom:var(--sp-4)}
+#hero.ix .crumb a{color:inherit}#hero.ix .crumb b{color:var(--ink)}
+#hero.ix .sol-k{color:var(--red);display:flex;align-items:center;gap:10px}
+#hero.ix .sol-k::before{content:"";flex:none;width:12px;height:12px;background:var(--red)}
+#hero.ix .ab-h1{color:var(--ink);font-size:calc(var(--fs-h1) * .62);line-height:1.02;margin:0}
+#hero.ix .ab-h1 > span{display:block;color:var(--ink)}
+#hero.ix .ab-h1 .lt{font-weight:var(--w-light)}#hero.ix .ab-h1 .bd{font-weight:var(--w-bold);white-space:normal}
+#hero.ix .sol-p{margin:0;max-width:30em;color:rgba(20,22,25,.78);font-size:var(--fs-lede);line-height:1.55;font-weight:var(--w-light)}
+#hero.ix .ix-fig{position:relative;width:100%;aspect-ratio:1280/480;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%201280%20480%22%20preserveAspectRatio=%22none%22%20shape-rendering=%22crispEdges%22%3E%3Crect%20x=%220%22%20y=%22120%22%20width=%221280%22%20height=%22360%22%20fill=%22white%22/%3E%3Crect%20x=%220%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2240%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22120%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22200%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22240%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22320%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22400%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22440%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22560%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22600%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22840%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22920%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22960%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221000%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221040%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221120%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%220%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2240%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2280%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22120%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22200%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22240%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22280%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22320%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22360%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22480%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22520%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22560%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22680%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22760%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22800%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22880%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22920%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22960%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221080%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221160%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221240%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%220%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2240%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2280%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22160%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22200%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22240%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22280%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22320%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22400%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22440%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22480%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22520%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22560%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22600%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22640%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22680%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22720%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22760%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22800%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22840%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22880%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22960%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221000%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221040%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221120%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221160%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221200%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221240%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3C/svg%3E") center/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%201280%20480%22%20preserveAspectRatio=%22none%22%20shape-rendering=%22crispEdges%22%3E%3Crect%20x=%220%22%20y=%22120%22%20width=%221280%22%20height=%22360%22%20fill=%22white%22/%3E%3Crect%20x=%220%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2240%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22120%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22200%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22240%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22320%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22400%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22440%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22560%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22600%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22840%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22920%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22960%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221000%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221040%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221120%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%220%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2240%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2280%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22120%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22200%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22240%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22280%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22320%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22360%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22480%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22520%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22560%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22680%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22760%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22800%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22880%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22920%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22960%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221080%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221160%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221240%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%220%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2240%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2280%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22160%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22200%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22240%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22280%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22320%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22400%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22440%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22480%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22520%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22560%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22600%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22640%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22680%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22720%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22760%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22800%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22840%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22880%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22960%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221000%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221040%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221120%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221160%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221200%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%221240%22%20y=%2280%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3C/svg%3E") center/100% 100% no-repeat}
+#hero.ix .ix-fig img,#hero.ix .ix-fig video{display:block;width:100%;height:100%;object-fit:cover}
+#hero.ix .ix-top{animation:xh-up .9s cubic-bezier(.22,1,.36,1) .1s both}
+#hero.ix .ix-fig{animation:ix-open 1.2s cubic-bezier(.62,0,.2,1) .25s both}
+@keyframes ix-open{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0)}}
+@keyframes xh-up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){ #hero.ix .ix-top,#hero.ix .ix-fig{animation:none} }
+@media (max-width:900px){
+  #hero.ix .ix-top{grid-template-columns:1fr;gap:var(--sp-4)}
+  #hero.ix .ab-h1{font-size:calc(var(--fs-h1) * .8)}
+  #hero.ix .ix-fig{aspect-ratio:400/320;-webkit-mask-image:url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20400%20320%22%20preserveAspectRatio=%22none%22%20shape-rendering=%22crispEdges%22%3E%3Crect%20x=%220%22%20y=%2280%22%20width=%22400%22%20height=%22240%22%20fill=%22white%22/%3E%3Crect%20x=%220%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22240%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%220%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2240%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2280%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22160%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22200%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22320%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22360%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20400%20320%22%20preserveAspectRatio=%22none%22%20shape-rendering=%22crispEdges%22%3E%3Crect%20x=%220%22%20y=%2280%22%20width=%22400%22%20height=%22240%22%20fill=%22white%22/%3E%3Crect%20x=%220%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22240%22%20y=%220%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%220%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2240%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%2280%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22160%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22200%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22320%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3Crect%20x=%22360%22%20y=%2240%22%20width=%2240%22%20height=%2240%22%20fill=%22white%22/%3E%3C/svg%3E")}
+}
+/* the solution pages took the industry hero (2026-11-11, client: option 2 of _hero-unify-options):
+   same words, same wide picture with the crumbling top edge; a hero button stands under the paragraph */
+#hero.ix .ix-side{min-width:0}
+#hero.ix .ix-side .xh-cta{margin-top:var(--sp-4)}
+
+/* ==== KP BAND = THE COMPACT BENTO (2026-11-11, client: option 2) ==============
+   The short proof strip under a solution hero speaks the bento's language now:
+   separate cards (grey on white, white on grey) with the bento's gap, and inside each
+   the number | hairline | text recipe at the same sizes, everything top-aligned.
+   No red panel - the strip stays one quiet row. */
+html body .kp.kp-band .kp-g{gap:var(--win-gap);background:none;border:0}
+html body .kp.kp-band .kp-g .kp-i{background:var(--sheet);padding:var(--sp-5) var(--gin);grid-template-columns:auto minmax(0,1fr);
+  align-content:start;align-items:start;column-gap:var(--sp-3);row-gap:var(--sp-2)}
+html body .kp.kp-band.on-grey .kp-g .kp-i{background:#fff}
+html body .kp.kp-band .kp-g .kp-i .kp-n{grid-column:1;grid-row:1 / span 2;align-self:start;padding-inline-end:var(--sp-3);
+  border-inline-end:1px solid rgba(20,22,25,.18);line-height:1.6}
+html body .kp.kp-band .kp-g .kp-i .kp-t{grid-column:2;grid-row:1;font-size:calc(var(--fs-lede) * .92);font-weight:400;line-height:1.5;letter-spacing:0;max-width:26em}
+html body .kp.kp-band .kp-g .kp-i .kp-d{grid-column:2;grid-row:2;margin:0}
+
+/* the FAQ (grey) now follows packing: packing goes white, its limit cards grey */
+section.pk.pq{background:var(--white)}
+section.pk.pq .pq-cards li{background:var(--sheet)}
+
+/* the conveyor: route and words share the width in two halves, so no wide empty band opens between the stations and the heading (2026-11-11) */
+@media (min-width:901px){.cv{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+</style>
 <script>(function(){
   var T=[1, 2, 3, 6], STRONG='soft'==='strong';  /* the industry pages take the stronger profile (2026-11-05) */
   if(!T.length||!('IntersectionObserver' in window)||!Element.prototype.animate) return;
@@ -11590,5 +11750,89 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
   window.addEventListener('resize',sweep);
 })();</script>
 <!-- /ORIAN ENTRY REVEAL -->
+
+<script>
+/* delivery days: hero button + tabs (2026-11-10) */
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.trk-tb'));
+  function pick(t){tabs.forEach(function(x){var on=x===t;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1;
+    document.getElementById(x.getAttribute('aria-controls')).hidden=!on;});}
+  tabs.forEach(function(t,i){t.addEventListener('click',function(){pick(t)});
+    t.addEventListener('keydown',function(e){var d=(e.key==='ArrowLeft'?1:e.key==='ArrowRight'?-1:0)*(document.documentElement.dir==='rtl'?1:-1);
+      if(d){e.preventDefault();var n=tabs[(i+d+tabs.length)%tabs.length];pick(n);n.focus();}});});
+  [].forEach.call(document.querySelectorAll('[data-fr-go]'),function(a){a.addEventListener('click',function(e){
+    var sec=document.getElementById('frequency');if(!sec)return;e.preventDefault();
+    var tb=document.querySelector('.trk-tb[aria-controls="frequency"]');if(tb)pick(tb);
+    var box=tb?document.getElementById('track'):sec;
+    var bar=document.querySelector('header, .bar, #topbar'),off=(bar?bar.getBoundingClientRect().bottom:0)+24;
+    window.scrollTo({top:box.getBoundingClientRect().top+scrollY-off,behavior:'smooth'});
+    setTimeout(function(){var i=document.getElementById('frIn');if(i)i.focus({preventScroll:true});},700);});});
+})();
+</script>
+
+<div class="pq-ov" id="pkDlg" hidden><div class="pq-dlg" role="dialog" aria-modal="true" aria-labelledby="pkDT" tabindex="-1"><div class="pq-dh"><h3 id="pkDT">Packing and <b>shipping guidelines</b></h3><button type="button" class="pq-x" data-pk-close aria-label="Close"><svg viewBox="0 0 16 16"><path d="M2 2l12 12M14 2L2 14"/></svg></button></div><p class="pq-sub">Maximum weights and dimensions</p><table class="pk-t"><thead><tr><th>Shipment type</th><th>Packaging</th><th>Max weight (kg)</th><th>Max dimensions (cm)</th></tr></thead><tbody><tr><td>Parcel to a business</td><td>Envelope or parcel</td><td>20</td><td><bdi dir="ltr">60×40×40</bdi></td></tr><tr><td>Parcel to a home</td><td>Envelope or parcel</td><td>15</td><td><bdi dir="ltr">50×30×40</bdi></td></tr><tr><td>Parcel to a pickup point (locker / shop)</td><td>Envelope or parcel</td><td>5</td><td><bdi dir="ltr">40×20×20</bdi></td></tr></tbody></table><p class="pq-sub">Packing guidelines</p><div class="pk-g" role="tablist" aria-orientation="vertical" aria-label="Packing guidelines" style="--n:6"><button class="pk-tab on" type="button" role="tab" id="pkTab0" aria-controls="pkPan0" aria-selected="true" tabindex="0" style="--r:1"><span class="pk-num">01</span><span class="pk-l">Contents and packing</span><span class="pk-ar" aria-hidden="true"></span></button><div class="pk-pan on" role="tabpanel" id="pkPan0" aria-labelledby="pkTab0"><ul><li>A new or intact carton in good condition, with no tears, defects or old labels.</li><li>Seal the carton well with tape (3-inch, non-glossy and non-reflective recommended).</li><li>Do not attach any other material, such as plastic film or cloth.</li><li>Round items (hats, balls) are packed with rigid, flat materials; the product is fixed in place, with no empty space.</li><li>Several delicate items in one carton must be separated.</li><li>Nothing may stick out of the parcel (nails, screws, tags, sharp parts).</li><li>Every parcel is packed on its own; no banding parcels together and no sacks.</li><li>Liquids and dangerous goods may not be sent for sorting.</li></ul></div><button class="pk-tab" type="button" role="tab" id="pkTab1" aria-controls="pkPan1" aria-selected="false" tabindex="-1" style="--r:2"><span class="pk-num">02</span><span class="pk-l">Packaging type</span><span class="pk-ar" aria-hidden="true"></span></button><div class="pk-pan" role="tabpanel" id="pkPan1" aria-labelledby="pkTab1" hidden><ul><li>Double-wall corrugated carton is recommended.</li><li>Match the carton to the product’s size and weight.</li><li>Fill cartons as much as possible; fill empty space with suitable filler.</li><li>Delicate products: the packaging is fitted to the contents.</li></ul></div><button class="pk-tab" type="button" role="tab" id="pkTab2" aria-controls="pkPan2" aria-selected="false" tabindex="-1" style="--r:3"><span class="pk-num">03</span><span class="pk-l">Label position</span><span class="pk-ar" aria-hidden="true"></span></button><div class="pk-pan" role="tabpanel" id="pkPan2" aria-labelledby="pkTab2" hidden><ul><li>On a smooth, even surface in the centre of the carton, not on the flap, sides or corners.</li><li>The barcode is not covered by packing materials (bags, tape, bands, other labels, shrink wrap).</li><li>For plastic packaging: apply the label before inserting the product, so it lies flat.</li></ul></div><button class="pk-tab" type="button" role="tab" id="pkTab3" aria-controls="pkPan3" aria-selected="false" tabindex="-1" style="--r:4"><span class="pk-num">04</span><span class="pk-l">Label size, quality and printing</span><span class="pk-ar" aria-hidden="true"></span></button><div class="pk-pan" role="tabpanel" id="pkPan3" aria-labelledby="pkTab3" hidden><ul><li>Recommended size 10×10 cm, a white label with a matte finish, so the camera is not dazzled.</li><li>A black barcode on a white, complete label, readable, unscratched and not faded.</li><li>Recommended printers: Zebra GK420 (small), Zebra ZT230 (large).</li></ul></div><button class="pk-tab" type="button" role="tab" id="pkTab4" aria-controls="pkPan4" aria-selected="false" tabindex="-1" style="--r:5"><span class="pk-num">05</span><span class="pk-l">Barcode specification</span><span class="pk-ar" aria-hidden="true"></span></button><div class="pk-pan" role="tabpanel" id="pkPan4" aria-labelledby="pkTab4" hidden><ul><li>ANSI A or B quality; module size X between 0.25 and 0.55 mm; minimum bar length 20 mm.</li><li>Quiet zone at least 10× the module size on both sides; length-to-height ratio 4:1.</li><li>Code 128 preferred, no frame around the barcode, centred at the top of the label.</li><li>Labels not made in the Orian portal: design them to spec and approve them with Orian’s IT contact.</li><li>Labels from the Orian portal: print in portrait, in Orian’s formats only, without resizing.</li></ul></div><button class="pk-tab" type="button" role="tab" id="pkTab5" aria-controls="pkPan5" aria-selected="false" tabindex="-1" style="--r:6"><span class="pk-num">06</span><span class="pk-l">Minimums and oversize</span><span class="pk-ar" aria-hidden="true"></span></button><div class="pk-pan" role="tabpanel" id="pkPan5" aria-labelledby="pkTab5" hidden><ul><li>Envelopes: A4 minimum; smaller envelopes will not be handled.</li><li>Parcels: minimum 15×10×1 cm and 250 g.</li><li>Parcels over the limits are charged the oversize rate (with your sales contact); an oversized parcel declared as regular is charged the oversize rate plus a handling fee.</li></ul></div></div></div></div>
+<script>
+(function(){var g=document.querySelector('#pkDlg .pk-g');if(!g)return;
+var tabs=[].slice.call(g.querySelectorAll('.pk-tab')),pans=[].slice.call(g.querySelectorAll('.pk-pan'));
+var mq=window.matchMedia('(max-width:900px)');
+function set(k,open){tabs.forEach(function(t,j){var on=j===k&&open;t.classList.toggle('on',on);t.setAttribute('aria-selected',on?'true':'false');t.tabIndex=(j===k)?0:-1;
+ pans[j].classList.toggle('on',on);pans[j].hidden=!on;});}
+tabs.forEach(function(t,j){t.addEventListener('click',function(){
+  if(mq.matches&&t.classList.contains('on')){set(j,false);return;}   /* accordion: tap again to close */
+  set(j,true);
+  if(mq.matches){var y=t.getBoundingClientRect().top;if(y<80)window.scrollBy({top:y-90,behavior:'smooth'});}});
+ t.addEventListener('keydown',function(e){var d=(e.key==='ArrowDown')?1:(e.key==='ArrowUp')?-1:0;
+  if(e.key==='Home')d=-j;if(e.key==='End')d=tabs.length-1-j;
+  if(d){e.preventDefault();var n=(j+d+tabs.length)%tabs.length;set(n,true);tabs[n].focus();}});});
+})();
+</script>
+<script>
+/* packing popup (2026-11-10) */
+(function(){var ov=document.getElementById('pkDlg');if(!ov)return;var dlg=ov.querySelector('.pq-dlg'),back=null;
+ function open(e){if(e)e.preventDefault();back=document.activeElement;ov.hidden=false;document.documentElement.classList.add('pq-lock');
+   requestAnimationFrame(function(){requestAnimationFrame(function(){ov.classList.add('on');dlg.focus({preventScroll:true});});});}
+ function close(){if(ov.hidden)return;ov.classList.remove('on');document.documentElement.classList.remove('pq-lock');
+   setTimeout(function(){ov.hidden=true;},320);if(back&&back.focus)back.focus({preventScroll:true});}
+ [].forEach.call(document.querySelectorAll('[data-pk-open]'),function(a){a.addEventListener('click',open)});
+ ov.addEventListener('click',function(e){if(e.target===ov||e.target.closest('[data-pk-close]'))close();});
+ document.addEventListener('keydown',function(e){if(ov.hidden)return;if(e.key==='Escape'){close();return;}
+   if(e.key==='Tab'){var f=[].filter.call(dlg.querySelectorAll('button,a[href],input,[tabindex]:not([tabindex="-1"])'),function(x){return x.offsetParent!==null});if(!f.length)return;
+     var a=f[0],z=f[f.length-1];if(e.shiftKey&&(document.activeElement===a||document.activeElement===dlg)){e.preventDefault();z.focus();}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus();}}});
+})();
+</script>
+<style>
+/* ==== THE NAV KNOWS WHERE YOU ARE (2026-11-11) ==========================================
+   The page you are on is marked in the bar AND in the menu, in the hover's own look:
+   its group's word in the bar is red with its square (as when open), and its tile in the
+   menu is red with the red line under it (desktop sheet and phone list alike). */
+.m-top.is-cur:not(.m-util){color:var(--red)}
+.m-top.is-cur:not(.m-util)::after{--top-mk:var(--top-mk-on)}
+.dd .dd-t.is-cur,.mg .dd-t.is-cur{color:var(--red);border-bottom-color:var(--red)}
+.dd .dd-t.is-cur .btn-ring .ar,.mg .dd-t.is-cur .btn-ring .ar{color:var(--red)}
+</style>
+<script>
+/* the nav marks the current page: its tile in the menu and its group in the bar */
+(function(){
+  function file(h){ try{ return decodeURIComponent(new URL(h, location.href).pathname.split('/').pop()) || 'index.html'; }catch(e){ return ''; } }
+  var me = file(location.href), GROUPS = ['dd-svc','dd-ind','dd-sus','dd-abt'];
+  function mark(){
+    var hit = -1;
+    [].forEach.call(document.querySelectorAll('a.dd-t'), function(a){
+      var on = file(a.getAttribute('href') || '') === me;
+      a.classList.toggle('is-cur', on);
+      if(on){ a.setAttribute('aria-current','page'); var g = a.closest('.dd-g'); if(g && hit < 0) hit = GROUPS.indexOf(g.id); }
+      else if(a.getAttribute('aria-current') === 'page') a.removeAttribute('aria-current');
+    });
+    [].forEach.call(document.querySelectorAll('#bar .m-top:not(.m-util)'), function(t, i){
+      t.classList.toggle('is-cur', i === hit);
+      if(i === hit) t.setAttribute('aria-current','page'); else t.removeAttribute('aria-current');
+    });
+  }
+  mark();
+  window.addEventListener('load', mark);
+  setTimeout(mark, 600);
+  document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('.m-top, .m-btn, [aria-controls]')) setTimeout(mark, 30); }, true);
+})();
+</script>
 </body>
 </html>

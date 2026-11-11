@@ -8911,6 +8911,16 @@ a.cd-v:hover{color:var(--red)}
 .dd .dd-t .btn-ring .ar{width:12px;height:12px;color:var(--ink);--ar-w:1.8}
 .dd .dd-t:hover,.dd .dd-t:focus-visible{background:none;color:var(--red);border-bottom-color:var(--red)}
 .dd .dd-t:hover .btn-ring .ar,.dd .dd-t:focus-visible .btn-ring .ar{color:var(--red)}
+/* ---- THE MENU IN THREE COLUMNS (2026-11-11, option 4 of _menu3-options). The client asked to
+   join today's line-and-arrow menu with the earlier one: the grey sheet and the white tiles
+   come back, three to a row, no icons; the tile wears the new manner - the small diagonal
+   arrow always standing at its far end, and hover = label, arrow and a red line under the
+   tile in one frame, no red fill. Desktop only, like the sheet; the phone menu is .mg. ---- */
+.dd{background:linear-gradient(transparent var(--win-gap),var(--sheet) 0)}
+.dd .dd-g{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--win-gap);padding:var(--sp-4) var(--gin)}
+.dd .dd-t{background:var(--white);min-height:calc(var(--sq) + var(--sp-4));padding-inline:var(--sp-4);border-bottom:2px solid transparent}
+.dd .dd-t .btn-ring{inset-inline-end:var(--sp-4)}
+.dd .dd-t:hover,.dd .dd-t:focus-visible{background:var(--white);color:var(--red);border-bottom-color:var(--red)}
 .dd-ic{display:none}
 </style>
 <style>
@@ -8948,6 +8958,44 @@ a.cd-v:hover{color:var(--red)}
   .mg .dd-t:hover,.mg .dd-t:focus-visible,.mg .dd-t:active{background:none;color:var(--red);border-bottom-color:var(--red)}
   .mg .dd-t:hover .btn-ring .ar,.mg .dd-t:focus-visible .btn-ring .ar,.mg .dd-t:active .btn-ring .ar{color:var(--red)}
   .mg + .m-util{border-top:0}
+}
+</style>
+<style>
+/* CERTIFICATES · option 3 of _cert-options (2026-11-10): the client asked for less on each card by default.
+   The standard's code IS the title (ISO 9001, no year; AEO; the platinum mark by name), a short topic under it.
+   Hover swaps the topic for her own description, on the red the card already had. No icon. A phone has no
+   hover and a tap opens the PDF, so there the description stays under the topic. */
+.kp-cert .kp-a{min-height:clamp(250px,20.8vw,330px);align-content:start}
+.kp-cert .cr-code{display:block;margin-block-start:var(--sp-2);font-size:calc(var(--fs-sec) * .62);font-weight:700;line-height:1;letter-spacing:var(--tr-head);color:var(--ink)}
+.kp-cert .cr-sub{font-size:var(--fs-text);font-weight:500;color:var(--ink);max-width:22em}
+.kp-cert .kp-a .kp-d{display:none}
+@media (hover:hover){
+  .kp-cert .kp-a:is(:hover,:focus-visible) .cr-code{color:var(--paper)}
+  .kp-cert .kp-a:is(:hover,:focus-visible) .cr-sub{display:none}
+  .kp-cert .kp-a:is(:hover,:focus-visible) .kp-d{display:block}
+}
+@media (hover:none){
+  .kp-cert .kp-a{min-height:0}
+  .kp-cert .kp-a .kp-d{display:block}
+}
+</style>
+<style>
+/* THE CERTIFICATE OPENS SOFTLY (2026-11-11, hers: "נפתחות בצורה לינארית ונעימה ולא מיידית").
+   The page throws every .kp-a hover on in one frame (transition:none!important); here, and only
+   here, the red ground eases in over .45s and the topic cross-fades into the description in the
+   SAME grid cell, so the card never jumps. Pointer devices only; a phone shows both, as before. */
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  html body .kp-cert .kp-a{grid-template-columns:minmax(0,1fr);
+    transition:background-color .45s cubic-bezier(.4,0,.2,1),color .45s cubic-bezier(.4,0,.2,1)!important}
+  html body .kp-cert .kp-a > .ar-sq{transition:background-color .45s cubic-bezier(.4,0,.2,1)!important}
+  html body .kp-cert .kp-a > *:not(.ar-sq){transition:color .45s cubic-bezier(.4,0,.2,1),background-color .45s cubic-bezier(.4,0,.2,1),
+    opacity .4s cubic-bezier(.4,0,.2,1),transform .5s cubic-bezier(.4,0,.2,1)!important}
+  html body .kp-cert .kp-a .kp-n{grid-row:1;grid-column:1}
+  html body .kp-cert .kp-a .cr-code{grid-row:2;grid-column:1}
+  html body .kp-cert .kp-a .cr-sub,html body .kp-cert .kp-a .kp-d{grid-row:3;grid-column:1;display:block!important}
+  html body .kp-cert .kp-a .kp-d{opacity:0;transform:translateY(10px)}
+  html body .kp-cert .kp-a:is(:hover,:focus-visible) .cr-sub{opacity:0;transform:translateY(-6px)}
+  html body .kp-cert .kp-a:is(:hover,:focus-visible) .kp-d{opacity:1;transform:none;transition-delay:0s,0s,.12s,.12s!important}
 }
 </style>
 </head>
@@ -9248,13 +9296,13 @@ a.cd-v:hover{color:var(--red)}
     <p class="kp-p">ההסמכות של אוריין, כפי שהן מפורסמות באתר החברה. כל תעודה זמינה להורדה.</p>
   </div>
   <ol class="kp-g">
-    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/p1868801089_FFPDF-Hebrew-89101.PDF" target="_blank" rel="noopener"><svg class="v2-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="9.5" r="6.5"/><path d="M8.5 15L7 21.5L12 19L17 21.5L15.5 15"/><rect class="pt" x="10.5" y="8" width="3" height="3"/></svg><span class="kp-n">01</span><b class="kp-t">תעודת הסמכה לתקן <bdi dir="ltr">ISO 9001:2015</bdi></b><span class="kp-d">חברת אוריין נבחנה ונסקרה ע״י מכון התקנים הישראלי ונמצאה מתאימה לדרישות התקן במתן שירותי שילוח בינ״ל, עמילות מכס, אחסנה, הובלות יבשתיות ובלדרות.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li>
-    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/Orian-AEO2025.pdf" target="_blank" rel="noopener"><svg class="v2-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="9.5" r="6.5"/><path d="M8.5 15L7 21.5L12 19L17 21.5L15.5 15"/><rect class="pt" x="10.5" y="8" width="3" height="3"/></svg><span class="kp-n">02</span><b class="kp-t">תעודת גורם כלכלי מאושר, מחסן מטענים כללי</b><span class="kp-d">חברת אוריין אושרה כמחסן מטענים כללי בתכנית ״גורם כלכלי מאושר״ ושותפה לאבטחת שרשרת האספקה הבינלאומית.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li>
-    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/45001-he.PDF" target="_blank" rel="noopener"><svg class="v2-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="9.5" r="6.5"/><path d="M8.5 15L7 21.5L12 19L17 21.5L15.5 15"/><rect class="pt" x="10.5" y="8" width="3" height="3"/></svg><span class="kp-n">03</span><b class="kp-t">תעודת הסמכה לתקן ת״י <bdi dir="ltr">ISO 45001:2018</bdi></b><span class="kp-d">חברת אוריין נסקרה ונבחנה ע״י המכון לבקרה ואיכות ונמצאה מתאימה לדרישות התקן במתן שירותים לוגיסטיים.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li>
-    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/Orian-AEO-FF-2024.pdf" target="_blank" rel="noopener"><svg class="v2-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="9.5" r="6.5"/><path d="M8.5 15L7 21.5L12 19L17 21.5L15.5 15"/><rect class="pt" x="10.5" y="8" width="3" height="3"/></svg><span class="kp-n">04</span><b class="kp-t">תעודת גורם כלכלי מאושר, סוכן מכס ומשלח בינ״ל</b><span class="kp-d">חברת אוריין אושרה כסוכן מכס ומשלח בינ״ל בתכנית ״גורם כלכלי מאושר״ ושותפה לאבטחת שרשרת האספקה הבינלאומית.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li>
-    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/14001-he.PDF" target="_blank" rel="noopener"><svg class="v2-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="9.5" r="6.5"/><path d="M8.5 15L7 21.5L12 19L17 21.5L15.5 15"/><rect class="pt" x="10.5" y="8" width="3" height="3"/></svg><span class="kp-n">05</span><b class="kp-t">תעודת הסמכה לתקן ת״י <bdi dir="ltr">ISO 14001:2015</bdi></b><span class="kp-d">חברת אוריין נסקרה ונבחנה ע״י המכון לבקרה ואיכות ונמצאה מתאימה לדרישות התקן במתן שירותים לוגיסטיים.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li>
-    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/Orian-PlatinumMark2024.pdf" target="_blank" rel="noopener"><svg class="v2-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="9.5" r="6.5"/><path d="M8.5 15L7 21.5L12 19L17 21.5L15.5 15"/><rect class="pt" x="10.5" y="8" width="3" height="3"/></svg><span class="kp-n">06</span><b class="kp-t">תו פלטינה, מכון התקנים</b><span class="kp-d">חברת אוריין נסקרה ונבחנה ע״י מכון התקנים על היותה נושאת תווי איכות המעידים על התאמת מערכות הניהול שלה לאמות מידה של איכות.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li>
-    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/Certificate%20-%20ISO%2027001%20+%20ISO%2027032%20till%2019-10-2026%20-%20ENG.pdf" target="_blank" rel="noopener"><svg class="v2-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="9.5" r="6.5"/><path d="M8.5 15L7 21.5L12 19L17 21.5L15.5 15"/><rect class="pt" x="10.5" y="8" width="3" height="3"/></svg><span class="kp-n">07</span><b class="kp-t">תעודת הסמכה לתקן ת״י <bdi dir="ltr">ISO 27001:2022</bdi></b><span class="kp-d">חברת אוריין נסקרה ונבחנה ע״י מכון התקנים הישראלי ונמצאה מתאימה לדרישות התקן לניהול אבטחת מידע.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li>
+    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/p1868801089_FFPDF-Hebrew-89101.PDF" target="_blank" rel="noopener"><span class="kp-n">01</span><b class="cr-code"><bdi dir="ltr">ISO 9001</bdi></b><span class="cr-sub">ניהול איכות</span><span class="kp-d">חברת אוריין נבחנה ונסקרה ע״י מכון התקנים הישראלי ונמצאה מתאימה לדרישות התקן במתן שירותי שילוח בינ״ל, עמילות מכס, אחסנה, הובלות יבשתיות ובלדרות.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li>
+    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/Orian-AEO2025.pdf" target="_blank" rel="noopener"><span class="kp-n">02</span><b class="cr-code"><bdi dir="ltr">AEO</bdi></b><span class="cr-sub">גורם כלכלי מאושר · מחסן מטענים כללי</span><span class="kp-d">חברת אוריין אושרה כמחסן מטענים כללי בתכנית ״גורם כלכלי מאושר״ ושותפה לאבטחת שרשרת האספקה הבינלאומית.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li>
+    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/45001-he.PDF" target="_blank" rel="noopener"><span class="kp-n">03</span><b class="cr-code"><bdi dir="ltr">ISO 45001</bdi></b><span class="cr-sub">בטיחות וגיהות בעבודה</span><span class="kp-d">חברת אוריין נסקרה ונבחנה ע״י המכון לבקרה ואיכות ונמצאה מתאימה לדרישות התקן במתן שירותים לוגיסטיים.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li>
+    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/Orian-AEO-FF-2024.pdf" target="_blank" rel="noopener"><span class="kp-n">04</span><b class="cr-code"><bdi dir="ltr">AEO</bdi></b><span class="cr-sub">גורם כלכלי מאושר · סוכן מכס ומשלח בינ״ל</span><span class="kp-d">חברת אוריין אושרה כסוכן מכס ומשלח בינ״ל בתכנית ״גורם כלכלי מאושר״ ושותפה לאבטחת שרשרת האספקה הבינלאומית.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li>
+    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/14001-he.PDF" target="_blank" rel="noopener"><span class="kp-n">05</span><b class="cr-code"><bdi dir="ltr">ISO 14001</bdi></b><span class="cr-sub">ניהול סביבתי</span><span class="kp-d">חברת אוריין נסקרה ונבחנה ע״י המכון לבקרה ואיכות ונמצאה מתאימה לדרישות התקן במתן שירותים לוגיסטיים.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li>
+    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/Orian-PlatinumMark2024.pdf" target="_blank" rel="noopener"><span class="kp-n">06</span><b class="cr-code">תו פלטינה</b><span class="cr-sub">מכון התקנים הישראלי</span><span class="kp-d">חברת אוריין נסקרה ונבחנה ע״י מכון התקנים על היותה נושאת תווי איכות המעידים על התאמת מערכות הניהול שלה לאמות מידה של איכות.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li>
+    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/Certificate%20-%20ISO%2027001%20+%20ISO%2027032%20till%2019-10-2026%20-%20ENG.pdf" target="_blank" rel="noopener"><span class="kp-n">07</span><b class="cr-code"><bdi dir="ltr">ISO 27001</bdi></b><span class="cr-sub">אבטחת מידע</span><span class="kp-d">חברת אוריין נסקרה ונבחנה ע״י מכון התקנים הישראלי ונמצאה מתאימה לדרישות התקן לניהול אבטחת מידע.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li>
   </ol>
 </section>
 
@@ -9338,7 +9386,7 @@ a.cd-v:hover{color:var(--red)}
     </div>
     <div class="mo-more">
       <p class="mo-k">עוד בנושא</p>
-      <ul class="mo-g"><li style="--i:0"><a href="about.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M4 21V7L12 3L20 7V21ZM2 21H22M9 21V16H15V21M8 10H10M14 10H16"/><rect class="pt" x="10.5" y="6.5" width="3" height="3" /></svg><span class="mo-n">אודות אוריין</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li><li style="--i:1"><a href="board.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="3.5" y="7" width="3" height="3"/><rect x="17.5" y="7" width="3" height="3"/><path d="M2 17V13H8V17M9 17V10H15V17M16 17V13H22V17M2 20H22"/><rect class="pt" x="10.5" y="4" width="3" height="3" /></svg><span class="mo-n">חברי דירקטוריון</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li><li style="--i:2"><a href="customs-clearance.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 3H15L19 7V21H5ZM15 3V7H19M8 11H16M8 14H13"/><rect class="pt" x="13.5" y="16.5" width="3" height="3" /></svg><span class="mo-n">עמילות מכס</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li><li style="--i:3"><a href="logistics-warehousing.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M4 3V21M20 3V21M4 9H20M4 15H20"/><rect x="7" y="5" width="4" height="4"/><rect x="12" y="11" width="4" height="4"/><rect class="pt" x="7.5" y="16.5" width="3" height="3" /></svg><span class="mo-n">לוגיסטיקה ואחסנה</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li></ul>
+      <ul class="mo-g"><li style="--i:0"><a href="about.html" class="mo-c"><span class="mo-n">אודות אוריין</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li><li style="--i:1"><a href="board.html" class="mo-c"><span class="mo-n">חברי דירקטוריון</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li><li style="--i:2"><a href="customs-clearance.html" class="mo-c"><span class="mo-n">עמילות מכס</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li><li style="--i:3"><a href="logistics-warehousing.html" class="mo-c"><span class="mo-n">לוגיסטיקה ואחסנה</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a></li></ul>
     </div>
   </div>
 </section>
@@ -11259,14 +11307,14 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
       if(h.classList.contains('ol1')){ h.classList.remove('ol1'); h.style.textAlign=''; gap(h,0) }
       var r=h.getBoundingClientRect(); if(!r.width||!r.height) return;
       var L=lh(h); if(r.height<L*1.6) return;                 /* already one line */
-      var cs=getComputedStyle(h), col=colW(h), ta='';
+      var cs=getComputedStyle(h), col=Math.min(colW(h), r.width), ta='';   /* 2026-11-05: its OWN column (the box it fills on two lines), not the head row's whole width - a heading beside its paragraph was set on one line and ran under it */
       /* a heading laid out as a flex/grid column keeps the side its lines stood on */
       if(/flex|grid/.test(cs.display)){ var ai=(cs.alignItems+' '+cs.justifyItems);
         ta=/center/.test(ai)?'center':(/flex-end|(^| )end|right/.test(ai)?'end':'') }
       h.classList.add('ol1'); if(ta) h.style.textAlign=ta; gap(h,1);
       h.style.width='max-content'; var w=h.getBoundingClientRect().width; h.style.width='';
       var one=h.getBoundingClientRect().height<L*1.6;          /* it really is one line now */
-      if(!(one&&w<=lim&&w<=col+1)){ h.classList.remove('ol1'); h.style.textAlign=''; gap(h,0) }
+      if(!(one&&w<=lim&&w<=col+1&&h.scrollWidth<=h.clientWidth+1)){   /* and its words may not spill past its box */ h.classList.remove('ol1'); h.style.textAlign=''; gap(h,0) }
     });
   }
   var t; function later(){ clearTimeout(t); t=setTimeout(fit,120) }
@@ -11357,5 +11405,39 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
   window.addEventListener('resize',sweep);
 })();</script>
 <!-- /ORIAN ENTRY REVEAL -->
+<style>
+/* ==== THE NAV KNOWS WHERE YOU ARE (2026-11-11) ==========================================
+   The page you are on is marked in the bar AND in the menu, in the hover's own look:
+   its group's word in the bar is red with its square (as when open), and its tile in the
+   menu is red with the red line under it (desktop sheet and phone list alike). */
+.m-top.is-cur:not(.m-util){color:var(--red)}
+.m-top.is-cur:not(.m-util)::after{--top-mk:var(--top-mk-on)}
+.dd .dd-t.is-cur,.mg .dd-t.is-cur{color:var(--red);border-bottom-color:var(--red)}
+.dd .dd-t.is-cur .btn-ring .ar,.mg .dd-t.is-cur .btn-ring .ar{color:var(--red)}
+</style>
+<script>
+/* the nav marks the current page: its tile in the menu and its group in the bar */
+(function(){
+  function file(h){ try{ return decodeURIComponent(new URL(h, location.href).pathname.split('/').pop()) || 'index.html'; }catch(e){ return ''; } }
+  var me = file(location.href), GROUPS = ['dd-svc','dd-ind','dd-sus','dd-abt'];
+  function mark(){
+    var hit = -1;
+    [].forEach.call(document.querySelectorAll('a.dd-t'), function(a){
+      var on = file(a.getAttribute('href') || '') === me;
+      a.classList.toggle('is-cur', on);
+      if(on){ a.setAttribute('aria-current','page'); var g = a.closest('.dd-g'); if(g && hit < 0) hit = GROUPS.indexOf(g.id); }
+      else if(a.getAttribute('aria-current') === 'page') a.removeAttribute('aria-current');
+    });
+    [].forEach.call(document.querySelectorAll('#bar .m-top:not(.m-util)'), function(t, i){
+      t.classList.toggle('is-cur', i === hit);
+      if(i === hit) t.setAttribute('aria-current','page'); else t.removeAttribute('aria-current');
+    });
+  }
+  mark();
+  window.addEventListener('load', mark);
+  setTimeout(mark, 600);
+  document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('.m-top, .m-btn, [aria-controls]')) setTimeout(mark, 30); }, true);
+})();
+</script>
 </body>
 </html>

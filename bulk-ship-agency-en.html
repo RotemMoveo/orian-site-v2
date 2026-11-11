@@ -8864,6 +8864,16 @@ section.tp#aeo{padding:var(--ab-air) var(--cx);text-align:start}
 .dd .dd-t .btn-ring .ar{width:12px;height:12px;color:var(--ink);--ar-w:1.8}
 .dd .dd-t:hover,.dd .dd-t:focus-visible{background:none;color:var(--red);border-bottom-color:var(--red)}
 .dd .dd-t:hover .btn-ring .ar,.dd .dd-t:focus-visible .btn-ring .ar{color:var(--red)}
+/* ---- THE MENU IN THREE COLUMNS (2026-11-11, option 4 of _menu3-options). The client asked to
+   join today's line-and-arrow menu with the earlier one: the grey sheet and the white tiles
+   come back, three to a row, no icons; the tile wears the new manner - the small diagonal
+   arrow always standing at its far end, and hover = label, arrow and a red line under the
+   tile in one frame, no red fill. Desktop only, like the sheet; the phone menu is .mg. ---- */
+.dd{background:linear-gradient(transparent var(--win-gap),var(--sheet) 0)}
+.dd .dd-g{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--win-gap);padding:var(--sp-4) var(--gin)}
+.dd .dd-t{background:var(--white);min-height:calc(var(--sq) + var(--sp-4));padding-inline:var(--sp-4);border-bottom:2px solid transparent}
+.dd .dd-t .btn-ring{inset-inline-end:var(--sp-4)}
+.dd .dd-t:hover,.dd .dd-t:focus-visible{background:var(--white);color:var(--red);border-bottom-color:var(--red)}
 .dd-ic{display:none}
 </style>
 <style>
@@ -8953,8 +8963,8 @@ section.tp#aeo{padding:var(--ab-air) var(--cx);text-align:start}
 .ct-fd input[type=tel]{text-align:left}
 
 /* ---- the footer: the crumbling end of the red floor goes to the LEFT */
-.ft-band{background:linear-gradient(var(--red),var(--red)) right / calc(100% - var(--ft-crumb-w) + 1px) 100% no-repeat}
-.ft-band svg{right:auto;left:0;transform:scaleX(-1)}
+
+
 @media(prefers-reduced-motion:reduce){
   .pz-nt .ns-item,.pz-nt .ns-item.out,.pz-nt .ns-item.on{transform:none}
 }
@@ -9235,6 +9245,32 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
   </div>
   <div class="ix-fig" aria-hidden="true"><img src="files/v-supply-launch.jpg" alt="" fetchpriority="high"></div>
 </section>
+<style>
+/* ==== INNER HERO · ONE CURTAIN, TOP DOWN (2026-11-11, second pass) ====
+   Her correction the same day: the pixels must not pop off one by one ("לא בחשיפה מיידית").
+   ONE white cover over the whole picture, the crumbling pixel band included, draws up off
+   it from the top down, like a curtain opening downward: the band's squares come out first
+   and then the photograph, gradually, as its edge passes. Replaces the square-by-square band
+   and the second wipe that followed it. */
+#hero.ix .ix-fig{animation:none!important;clip-path:none!important;overflow:hidden}
+#hero.ix .ix-cv{position:absolute;inset:0;z-index:2;background:var(--white,#fff);pointer-events:none;
+  animation:ix-cv var(--cvd,1.2s) cubic-bezier(.45,0,.2,1) var(--cvs,.15s) forwards}
+@keyframes ix-cv{from{clip-path:inset(0)}to{clip-path:inset(100% 0 0 0)}}
+@media (prefers-reduced-motion:reduce){#hero.ix .ix-cv{display:none}}
+</style>
+<script>
+/* inner hero: one curtain, drawn down off the picture */
+(function(){
+  var f=document.querySelector('#hero.ix .ix-fig'); if(!f) return;
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var START=150, WIPE=1200;
+  var c=document.createElement('div'); c.className='ix-cv'; c.setAttribute('aria-hidden','true');
+  c.style.setProperty('--cvs',START+'ms'); c.style.setProperty('--cvd',WIPE+'ms');
+  f.appendChild(c);
+  setTimeout(function(){ if(c.parentNode) c.parentNode.removeChild(c); }, START+WIPE+300);
+})();
+</script>
+
 
 <script>
 /* INNER HERO · THE HOMEPAGE'S ENTRANCE (2026-10-06) - concept-3-hero.html's
@@ -9360,9 +9396,17 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
   <svg class="st-px" viewBox="0 0 310 240" aria-hidden="true" focusable="false"><rect x="0" y="0" width="30" height="30"/><rect x="35" y="0" width="30" height="30"/><rect x="70" y="0" width="30" height="30"/><rect x="0" y="35" width="30" height="30"/><rect x="35" y="35" width="30" height="30"/><rect x="70" y="35" width="30" height="30"/><rect x="105" y="35" width="30" height="30"/><rect x="140" y="35" width="30" height="30"/><rect x="210" y="35" width="30" height="30"/><rect x="0" y="70" width="30" height="30"/><rect x="35" y="70" width="30" height="30"/><rect x="70" y="70" width="30" height="30"/><rect x="105" y="70" width="30" height="30"/><rect x="140" y="70" width="30" height="30"/><rect x="175" y="70" width="30" height="30"/><rect class="r" x="210" y="70" width="30" height="30"/><rect x="0" y="105" width="30" height="30"/><rect x="35" y="105" width="30" height="30"/><rect x="70" y="105" width="30" height="30"/><rect x="105" y="105" width="30" height="30"/><rect x="140" y="105" width="30" height="30"/><rect x="0" y="140" width="30" height="30"/><rect x="35" y="140" width="30" height="30"/><rect x="70" y="140" width="30" height="30"/><rect class="r" x="105" y="140" width="30" height="30"/><rect x="0" y="175" width="30" height="30"/><rect x="35" y="175" width="30" height="30"/><rect x="70" y="175" width="30" height="30"/><rect x="105" y="175" width="30" height="30"/><rect x="175" y="175" width="30" height="30"/><rect x="0" y="210" width="30" height="30"/><rect x="35" y="210" width="30" height="30"/><rect x="70" y="210" width="30" height="30"/><rect x="105" y="210" width="30" height="30"/></svg>
 </section>
 
-<section class="fs" id="story">
-  <article class="fs-row"><figure class="fs-img"><img src="files/r-dagon-bulk.jpg" alt="" loading="lazy"></figure><div class="fs-tx"><h2 class="fs-h">Throughout the port call</h2><p>The agency team provides full service throughout the port call, coordinating continuously between the port, the authorities, operators, clients and every party involved.</p><p>Our teams follow the work in the field and keep continuous operational control, to move processes forward in real time and keep the operation efficient and accurate.</p><p>The service includes, among other things, ship supplies, bunkering, medical services, crew changes and coordinating a range of operational and logistics services for the ship and its owners.</p></div></article>
-  <article class="fs-row"><figure class="fs-img"><img src="files/real-agent-quay.jpg" alt="" loading="lazy"></figure><div class="fs-tx"><h2 class="fs-h">Transparency and control</h2><p>In addition, through our automated systems, customers receive ongoing real-time updates on the ship's status and the work, for transparency and control throughout.</p><p>Years of experience, deep knowledge of Israel's ports and our presence on the ground let Orian give shipowners and customers a professional, local and available service, even in complex work and challenging operating conditions.</p></div></article>
+<section class="sp" id="route" aria-labelledby="rteTitle">
+  <div class="kp-head">
+    <h2 class="kp-h" id="rteTitle"><span class="lt">Throughout</span><span class="bd">the port call.</span></h2>
+    <p class="kp-p">The agency team provides full service throughout the ship's call in port.</p>
+  </div>
+  <ol class="sp-l" style="--n:4">
+    <li class="sp-i"><span class="sp-pt" aria-hidden="true"></span><span class="sp-n">01</span><b class="sp-t">Coordination</b><span class="sp-d">Between the port, the authorities, operators and clients</span></li>
+    <li class="sp-i"><span class="sp-pt" aria-hidden="true"></span><span class="sp-n">02</span><b class="sp-t">Control in the field</b><span class="sp-d">Continuous operational control, in real time</span></li>
+    <li class="sp-i"><span class="sp-pt" aria-hidden="true"></span><span class="sp-n">03</span><b class="sp-t">Ship services</b><span class="sp-d">Supplies, bunkering and medical services</span></li>
+    <li class="sp-i"><span class="sp-pt" aria-hidden="true"></span><span class="sp-n">04</span><b class="sp-t">Crew and operations</b><span class="sp-d">Crew changes and logistics services</span></li>
+  </ol>
 </section>
 
 <section class="st" id="statement2">
@@ -9373,6 +9417,10 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
 
 
 
+
+<section class="fs" id="story">
+  <article class="fs-row"><figure class="fs-img"><img src="files/real-agent-quay.jpg" alt="" loading="lazy"></figure><div class="fs-tx"><h2 class="fs-h">Transparency and control</h2><p>In addition, through our automated systems, customers receive ongoing real-time updates on the ship's status and the work, for transparency and control throughout.</p><p>Years of experience, deep knowledge of Israel's ports and our presence on the ground let Orian give shipowners and customers a professional, local and available service, even in complex work and challenging operating conditions.</p></div></article>
+</section>
 
 <script>
 /* HERO FILM: plays at once; until the tiles are built, every frame of it is painted
@@ -9422,6 +9470,23 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
 
 
 
+<section class="fq" id="faq" aria-labelledby="fqTitle">
+  <div class="fq-side">
+    <h2 class="fq-h" id="fqTitle"><span class="lt">Common</span><span class="bd">questions</span></h2>
+    <p class="fq-p">The questions we hear most often.</p>
+  </div>
+  <div class="fq-l">
+      <div class="fq-i" style="--i:0"><h3 class="fq-hq"><button class="fq-q" type="button" id="fqQ0" aria-expanded="false" aria-controls="fqA0"><span class="fq-m" aria-hidden="true"></span><span class="fq-t">What kinds of ships do you handle?</span></button></h3>
+        <div class="fq-a" id="fqA0" role="region" aria-labelledby="fqQ0"><div><p>Bulk carriers, chemical tankers and steel carriers, as well as ships serving clients in the defence equipment field.</p></div></div></div>
+      <div class="fq-i" style="--i:1"><h3 class="fq-hq"><button class="fq-q" type="button" id="fqQ1" aria-expanded="false" aria-controls="fqA1"><span class="fq-m" aria-hidden="true"></span><span class="fq-t">What does the ship agency service include?</span></button></h3>
+        <div class="fq-a" id="fqA1" role="region" aria-labelledby="fqQ1"><div><p>Full service throughout the port call: coordination with the port and the authorities, ship supplies, bunkering, medical services, crew changes and further operational services.</p></div></div></div>
+      <div class="fq-i" style="--i:2"><h3 class="fq-hq"><button class="fq-q" type="button" id="fqQ2" aria-expanded="false" aria-controls="fqA2"><span class="fq-m" aria-hidden="true"></span><span class="fq-t">Do you operate in emergencies too?</span></button></h3>
+        <div class="fq-a" id="fqA2" role="region" aria-labelledby="fqQ2"><div><p>Yes. Orian's teams are available 24/7 and work in Israel's ports in emergencies and in wartime too.</p></div></div></div>
+      <div class="fq-i" style="--i:3"><h3 class="fq-hq"><button class="fq-q" type="button" id="fqQ3" aria-expanded="false" aria-controls="fqA3"><span class="fq-m" aria-hidden="true"></span><span class="fq-t">How will I know what is happening with the ship?</span></button></h3>
+        <div class="fq-a" id="fqA3" role="region" aria-labelledby="fqQ3"><div><p>Our automated systems send ongoing real-time updates on the ship's status and the work in port.</p></div></div></div>
+  </div>
+</section>
+
 <section class="mo" id="more" aria-labelledby="moTitle">
   <div class="mo-sheet">
     <div class="mo-top">
@@ -9433,7 +9498,7 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
     </div>
     <div class="mo-more">
       <p class="mo-k">More for your industry</p>
-      <ul class="mo-g"><li style="--i:0"><a href="sea-freight-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 15H21L18 20H6Z"/><rect x="6.5" y="10" width="4" height="5"/><rect x="10.5" y="10" width="4" height="5"/><rect class="pt" x="15" y="12" width="3" height="3" /></svg><span class="mo-n">Ocean Freight</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:1"><a href="customs-clearance-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 3H15L19 7V21H5ZM15 3V7H19M8 11H16M8 14H13"/><rect class="pt" x="13.5" y="16.5" width="3" height="3" /></svg><span class="mo-n">Customs Brokerage</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:2"><a href="cargo-insurance-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 3L20 6V12L12 21L4 12V6Z"/><rect class="pt" x="10.5" y="9.5" width="3" height="3" /></svg><span class="mo-n">Cargo Insurance</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:3"><a href="projects-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M7 21V3M3 6H21M7 3L11 6M18 6V11M3 21H11"/><rect class="pt" x="16.5" y="11" width="3" height="3" /></svg><span class="mo-n">Projects</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li></ul>
+      <ul class="mo-g"><li style="--i:0"><a href="sea-freight-en.html" class="mo-c"><span class="mo-n">Ocean Freight</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:1"><a href="customs-clearance-en.html" class="mo-c"><span class="mo-n">Customs Brokerage</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:2"><a href="cargo-insurance-en.html" class="mo-c"><span class="mo-n">Cargo Insurance</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:3"><a href="projects-en.html" class="mo-c"><span class="mo-n">Projects</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li></ul>
     </div>
   </div>
 </section>
@@ -11285,7 +11350,19 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
      content blocks (heading, text, button, picture) and, one level down, the items of
      a grid or list. Built on `translate` + WAAPI so it never overrides a section's own
      transform, transition, hover or tabs. Off under prefers-reduced-motion. -->
-<style>.rv-wait{opacity:0!important}</style>
+<style>.rv-wait{opacity:0!important}
+/* ---- THE ENGLISH STRIP RUNS AS THE HEBREW ONE (2026-11-10, client meeting):
+   crumbled end on the RIGHT, links on the left; the words inside read LTR ---- */
+.ft-foot{direction:rtl}
+.ft-foot > *{direction:ltr}
+.ft-foot .ft-rights{margin-right:0;margin-left:auto}
+@media(max-width:640px){.ft-foot .ft-rights{margin:0}}
+/* the language switch at the strip's far end, as in Hebrew */
+.ft-foot .ft-legal{direction:rtl}
+
+/* the industry mix (2026-11-11): one story row is left, so no kicker over it - no number, no line */
+.fs .fs-tx::before{content:none!important;display:none!important}
+</style>
 <script>(function(){
   var T=[1, 2, 3], STRONG='strong'==='strong';  /* the industry pages take the stronger profile (2026-11-05) */
   if(!T.length||!('IntersectionObserver' in window)||!Element.prototype.animate) return;
@@ -11363,5 +11440,39 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
   window.addEventListener('resize',sweep);
 })();</script>
 <!-- /ORIAN ENTRY REVEAL -->
+<style>
+/* ==== THE NAV KNOWS WHERE YOU ARE (2026-11-11) ==========================================
+   The page you are on is marked in the bar AND in the menu, in the hover's own look:
+   its group's word in the bar is red with its square (as when open), and its tile in the
+   menu is red with the red line under it (desktop sheet and phone list alike). */
+.m-top.is-cur:not(.m-util){color:var(--red)}
+.m-top.is-cur:not(.m-util)::after{--top-mk:var(--top-mk-on)}
+.dd .dd-t.is-cur,.mg .dd-t.is-cur{color:var(--red);border-bottom-color:var(--red)}
+.dd .dd-t.is-cur .btn-ring .ar,.mg .dd-t.is-cur .btn-ring .ar{color:var(--red)}
+</style>
+<script>
+/* the nav marks the current page: its tile in the menu and its group in the bar */
+(function(){
+  function file(h){ try{ return decodeURIComponent(new URL(h, location.href).pathname.split('/').pop()) || 'index.html'; }catch(e){ return ''; } }
+  var me = file(location.href), GROUPS = ['dd-svc','dd-ind','dd-sus','dd-abt'];
+  function mark(){
+    var hit = -1;
+    [].forEach.call(document.querySelectorAll('a.dd-t'), function(a){
+      var on = file(a.getAttribute('href') || '') === me;
+      a.classList.toggle('is-cur', on);
+      if(on){ a.setAttribute('aria-current','page'); var g = a.closest('.dd-g'); if(g && hit < 0) hit = GROUPS.indexOf(g.id); }
+      else if(a.getAttribute('aria-current') === 'page') a.removeAttribute('aria-current');
+    });
+    [].forEach.call(document.querySelectorAll('#bar .m-top:not(.m-util)'), function(t, i){
+      t.classList.toggle('is-cur', i === hit);
+      if(i === hit) t.setAttribute('aria-current','page'); else t.removeAttribute('aria-current');
+    });
+  }
+  mark();
+  window.addEventListener('load', mark);
+  setTimeout(mark, 600);
+  document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('.m-top, .m-btn, [aria-controls]')) setTimeout(mark, 30); }, true);
+})();
+</script>
 </body>
 </html>

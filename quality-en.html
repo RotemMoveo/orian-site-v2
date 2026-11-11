@@ -8911,6 +8911,16 @@ a.cd-v:hover{color:var(--red)}
 .dd .dd-t .btn-ring .ar{width:12px;height:12px;color:var(--ink);--ar-w:1.8}
 .dd .dd-t:hover,.dd .dd-t:focus-visible{background:none;color:var(--red);border-bottom-color:var(--red)}
 .dd .dd-t:hover .btn-ring .ar,.dd .dd-t:focus-visible .btn-ring .ar{color:var(--red)}
+/* ---- THE MENU IN THREE COLUMNS (2026-11-11, option 4 of _menu3-options). The client asked to
+   join today's line-and-arrow menu with the earlier one: the grey sheet and the white tiles
+   come back, three to a row, no icons; the tile wears the new manner - the small diagonal
+   arrow always standing at its far end, and hover = label, arrow and a red line under the
+   tile in one frame, no red fill. Desktop only, like the sheet; the phone menu is .mg. ---- */
+.dd{background:linear-gradient(transparent var(--win-gap),var(--sheet) 0)}
+.dd .dd-g{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--win-gap);padding:var(--sp-4) var(--gin)}
+.dd .dd-t{background:var(--white);min-height:calc(var(--sq) + var(--sp-4));padding-inline:var(--sp-4);border-bottom:2px solid transparent}
+.dd .dd-t .btn-ring{inset-inline-end:var(--sp-4)}
+.dd .dd-t:hover,.dd .dd-t:focus-visible{background:var(--white);color:var(--red);border-bottom-color:var(--red)}
 .dd-ic{display:none}
 </style>
 <style>
@@ -9000,8 +9010,8 @@ a.cd-v:hover{color:var(--red)}
 .ct-fd input[type=tel]{text-align:left}
 
 /* ---- the footer: the crumbling end of the red floor goes to the LEFT */
-.ft-band{background:linear-gradient(var(--red),var(--red)) right / calc(100% - var(--ft-crumb-w) + 1px) 100% no-repeat}
-.ft-band svg{right:auto;left:0;transform:scaleX(-1)}
+
+
 @media(prefers-reduced-motion:reduce){
   .pz-nt .ns-item,.pz-nt .ns-item.out,.pz-nt .ns-item.on{transform:none}
 }
@@ -9122,6 +9132,44 @@ section.tp{text-align:left}
   .mg .dd-t:hover,.mg .dd-t:focus-visible,.mg .dd-t:active{background:none;color:var(--red);border-bottom-color:var(--red)}
   .mg .dd-t:hover .btn-ring .ar,.mg .dd-t:focus-visible .btn-ring .ar,.mg .dd-t:active .btn-ring .ar{color:var(--red)}
   .mg + .m-util{border-top:0}
+}
+</style>
+<style>
+/* CERTIFICATES · option 3 of _cert-options (2026-11-10): the client asked for less on each card by default.
+   The standard's code IS the title (ISO 9001, no year; AEO; the platinum mark by name), a short topic under it.
+   Hover swaps the topic for her own description, on the red the card already had. No icon. A phone has no
+   hover and a tap opens the PDF, so there the description stays under the topic. */
+.kp-cert .kp-a{min-height:clamp(250px,20.8vw,330px);align-content:start}
+.kp-cert .cr-code{display:block;margin-block-start:var(--sp-2);font-size:calc(var(--fs-sec) * .62);font-weight:700;line-height:1;letter-spacing:var(--tr-head);color:var(--ink)}
+.kp-cert .cr-sub{font-size:var(--fs-text);font-weight:500;color:var(--ink);max-width:22em}
+.kp-cert .kp-a .kp-d{display:none}
+@media (hover:hover){
+  .kp-cert .kp-a:is(:hover,:focus-visible) .cr-code{color:var(--paper)}
+  .kp-cert .kp-a:is(:hover,:focus-visible) .cr-sub{display:none}
+  .kp-cert .kp-a:is(:hover,:focus-visible) .kp-d{display:block}
+}
+@media (hover:none){
+  .kp-cert .kp-a{min-height:0}
+  .kp-cert .kp-a .kp-d{display:block}
+}
+</style>
+<style>
+/* THE CERTIFICATE OPENS SOFTLY (2026-11-11, hers: "נפתחות בצורה לינארית ונעימה ולא מיידית").
+   The page throws every .kp-a hover on in one frame (transition:none!important); here, and only
+   here, the red ground eases in over .45s and the topic cross-fades into the description in the
+   SAME grid cell, so the card never jumps. Pointer devices only; a phone shows both, as before. */
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  html body .kp-cert .kp-a{grid-template-columns:minmax(0,1fr);
+    transition:background-color .45s cubic-bezier(.4,0,.2,1),color .45s cubic-bezier(.4,0,.2,1)!important}
+  html body .kp-cert .kp-a > .ar-sq{transition:background-color .45s cubic-bezier(.4,0,.2,1)!important}
+  html body .kp-cert .kp-a > *:not(.ar-sq){transition:color .45s cubic-bezier(.4,0,.2,1),background-color .45s cubic-bezier(.4,0,.2,1),
+    opacity .4s cubic-bezier(.4,0,.2,1),transform .5s cubic-bezier(.4,0,.2,1)!important}
+  html body .kp-cert .kp-a .kp-n{grid-row:1;grid-column:1}
+  html body .kp-cert .kp-a .cr-code{grid-row:2;grid-column:1}
+  html body .kp-cert .kp-a .cr-sub,html body .kp-cert .kp-a .kp-d{grid-row:3;grid-column:1;display:block!important}
+  html body .kp-cert .kp-a .kp-d{opacity:0;transform:translateY(10px)}
+  html body .kp-cert .kp-a:is(:hover,:focus-visible) .cr-sub{opacity:0;transform:translateY(-6px)}
+  html body .kp-cert .kp-a:is(:hover,:focus-visible) .kp-d{opacity:1;transform:none;transition-delay:0s,0s,.12s,.12s!important}
 }
 </style>
 </head>
@@ -9407,13 +9455,13 @@ section.tp{text-align:left}
     <p class="kp-p">Orian's certifications, as published on the company site. Every certificate can be downloaded.</p>
   </div>
   <ol class="kp-g">
-    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/p1868801089_FFPDF-Hebrew-89101.PDF" target="_blank" rel="noopener"><svg class="v2-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="9.5" r="6.5"/><path d="M8.5 15L7 21.5L12 19L17 21.5L15.5 15"/><rect class="pt" x="10.5" y="8" width="3" height="3"/></svg><span class="kp-n">01</span><b class="kp-t"> <bdi dir="ltr">ISO 9001:2015</bdi></b><span class="kp-d">Orian was audited by the Standards Institution of Israel and found to meet the standard for international forwarding, customs brokerage, warehousing, land transport and courier services.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
-    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/Orian-AEO2025.pdf" target="_blank" rel="noopener"><svg class="v2-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="9.5" r="6.5"/><path d="M8.5 15L7 21.5L12 19L17 21.5L15.5 15"/><rect class="pt" x="10.5" y="8" width="3" height="3"/></svg><span class="kp-n">02</span><b class="kp-t">Authorised Economic Operator certificate: general cargo warehouse</b><span class="kp-d">Orian is approved as a general cargo warehouse in the Authorised Economic Operator programme and is a partner in securing the international supply chain.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
-    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/45001-he.PDF" target="_blank" rel="noopener"><svg class="v2-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="9.5" r="6.5"/><path d="M8.5 15L7 21.5L12 19L17 21.5L15.5 15"/><rect class="pt" x="10.5" y="8" width="3" height="3"/></svg><span class="kp-n">03</span><b class="kp-t">SI <bdi dir="ltr">ISO 45001:2018</bdi></b><span class="kp-d">Orian was audited by the Institute for Control and Quality and found to meet the standard for logistics services.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
-    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/Orian-AEO-FF-2024.pdf" target="_blank" rel="noopener"><svg class="v2-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="9.5" r="6.5"/><path d="M8.5 15L7 21.5L12 19L17 21.5L15.5 15"/><rect class="pt" x="10.5" y="8" width="3" height="3"/></svg><span class="kp-n">04</span><b class="kp-t">Authorised Economic Operator certificate: customs agent and international forwarder</b><span class="kp-d">Orian is approved as a customs agent and international forwarder in the Authorised Economic Operator programme and is a partner in securing the international supply chain.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
-    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/14001-he.PDF" target="_blank" rel="noopener"><svg class="v2-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="9.5" r="6.5"/><path d="M8.5 15L7 21.5L12 19L17 21.5L15.5 15"/><rect class="pt" x="10.5" y="8" width="3" height="3"/></svg><span class="kp-n">05</span><b class="kp-t">SI <bdi dir="ltr">ISO 14001:2015</bdi></b><span class="kp-d">Orian was audited by the Institute for Control and Quality and found to meet the standard for logistics services.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
-    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/Orian-PlatinumMark2024.pdf" target="_blank" rel="noopener"><svg class="v2-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="9.5" r="6.5"/><path d="M8.5 15L7 21.5L12 19L17 21.5L15.5 15"/><rect class="pt" x="10.5" y="8" width="3" height="3"/></svg><span class="kp-n">06</span><b class="kp-t">Platinum Mark, Standards Institution of Israel</b><span class="kp-d">Orian was audited by the Standards Institution of Israel as a holder of quality marks that show its management systems meet quality benchmarks.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
-    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/Certificate%20-%20ISO%2027001%20+%20ISO%2027032%20till%2019-10-2026%20-%20ENG.pdf" target="_blank" rel="noopener"><svg class="v2-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="9.5" r="6.5"/><path d="M8.5 15L7 21.5L12 19L17 21.5L15.5 15"/><rect class="pt" x="10.5" y="8" width="3" height="3"/></svg><span class="kp-n">07</span><b class="kp-t">SI <bdi dir="ltr">ISO 27001:2022</bdi></b><span class="kp-d">Orian was audited by the Standards Institution of Israel and found to meet the standard for information security management.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
+    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/p1868801089_FFPDF-Hebrew-89101.PDF" target="_blank" rel="noopener"><span class="kp-n">01</span><b class="cr-code">ISO 9001</b><span class="cr-sub">Quality management</span><span class="kp-d">Orian was audited by the Standards Institution of Israel and found to meet the standard for international forwarding, customs brokerage, warehousing, land transport and courier services.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
+    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/Orian-AEO2025.pdf" target="_blank" rel="noopener"><span class="kp-n">02</span><b class="cr-code">AEO</b><span class="cr-sub">Authorised Economic Operator · General cargo warehouse</span><span class="kp-d">Orian is approved as a general cargo warehouse in the Authorised Economic Operator programme and is a partner in securing the international supply chain.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
+    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/45001-he.PDF" target="_blank" rel="noopener"><span class="kp-n">03</span><b class="cr-code">ISO 45001</b><span class="cr-sub">Occupational health and safety</span><span class="kp-d">Orian was audited by the Institute for Control and Quality and found to meet the standard for logistics services.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
+    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/Orian-AEO-FF-2024.pdf" target="_blank" rel="noopener"><span class="kp-n">04</span><b class="cr-code">AEO</b><span class="cr-sub">Authorised Economic Operator · Customs agent and international forwarder</span><span class="kp-d">Orian is approved as a customs agent and international forwarder in the Authorised Economic Operator programme and is a partner in securing the international supply chain.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
+    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/14001-he.PDF" target="_blank" rel="noopener"><span class="kp-n">05</span><b class="cr-code">ISO 14001</b><span class="cr-sub">Environmental management</span><span class="kp-d">Orian was audited by the Institute for Control and Quality and found to meet the standard for logistics services.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
+    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/Orian-PlatinumMark2024.pdf" target="_blank" rel="noopener"><span class="kp-n">06</span><b class="cr-code">Platinum Mark</b><span class="cr-sub">Standards Institution of Israel</span><span class="kp-d">Orian was audited by the Standards Institution of Israel as a holder of quality marks that show its management systems meet quality benchmarks.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
+    <li class="kp-i kp-l"><a class="kp-a" href="https://www.orian.com/uploads/sites/35/files/Certificate%20-%20ISO%2027001%20+%20ISO%2027032%20till%2019-10-2026%20-%20ENG.pdf" target="_blank" rel="noopener"><span class="kp-n">07</span><b class="cr-code">ISO 27001</b><span class="cr-sub">Information security</span><span class="kp-d">Orian was audited by the Standards Institution of Israel and found to meet the standard for information security management.</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li>
   </ol>
 </section>
 
@@ -9479,7 +9527,7 @@ section.tp{text-align:left}
     </div>
     <div class="mo-more">
       <p class="mo-k">More on this</p>
-      <ul class="mo-g"><li style="--i:0"><a href="about-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M4 21V7L12 3L20 7V21ZM2 21H22M9 21V16H15V21M8 10H10M14 10H16"/><rect class="pt" x="10.5" y="6.5" width="3" height="3" /></svg><span class="mo-n">About Orian</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:1"><a href="board-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="3.5" y="7" width="3" height="3"/><rect x="17.5" y="7" width="3" height="3"/><path d="M2 17V13H8V17M9 17V10H15V17M16 17V13H22V17M2 20H22"/><rect class="pt" x="10.5" y="4" width="3" height="3" /></svg><span class="mo-n">Board of Directors</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:2"><a href="customs-clearance-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 3H15L19 7V21H5ZM15 3V7H19M8 11H16M8 14H13"/><rect class="pt" x="13.5" y="16.5" width="3" height="3" /></svg><span class="mo-n">Customs Brokerage</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:3"><a href="logistics-warehousing-en.html" class="mo-c"><svg class="mo-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M4 3V21M20 3V21M4 9H20M4 15H20"/><rect x="7" y="5" width="4" height="4"/><rect x="12" y="11" width="4" height="4"/><rect class="pt" x="7.5" y="16.5" width="3" height="3" /></svg><span class="mo-n">Logistics and Warehousing</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li></ul>
+      <ul class="mo-g"><li style="--i:0"><a href="about-en.html" class="mo-c"><span class="mo-n">About Orian</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:1"><a href="board-en.html" class="mo-c"><span class="mo-n">Board of Directors</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:2"><a href="customs-clearance-en.html" class="mo-c"><span class="mo-n">Customs Brokerage</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li><li style="--i:3"><a href="logistics-warehousing-en.html" class="mo-c"><span class="mo-n">Logistics and Warehousing</span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M16.2 2.8L1.2 17.8M1.2 2.8H16.2V17.8"/></svg></span></a></li></ul>
     </div>
   </div>
 </section>
@@ -11359,14 +11407,14 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
       if(h.classList.contains('ol1')){ h.classList.remove('ol1'); h.style.textAlign=''; gap(h,0) }
       var r=h.getBoundingClientRect(); if(!r.width||!r.height) return;
       var L=lh(h); if(r.height<L*1.6) return;                 /* already one line */
-      var cs=getComputedStyle(h), col=colW(h), ta='';
+      var cs=getComputedStyle(h), col=Math.min(colW(h), r.width), ta='';   /* 2026-11-05: its OWN column (the box it fills on two lines), not the head row's whole width - a heading beside its paragraph was set on one line and ran under it */
       /* a heading laid out as a flex/grid column keeps the side its lines stood on */
       if(/flex|grid/.test(cs.display)){ var ai=(cs.alignItems+' '+cs.justifyItems);
         ta=/center/.test(ai)?'center':(/flex-end|(^| )end|right/.test(ai)?'end':'') }
       h.classList.add('ol1'); if(ta) h.style.textAlign=ta; gap(h,1);
       h.style.width='max-content'; var w=h.getBoundingClientRect().width; h.style.width='';
       var one=h.getBoundingClientRect().height<L*1.6;          /* it really is one line now */
-      if(!(one&&w<=lim&&w<=col+1)){ h.classList.remove('ol1'); h.style.textAlign=''; gap(h,0) }
+      if(!(one&&w<=lim&&w<=col+1&&h.scrollWidth<=h.clientWidth+1)){   /* and its words may not spill past its box */ h.classList.remove('ol1'); h.style.textAlign=''; gap(h,0) }
     });
   }
   var t; function later(){ clearTimeout(t); t=setTimeout(fit,120) }
@@ -11379,7 +11427,16 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
      content blocks (heading, text, button, picture) and, one level down, the items of
      a grid or list. Built on `translate` + WAAPI so it never overrides a section's own
      transform, transition, hover or tabs. Off under prefers-reduced-motion. -->
-<style>.rv-wait{opacity:0!important}</style>
+<style>.rv-wait{opacity:0!important}
+/* ---- THE ENGLISH STRIP RUNS AS THE HEBREW ONE (2026-11-10, client meeting):
+   crumbled end on the RIGHT, links on the left; the words inside read LTR ---- */
+.ft-foot{direction:rtl}
+.ft-foot > *{direction:ltr}
+.ft-foot .ft-rights{margin-right:0;margin-left:auto}
+@media(max-width:640px){.ft-foot .ft-rights{margin:0}}
+/* the language switch at the strip's far end, as in Hebrew */
+.ft-foot .ft-legal{direction:rtl}
+</style>
 <script>(function(){
   var T=[1], STRONG='soft'==='strong';  /* the industry pages take the stronger profile (2026-11-05) */
   if(!T.length||!('IntersectionObserver' in window)||!Element.prototype.animate) return;
@@ -11457,5 +11514,39 @@ h1.anh-h1,#hero .ab-h1,#hero.xh .ab-h1,h1.hx-h,h1.dh-h,h1.pph-h1{font-size:var(-
   window.addEventListener('resize',sweep);
 })();</script>
 <!-- /ORIAN ENTRY REVEAL -->
+<style>
+/* ==== THE NAV KNOWS WHERE YOU ARE (2026-11-11) ==========================================
+   The page you are on is marked in the bar AND in the menu, in the hover's own look:
+   its group's word in the bar is red with its square (as when open), and its tile in the
+   menu is red with the red line under it (desktop sheet and phone list alike). */
+.m-top.is-cur:not(.m-util){color:var(--red)}
+.m-top.is-cur:not(.m-util)::after{--top-mk:var(--top-mk-on)}
+.dd .dd-t.is-cur,.mg .dd-t.is-cur{color:var(--red);border-bottom-color:var(--red)}
+.dd .dd-t.is-cur .btn-ring .ar,.mg .dd-t.is-cur .btn-ring .ar{color:var(--red)}
+</style>
+<script>
+/* the nav marks the current page: its tile in the menu and its group in the bar */
+(function(){
+  function file(h){ try{ return decodeURIComponent(new URL(h, location.href).pathname.split('/').pop()) || 'index.html'; }catch(e){ return ''; } }
+  var me = file(location.href), GROUPS = ['dd-svc','dd-ind','dd-sus','dd-abt'];
+  function mark(){
+    var hit = -1;
+    [].forEach.call(document.querySelectorAll('a.dd-t'), function(a){
+      var on = file(a.getAttribute('href') || '') === me;
+      a.classList.toggle('is-cur', on);
+      if(on){ a.setAttribute('aria-current','page'); var g = a.closest('.dd-g'); if(g && hit < 0) hit = GROUPS.indexOf(g.id); }
+      else if(a.getAttribute('aria-current') === 'page') a.removeAttribute('aria-current');
+    });
+    [].forEach.call(document.querySelectorAll('#bar .m-top:not(.m-util)'), function(t, i){
+      t.classList.toggle('is-cur', i === hit);
+      if(i === hit) t.setAttribute('aria-current','page'); else t.removeAttribute('aria-current');
+    });
+  }
+  mark();
+  window.addEventListener('load', mark);
+  setTimeout(mark, 600);
+  document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('.m-top, .m-btn, [aria-controls]')) setTimeout(mark, 30); }, true);
+})();
+</script>
 </body>
 </html>
