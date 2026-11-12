@@ -2551,7 +2551,7 @@ h1 .rl::after{content:"";position:absolute;right:0;left:0;bottom:.02em;height:.0
 .tc-form input{flex:1;min-width:0;font-family:inherit;font-weight:var(--w-light);
   font-size:var(--fs-text);color:var(--ink);
   background:transparent;border:0;border-radius:0;padding:6px 0}
-.tc-form input::placeholder{color:rgba(20,22,25,.42)}
+.tc-form input::placeholder{color:var(--muted)}
 .tc-form input:focus{outline:none}
 /* the one hairline left anywhere in the hero, and it is concept 2's: a field
    with neither frame nor underline is not readable as a field. It belongs to
@@ -7132,7 +7132,7 @@ h1 .rl::after{content:"";position:absolute;right:0;left:0;bottom:.02em;height:.0
   .pz-card .m-ic{display:block;flex:none;width:20px;height:20px;margin-inline-start:14px;
     fill:none;stroke:var(--red);stroke-width:1.4;stroke-linejoin:miter}
   .pz-card .m-box input{height:100%;font-size:16px;font-weight:var(--w-reg);padding-block:0;padding-inline:10px 14px}
-  .pz-card .m-box input::placeholder{font-weight:var(--w-light);color:rgba(20,22,25,.5)}
+  .pz-card .m-box input::placeholder{font-weight:var(--w-light);color:var(--muted)}
   .pz-card .m-box .tc-go,.pz-card .tc-rule{display:none}
   .pz-card .m-btn{display:flex;align-items:center;justify-content:space-between;width:100%;height:52px;
     margin-top:10px;padding:0 18px;border:0;border-radius:0;background:var(--red);color:var(--white);
@@ -7426,7 +7426,7 @@ h1 .rl::after{content:"";position:absolute;right:0;left:0;bottom:.02em;height:.0
 .hn-sq{flex:none;width:12px;height:12px;background:var(--red)}
 .hn-list{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;column-gap:var(--sp-5);row-gap:var(--sp-2)}
 .hn-it{display:flex;align-items:center;gap:12px;color:var(--ink);text-decoration:none;font-size:var(--fs-text)}
-.hn-date{flex:none;font-size:13px;letter-spacing:.08em;color:rgba(20,22,25,.5)}
+.hn-date{flex:none;font-size:13px;letter-spacing:.08em;color:var(--muted)}
 .hn-tx bdi{white-space:nowrap}   /* `Challenge Group` breaks in two on a phone otherwise */
 .hn-ar{flex:none;display:block;width:10px;height:10px}
 .hn-ar svg{display:block;width:100%;height:100%}
@@ -7472,7 +7472,7 @@ h1 .rl::after{content:"";position:absolute;right:0;left:0;bottom:.02em;height:.0
 @media (min-width:821px){.hero.pz .pz-card{align-self:stretch}.pz-card .tc-foot{margin-top:auto}}
 .tc-type{position:relative;z-index:6;margin-top:var(--sp-3);margin-bottom:var(--sp-3)}
 .tt-btn{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2);width:100%;
-  font-family:inherit;font-weight:var(--w-light);font-size:var(--fs-text);color:rgba(20,22,25,.42);text-align:start;
+  font-family:inherit;font-weight:var(--w-light);font-size:var(--fs-text);color:var(--muted);text-align:start;
   background:transparent;border:0;border-bottom:1px solid rgba(20,22,25,.16);border-radius:0;padding:6px 0 10px;cursor:pointer}
 .tc-type.has .tt-btn{color:var(--ink)}
 .tt-chev{flex:none;width:12px;height:8px;fill:none;stroke:var(--ink);stroke-width:1.4;transition:transform .25s ease}
@@ -7482,7 +7482,7 @@ h1 .rl::after{content:"";position:absolute;right:0;left:0;bottom:.02em;height:.0
   background:var(--white);border:1px solid rgba(20,22,25,.16);border-top:0;
   clip-path:inset(0 0 100% 0);visibility:hidden;transition:clip-path .35s cubic-bezier(.66,0,.16,1),visibility 0s .35s}
 .tt-list.open{clip-path:inset(0);visibility:visible;transition:clip-path .35s cubic-bezier(.66,0,.16,1)}
-/* on open the list is moved to <body> and placed under the field, so neither the card nor the hero can cut it */
+/* on open the list is moved to the body element and placed under the field, so neither the card nor the hero can cut it */
 body > .tt-list{position:absolute;inset-inline:auto;top:0;left:0;z-index:60;margin:0;border-top:0;direction:inherit}
 .tt-list li{display:flex;align-items:center;gap:10px;padding:12px var(--sp-2);
   font-weight:var(--w-light);font-size:var(--fs-text);color:var(--ink);cursor:pointer;outline:none}
@@ -7490,9 +7490,21 @@ body > .tt-list{position:absolute;inset-inline:auto;top:0;left:0;z-index:60;marg
 .tt-list li::before{content:"";flex:none;width:8px;height:8px;background:var(--red);opacity:0}
 .tt-list li:hover,.tt-list li:focus-visible,.tt-list li[aria-selected="true"]{color:var(--red)}
 .tt-list li:hover::before,.tt-list li:focus-visible::before,.tt-list li[aria-selected="true"]::before{opacity:1}
+/* ---- SKIP LINK + <main> (2026-11-12, accessibility). Off screen until focused;
+   then a red rectangle with white ink at the top of the reading edge, over the bar. ---- */
+.skip{position:fixed;z-index:200;top:var(--sp-2);inset-inline-start:var(--sp-2);
+  padding:var(--sp-2) var(--sp-3);background:var(--red);color:#fff;font-size:var(--fs-text);
+  text-decoration:none;transform:translateY(calc(-100% - 40px))}
+.skip:focus,.skip:focus-visible{transform:none;outline:2px solid var(--ink);outline-offset:3px}
+main{display:block}
+main:focus{outline:none}
 </style>
 </head>
 <body>
+<!-- SKIP LINK (2026-11-12, accessibility: WCAG 2.4.1). The first stop of the Tab
+     order; hidden until it takes focus, then the CTA's red rectangle on the bar's
+     reading edge. It lands on <main>, which takes focus (tabindex=-1). -->
+<a class="skip" href="#main">דלג לתוכן הראשי</a>
 
 <!-- ===================== THE HEAD OF THE PAGE =====================
      logo · the red nav rectangle (centred) · utilities -->
@@ -7534,40 +7546,40 @@ body > .tt-list{position:absolute;inset-inline:auto;top:0;left:0;z-index:60;marg
 <!-- THE NAV DROPDOWN (2026-10-06): the footer's four groups, one sheet per word, in the
      words' order. See THE NAV DROPDOWN in the stylesheet; the script under it builds the field. -->
 <div class="dd" id="navDD">
-  <div class="dd-g" id="dd-svc" role="menu" aria-label="פתרונות">
-    <a class="dd-t" role="menuitem" href="air-freight.html" style="--td:100ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 4L13.5 6.5V10L21 14V16L13.5 14V18.5L16 20.5V22L12 21L8 22V20.5L10.5 18.5V14L3 16V14L10.5 10V6.5Z"/><rect class="pt" x="10.5" y="0.5" width="3" height="3" /></svg><span>הובלה אווירית</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="sea-freight.html" style="--td:125ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 15H21L18 20H6Z"/><rect x="6.5" y="10" width="4" height="5"/><rect x="10.5" y="10" width="4" height="5"/><rect class="pt" x="15" y="12" width="3" height="3" /></svg><span>הובלה ימית</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="land-transportation.html" style="--td:150ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M2 7H14V17H2ZM14 10H18L21 13V17H14"/><circle cx="6" cy="18" r="1.75" class="wh"/><circle cx="17.5" cy="18" r="1.75" class="wh"/><rect class="pt" x="6.5" y="10.5" width="3" height="3" /></svg><span>הובלה יבשתית</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="logistics-warehousing.html" style="--td:175ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M4 3V21M20 3V21M4 9H20M4 15H20"/><rect x="7" y="5" width="4" height="4"/><rect x="12" y="11" width="4" height="4"/><rect class="pt" x="7.5" y="16.5" width="3" height="3" /></svg><span>לוגיסטיקה ואחסנה</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="domestic-distribution.html" style="--td:200ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 10V5M10 12H5M14 12H19M12 14V19"/><rect x="10" y="2" width="4" height="3"/><rect x="2" y="10.5" width="3" height="3"/><rect x="19" y="10.5" width="3" height="3"/><rect x="10" y="19" width="4" height="3"/><rect class="pt" x="10.5" y="10.5" width="3" height="3" /></svg><span>הפצה פנים ארצית</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="e-commerce.html" style="--td:225ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 8H19V20H5ZM9 8V5H15V8"/><rect class="pt" x="10.5" y="12.5" width="3" height="3" /></svg><span><bdi dir="ltr">e-Commerce</bdi></span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="cargo-insurance.html" style="--td:250ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 3L20 6V12L12 21L4 12V6Z"/><rect class="pt" x="10.5" y="9.5" width="3" height="3" /></svg><span>ביטוח מטענים</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="border-crossings.html" style="--td:275ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M2 21H22M5 21V9M5 9H21M9 9V12M13 9V12M17 9V12"/><rect class="pt" x="3.5" y="5.5" width="3" height="3" /></svg><span>מעברי גבול יבשתיים בישראל</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="drop-shipments.html" style="--td:300ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10 10H21V21H10ZM10 10L3 3M3 9V3H9"/><rect class="pt" x="14" y="14" width="3" height="3" /></svg><span>משלוחי דרופ (צד ג׳)</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="customs-clearance.html" style="--td:325ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 3H15L19 7V21H5ZM15 3V7H19M8 11H16M8 14H13"/><rect class="pt" x="13.5" y="16.5" width="3" height="3" /></svg><span>עמילות מכס</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+  <div class="dd-g" id="dd-svc" role="group" aria-label="פתרונות">
+    <a class="dd-t" href="air-freight.html" style="--td:100ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 4L13.5 6.5V10L21 14V16L13.5 14V18.5L16 20.5V22L12 21L8 22V20.5L10.5 18.5V14L3 16V14L10.5 10V6.5Z"/><rect class="pt" x="10.5" y="0.5" width="3" height="3" /></svg><span>הובלה אווירית</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="sea-freight.html" style="--td:125ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 15H21L18 20H6Z"/><rect x="6.5" y="10" width="4" height="5"/><rect x="10.5" y="10" width="4" height="5"/><rect class="pt" x="15" y="12" width="3" height="3" /></svg><span>הובלה ימית</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="land-transportation.html" style="--td:150ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M2 7H14V17H2ZM14 10H18L21 13V17H14"/><circle cx="6" cy="18" r="1.75" class="wh"/><circle cx="17.5" cy="18" r="1.75" class="wh"/><rect class="pt" x="6.5" y="10.5" width="3" height="3" /></svg><span>הובלה יבשתית</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="logistics-warehousing.html" style="--td:175ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M4 3V21M20 3V21M4 9H20M4 15H20"/><rect x="7" y="5" width="4" height="4"/><rect x="12" y="11" width="4" height="4"/><rect class="pt" x="7.5" y="16.5" width="3" height="3" /></svg><span>לוגיסטיקה ואחסנה</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="domestic-distribution.html" style="--td:200ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 10V5M10 12H5M14 12H19M12 14V19"/><rect x="10" y="2" width="4" height="3"/><rect x="2" y="10.5" width="3" height="3"/><rect x="19" y="10.5" width="3" height="3"/><rect x="10" y="19" width="4" height="3"/><rect class="pt" x="10.5" y="10.5" width="3" height="3" /></svg><span>הפצה פנים ארצית</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="e-commerce.html" style="--td:225ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 8H19V20H5ZM9 8V5H15V8"/><rect class="pt" x="10.5" y="12.5" width="3" height="3" /></svg><span><bdi dir="ltr">e-Commerce</bdi></span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="cargo-insurance.html" style="--td:250ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 3L20 6V12L12 21L4 12V6Z"/><rect class="pt" x="10.5" y="9.5" width="3" height="3" /></svg><span>ביטוח מטענים</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="border-crossings.html" style="--td:275ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M2 21H22M5 21V9M5 9H21M9 9V12M13 9V12M17 9V12"/><rect class="pt" x="3.5" y="5.5" width="3" height="3" /></svg><span>מעברי גבול יבשתיים בישראל</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="drop-shipments.html" style="--td:300ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10 10H21V21H10ZM10 10L3 3M3 9V3H9"/><rect class="pt" x="14" y="14" width="3" height="3" /></svg><span>משלוחי דרופ (צד ג׳)</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="customs-clearance.html" style="--td:325ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 3H15L19 7V21H5ZM15 3V7H19M8 11H16M8 14H13"/><rect class="pt" x="13.5" y="16.5" width="3" height="3" /></svg><span>עמילות מכס</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
   </div>
-  <div class="dd-g" id="dd-ind" role="menu" aria-label="תעשיות">
-    <a class="dd-t" role="menuitem" href="defence.html" style="--td:100ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="4" y="4" width="16" height="16"/><path d="M12 2V7M12 17V22M2 12H7M17 12H22"/><rect class="pt" x="10.5" y="10.5" width="3" height="3" /></svg><span>ביטחוני</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="humanitarian.html" style="--td:125ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M9 3H15V9H21V15H15V21H9V15H3V9H9Z"/><rect class="pt" x="10.5" y="10.5" width="3" height="3" /></svg><span>סיוע הומניטרי וממשלתי</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="automotive.html" style="--td:150ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M2 16V12L6 8H15L19 12H22V16H2Z"/><circle cx="7" cy="17" r="1.75" class="wh"/><circle cx="17" cy="17" r="1.75" class="wh"/><rect class="pt" x="9" y="10.5" width="3" height="3" /></svg><span>רכב</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="pharma.html" style="--td:175ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M6 3H18V7H6ZM7 7H17V21H7Z"/><path d="M7 11H17M7 17H17"/><rect class="pt" x="10.5" y="12.5" width="3" height="3" /></svg><span>פארמה</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="fashion.html" style="--td:200ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M8 3L3 7L5 11L7 10V21H17V10L19 11L21 7L16 3L14 5H10Z"/><rect class="pt" x="10.5" y="11" width="3" height="3" /></svg><span>אופנה</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="food.html" style="--td:225ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10 3H14V15H10ZM9 15H15V21H9ZM14 6H17M14 9H17M14 12H17"/><rect class="pt" x="10.5" y="16.5" width="3" height="3" /></svg><span>מזון ומוצרים מתכלים</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="aerospace.html" style="--td:250ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M12 3V8.5M12 15.5V21M3 12H8.5M15.5 12H21M5.6 5.6L9.5 9.5M14.5 14.5L18.4 18.4M18.4 5.6L14.5 9.5M9.5 14.5L5.6 18.4"/><rect class="pt" x="10.5" y="10.5" width="3" height="3" /></svg><span>אירוספייס</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="data-center.html" style="--td:275ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M4 3H20V21H4ZM4 9H20M4 15H20M11 6H17M11 12H17M11 18H17"/><rect class="pt" x="6" y="4.5" width="3" height="3" /></svg><span>דאטה סנטר וסמי קונדקטורס</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="projects.html" style="--td:300ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M7 21V3M3 6H21M7 3L11 6M18 6V11M3 21H11"/><rect class="pt" x="16.5" y="11" width="3" height="3" /></svg><span>פרויקטים</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="bulk-ship-agency.html" style="--td:325ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 15H21L18 20H6Z"/><rect x="6.5" y="10" width="4" height="5"/><rect x="10.5" y="10" width="4" height="5"/><rect class="pt" x="15" y="12" width="3" height="3" /></svg><span>מטעני צובר וסוכנות אונייה</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+  <div class="dd-g" id="dd-ind" role="group" aria-label="תעשיות">
+    <a class="dd-t" href="defence.html" style="--td:100ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="4" y="4" width="16" height="16"/><path d="M12 2V7M12 17V22M2 12H7M17 12H22"/><rect class="pt" x="10.5" y="10.5" width="3" height="3" /></svg><span>ביטחוני</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="humanitarian.html" style="--td:125ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M9 3H15V9H21V15H15V21H9V15H3V9H9Z"/><rect class="pt" x="10.5" y="10.5" width="3" height="3" /></svg><span>סיוע הומניטרי וממשלתי</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="automotive.html" style="--td:150ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M2 16V12L6 8H15L19 12H22V16H2Z"/><circle cx="7" cy="17" r="1.75" class="wh"/><circle cx="17" cy="17" r="1.75" class="wh"/><rect class="pt" x="9" y="10.5" width="3" height="3" /></svg><span>רכב</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="pharma.html" style="--td:175ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M6 3H18V7H6ZM7 7H17V21H7Z"/><path d="M7 11H17M7 17H17"/><rect class="pt" x="10.5" y="12.5" width="3" height="3" /></svg><span>פארמה</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="fashion.html" style="--td:200ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M8 3L3 7L5 11L7 10V21H17V10L19 11L21 7L16 3L14 5H10Z"/><rect class="pt" x="10.5" y="11" width="3" height="3" /></svg><span>אופנה</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="food.html" style="--td:225ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M10 3H14V15H10ZM9 15H15V21H9ZM14 6H17M14 9H17M14 12H17"/><rect class="pt" x="10.5" y="16.5" width="3" height="3" /></svg><span>מזון ומוצרים מתכלים</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="aerospace.html" style="--td:250ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M12 3V8.5M12 15.5V21M3 12H8.5M15.5 12H21M5.6 5.6L9.5 9.5M14.5 14.5L18.4 18.4M18.4 5.6L14.5 9.5M9.5 14.5L5.6 18.4"/><rect class="pt" x="10.5" y="10.5" width="3" height="3" /></svg><span>אירוספייס</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="data-center.html" style="--td:275ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M4 3H20V21H4ZM4 9H20M4 15H20M11 6H17M11 12H17M11 18H17"/><rect class="pt" x="6" y="4.5" width="3" height="3" /></svg><span>דאטה סנטר וסמי קונדקטורס</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="projects.html" style="--td:300ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M7 21V3M3 6H21M7 3L11 6M18 6V11M3 21H11"/><rect class="pt" x="16.5" y="11" width="3" height="3" /></svg><span>פרויקטים</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="bulk-ship-agency.html" style="--td:325ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 15H21L18 20H6Z"/><rect x="6.5" y="10" width="4" height="5"/><rect x="10.5" y="10" width="4" height="5"/><rect class="pt" x="15" y="12" width="3" height="3" /></svg><span>מטעני צובר וסוכנות אונייה</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
   </div>
-  <div class="dd-g" id="dd-sus" role="menu" aria-label="קיימות">
-    <a class="dd-t" role="menuitem" href="quality.html" style="--td:100ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 19V11L12 4H20V12L13 19ZM3 21L14 10M10 14V10M10 14H14"/><rect class="pt" x="18.5" y="2.5" width="3" height="3" /></svg><span>איכות</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="https://www.orian.com/uploads/sites/35/files/Orian-Ethics-Dec25.pdf" target="_blank" rel="noopener" style="--td:125ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 5V20M8 20H16M4 7H20M4 7L2 13H6ZM20 7L18 13H22Z"/><rect class="pt" x="10.5" y="2" width="3" height="3" /></svg><span>קוד אתי</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+  <div class="dd-g" id="dd-sus" role="group" aria-label="קיימות">
+    <a class="dd-t" href="quality.html" style="--td:100ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 19V11L12 4H20V12L13 19ZM3 21L14 10M10 14V10M10 14H14"/><rect class="pt" x="18.5" y="2.5" width="3" height="3" /></svg><span>איכות</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="https://www.orian.com/uploads/sites/35/files/Orian-Ethics-Dec25.pdf" target="_blank" rel="noopener" style="--td:125ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 5V20M8 20H16M4 7H20M4 7L2 13H6ZM20 7L18 13H22Z"/><rect class="pt" x="10.5" y="2" width="3" height="3" /></svg><span>קוד אתי</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
   </div>
-  <div class="dd-g" id="dd-abt" role="menu" aria-label="אודות">
-    <a class="dd-t" role="menuitem" href="about.html" style="--td:100ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M4 21V7L12 3L20 7V21ZM2 21H22M9 21V16H15V21M8 10H10M14 10H16"/><rect class="pt" x="10.5" y="6.5" width="3" height="3" /></svg><span>אודות אוריין</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="board.html" style="--td:125ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="3.5" y="7" width="3" height="3"/><rect x="17.5" y="7" width="3" height="3"/><path d="M2 17V13H8V17M9 17V10H15V17M16 17V13H22V17M2 20H22"/><rect class="pt" x="10.5" y="4" width="3" height="3" /></svg><span>חברי דירקטוריון</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="investor-relations.html" style="--td:150ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M2 21H22M4 20V15H7V20M10.5 20V11H13.5V20M17 20V8H20V20"/><rect class="pt" x="17" y="3" width="3" height="3" /></svg><span>קשרי משקיעים</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="management.html" style="--td:175ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 7V11M5 11H19M5 11V15M12 11V15M19 11V15"/><rect x="3" y="15" width="4" height="4"/><rect x="10" y="15" width="4" height="4"/><rect x="17" y="15" width="4" height="4"/><rect class="pt" x="10" y="3" width="4" height="4" /></svg><span>ההנהלה</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
-    <a class="dd-t" role="menuitem" href="careers.html" style="--td:200ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 8H21V20H3ZM9 8V5H15V8M3 13H21"/><rect class="pt" x="10.5" y="11.5" width="3" height="3" /></svg><span>קריירה</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+  <div class="dd-g" id="dd-abt" role="group" aria-label="אודות">
+    <a class="dd-t" href="about.html" style="--td:100ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M4 21V7L12 3L20 7V21ZM2 21H22M9 21V16H15V21M8 10H10M14 10H16"/><rect class="pt" x="10.5" y="6.5" width="3" height="3" /></svg><span>אודות אוריין</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="board.html" style="--td:125ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="3.5" y="7" width="3" height="3"/><rect x="17.5" y="7" width="3" height="3"/><path d="M2 17V13H8V17M9 17V10H15V17M16 17V13H22V17M2 20H22"/><rect class="pt" x="10.5" y="4" width="3" height="3" /></svg><span>חברי דירקטוריון</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="investor-relations.html" style="--td:150ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M2 21H22M4 20V15H7V20M10.5 20V11H13.5V20M17 20V8H20V20"/><rect class="pt" x="17" y="3" width="3" height="3" /></svg><span>קשרי משקיעים</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="management.html" style="--td:175ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 7V11M5 11H19M5 11V15M12 11V15M19 11V15"/><rect x="3" y="15" width="4" height="4"/><rect x="10" y="15" width="4" height="4"/><rect x="17" y="15" width="4" height="4"/><rect class="pt" x="10" y="3" width="4" height="4" /></svg><span>ההנהלה</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
+    <a class="dd-t" href="careers.html" style="--td:200ms"><span class="dd-lb"><svg class="dd-ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 8H21V20H3ZM9 8V5H15V8M3 13H21"/><rect class="pt" x="10.5" y="11.5" width="3" height="3" /></svg><span>קריירה</span></span><span class="btn-ring ar-sq" aria-hidden="true"><svg class="ar" viewBox="0 0 19 19"><path d="M2.8 2.8L17.8 17.8M17.8 2.8H2.8V17.8"/></svg></span></a>
   </div>
 </div>
 <script>
@@ -7590,21 +7602,61 @@ body > .tt-list{position:absolute;inset-inline:auto;top:0;left:0;z-index:60;marg
     var g = document.getElementById('dd-' + k);
     [].forEach.call(dd.children, function(x){ x.classList.toggle('on', x === g); x.classList.remove('in'); });
     void g.offsetWidth; g.classList.add('in');
-    dd.classList.add('open');
+    dd.classList.add('open'); dd.inert = false;
     dd.style.height = (g.offsetHeight + parseFloat(getComputedStyle(dd).paddingTop)) + 'px';
   }
-  function shut(){ cur = null; dd.classList.remove('open'); dd.style.height = '0px';
+  function shut(){ cur = null; dd.classList.remove('open'); dd.style.height = '0px'; dd.inert = true;
     words.forEach(function(x){ x.classList.remove('on'); x.setAttribute('aria-expanded', 'false'); }); }
   function later(){ clearTimeout(t); t = setTimeout(shut, 180); }
   words.forEach(function(w, i){
-    w.setAttribute('aria-haspopup', 'true'); w.setAttribute('aria-expanded', 'false'); w.setAttribute('aria-controls', 'dd-' + KEYS[i]);
+    w.setAttribute('aria-expanded', 'false'); w.setAttribute('aria-controls', 'dd-' + KEYS[i]);
     w.addEventListener('mouseenter', function(){ open(KEYS[i], w); });
     w.addEventListener('mouseleave', later);
     w.addEventListener('click', function(){ if(cur === KEYS[i]) shut(); else open(KEYS[i], w); });
   });
   dd.addEventListener('mouseenter', function(){ clearTimeout(t); });
   dd.addEventListener('mouseleave', later);
-  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && cur) shut(); });
+  /* ---- THE KEYBOARD (2026-11-12, accessibility: WCAG 2.4.3 focus order). The sheet
+     is ONE fixed element after the header, so in the source its links come after
+     צור קשר. Instead of moving it, Tab is bridged: an open word hands focus to its
+     first link, the last link hands it on to whatever follows the word, Shift+Tab
+     walks back the same way. A closed sheet is inert, so its links are never in the
+     Tab order at all. Escape closes and puts focus back on the word. ---- */
+  dd.inert = true;
+  function tabbables(){
+    return [].filter.call(document.querySelectorAll('a[href],button,input,select,textarea,[tabindex]'), function(x){
+      return x.tabIndex >= 0 && !x.disabled && !dd.contains(x) && x.getClientRects().length; });
+  }
+  function links(k){ return [].slice.call(document.getElementById('dd-' + k).querySelectorAll('a[href]')); }
+  words.forEach(function(w, i){
+    w.addEventListener('keydown', function(e){
+      if(e.key !== 'Tab' || e.shiftKey || mq.matches || cur !== KEYS[i]) return;
+      var ls = links(KEYS[i]); if(!ls.length) return;
+      e.preventDefault(); ls[0].focus();
+    });
+  });
+  dd.addEventListener('keydown', function(e){
+    if(e.key !== 'Tab' || !cur) return;
+    var i = KEYS.indexOf(cur), w = words[i], ls = links(cur);
+    if(e.shiftKey && document.activeElement === ls[0]){ e.preventDefault(); w.focus(); }
+    else if(!e.shiftKey && document.activeElement === ls[ls.length - 1]){
+      var all = tabbables(), nx = all[all.indexOf(w) + 1];
+      e.preventDefault(); shut(); if(nx) nx.focus();
+    }
+  });
+  /* focus that leaves both the words and the sheet closes it (a pointer still over
+     the sheet keeps it: that blur has no relatedTarget) */
+  function away(e){
+    var to = e.relatedTarget;
+    if(cur && to && !dd.contains(to) && words.indexOf(to) < 0) shut();
+  }
+  dd.addEventListener('focusout', away);
+  words.forEach(function(w){ w.addEventListener('focusout', away); });
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Escape' || !cur) return;
+    var w = words[KEYS.indexOf(cur)], back = dd.contains(document.activeElement);
+    shut(); if(back && w) w.focus();
+  });
   addEventListener('scroll', function(){ if(cur) dd.style.setProperty('--dd-top', top.getBoundingClientRect().bottom + 'px'); }, {passive:true});
   addEventListener('resize', function(){ if(cur) shut(); });
 
@@ -7662,6 +7714,7 @@ body > .tt-list{position:absolute;inset-inline:auto;top:0;left:0;z-index:60;marg
      that it shows one notice at a time. צור קשר stands in the tracker's square.
      The previous hero (the console on the film's floor) is in
      _ארכיון/גרסאות קודמות/concept-3-hero.before-puzzle-2026-09-28.html. -->
+<main id="main" tabindex="-1">
 <section class="hero pz reveal-target" id="hero">
 
   <!-- the film: the canvas's two sources, never seen themselves, and the canvas -->
@@ -8625,6 +8678,8 @@ body > .tt-list{position:absolute;inset-inline:auto;top:0;left:0;z-index:60;marg
      footer is 240px from the screen and pauses it on the way out, and under
      prefers-reduced-motion it is never started and the poster is what the wash
      sits on. See 8 · פוטר in the stylesheet for the wash's four layers. -->
+</main>
+
 <footer class="ft" id="footer">
 
   <!-- NO FILM SINCE 2026-09-30 - hers: *"רעיונות אחרים לפוטר, שלא כוללים את
